@@ -1,0 +1,169 @@
+/* ==========================================================================
+   Portraits: OPTION 5
+   Arch-shaped portrait photos with a college-colour outline offset behind,
+   name and role, and round quick-action buttons (email, phone).
+   `.ccm-portrait--feature` = the Dean (photo left, details right).
+   Chairs sit on a beige band (`.ccm-band`).
+
+   Needs good photos: at least 600 × 750 px, same framing for everyone.
+   ========================================================================== */
+
+.ccm-band {
+  padding: 2.5rem 1.5rem;
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-beige-light);
+}
+@container (min-width: 720px) {
+  .ccm-band {
+    padding: 3rem 2.5rem;
+  }
+}
+
+.ccm-portraits {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 2.25rem 1rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@container (min-width: 860px) {
+  .ccm-portraits {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 2.5rem 1.75rem;
+  }
+}
+
+.ccm-portrait {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Arch photo with an outline offset up and to the left, so the arch shape
+   shows even when a photo has a white background */
+.ccm-portrait__frame {
+  position: relative;
+  margin: 0 0 1.25rem;
+  padding: 10px 0 0 10px;
+}
+.ccm-portrait__frame::before {
+  content: "";
+  position: absolute;
+  inset: 0 10px 10px 0;
+  border: 3px solid var(--ccm-college);
+  border-radius: 50% 50% 14px 14px / 40% 40% 14px 14px;
+}
+.ccm-portrait__photo {
+  position: relative;
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  border-radius: 50% 50% 14px 14px / 40% 40% 14px 14px;
+  background: var(--ccm-beige);
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.ccm-portrait__name {
+  margin: 0 0 .3rem;
+  font-family: var(--ccm-font-display);
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1.25;
+  color: var(--ccm-turquoise);
+}
+.ccm-portrait__name a,
+.ccm-portrait__name a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-portrait__name a:hover,
+.ccm-portrait__name a:focus-visible {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-college);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.ccm-portrait__role {
+  margin: 0 0 1rem;
+  font-size: .9rem;
+  line-height: 1.45;
+  color: var(--ccm-ink-muted);
+}
+.ccm-portrait__role strong {
+  display: block;
+  font-weight: 600;
+  color: var(--ccm-ink);
+}
+
+/* Round icon buttons */
+.ccm-icon-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .5rem;
+  list-style: none;
+  margin: auto 0 0; /* sit at the bottom, so buttons line up across cards */
+  padding: 0;
+}
+.ccm-icon-btns li {
+  margin: 0;
+}
+.ccm-icon-btn,
+.ccm-icon-btn:visited {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border: 1px solid var(--ccm-sand);
+  border-radius: 50%;
+  background: var(--ccm-white);
+  color: var(--ccm-turquoise);
+  text-decoration: none;
+  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+}
+.ccm-icon-btn::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
+          mask: var(--ccm-icon) center / contain no-repeat;
+}
+.ccm-icon-btn:hover,
+.ccm-icon-btn:focus-visible {
+  border-color: var(--ccm-turquoise);
+  background: var(--ccm-turquoise);
+  color: var(--ccm-white);
+}
+
+/* ---- Feature: the Dean -------------------------------------------------- */
+.ccm-portrait--feature {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 1.5rem;
+}
+.ccm-portrait--feature .ccm-portrait__frame {
+  width: min(100%, 260px);
+  margin: 0;
+}
+.ccm-portrait--feature .ccm-portrait__name {
+  font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.3rem);
+}
+.ccm-portrait--feature .ccm-portrait__role {
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+}
+.ccm-portrait--feature .ccm-contact {
+  margin-bottom: 1.5rem;
+  font-size: .925rem;
+}
+@container (min-width: 640px) {
+  .ccm-portrait--feature {
+    grid-template-columns: 260px minmax(0, 1fr);
+    align-items: center;
+    gap: 3rem;
+  }
+}

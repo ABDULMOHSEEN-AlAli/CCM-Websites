@@ -1,0 +1,118 @@
+/* ==========================================================================
+   People list: OPTION 1 "Contact list"
+   Circular photo with a college-colour ring, name, role, every contact line
+   visible. `.ccm-person--featured` = the Dean (full row, beige panel).
+   ========================================================================== */
+
+.ccm-people {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: 2.5rem 3rem;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@container (min-width: 720px) {
+  .ccm-people {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+.ccm-person {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.75rem;
+  margin: 0;
+}
+.ccm-person__photo {
+  flex: none;
+  width: 148px;
+  height: 148px;
+  padding: 4px;
+  border: 3px solid var(--ccm-college);
+  border-radius: 50%;
+  background: var(--ccm-white);
+  object-fit: cover;
+  object-position: center 20%;
+}
+.ccm-person__body {
+  min-width: 0;
+  padding-top: .6rem;
+}
+.ccm-person__name {
+  font-family: var(--ccm-font-display);
+  font-weight: 700;
+  font-size: 1.375rem;
+  line-height: 1.25;
+  margin: 0 0 .3rem;
+  color: var(--ccm-turquoise);
+}
+.ccm-person__name a,
+.ccm-person__name a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-person__name a:hover,
+.ccm-person__name a:focus-visible {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-college);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.ccm-person__role {
+  margin: 0 0 1rem;
+  font-weight: 500;
+  color: var(--ccm-ink);
+}
+.ccm-person__unit {
+  display: block;
+  font-weight: 400;
+  color: var(--ccm-ink-muted);
+}
+
+/* Featured: the Dean */
+.ccm-person--featured {
+  grid-column: 1 / -1;
+  gap: 2.25rem;
+  padding: 2rem;
+  border-radius: var(--ccm-radius);
+  background: var(--ccm-beige-light);
+}
+.ccm-person--featured .ccm-person__photo {
+  width: 200px;
+  height: 200px;
+}
+.ccm-person--featured .ccm-person__name {
+  font-size: clamp(1.6rem, 1.3rem + 1vw, 2rem);
+}
+.ccm-person--featured .ccm-contact {
+  grid-template-columns: repeat(auto-fit, minmax(240px, max-content));
+  column-gap: 2rem;
+}
+
+/* Narrow column (phones) */
+@container (max-width: 540px) {
+  .ccm-person {
+    gap: 1.1rem;
+  }
+  .ccm-person__photo {
+    width: 104px;
+    height: 104px;
+    padding: 3px;
+  }
+  .ccm-person__body {
+    padding-top: .2rem;
+  }
+  .ccm-person__name {
+    font-size: 1.2rem;
+  }
+  .ccm-person--featured {
+    flex-direction: column;
+    padding: 1.5rem;
+  }
+  .ccm-person--featured .ccm-person__photo {
+    width: 144px;
+    height: 144px;
+  }
+}

@@ -1,0 +1,97 @@
+/* ==========================================================================
+   CCM design tokens
+   Source of truth: KFUPM Branding folder (OneDrive) — see CLAUDE.md.
+   Colours marked "derived" are not in the brand swatches; they are tints/shades
+   used for UI states and should be reviewed against the brand guidelines.
+   ========================================================================== */
+
+/* ---- Fonts (files copied from Branding/01 Font) ---- */
+@font-face {
+  font-family: "KFUPM Display";
+  src: url("fonts/KFUPM-Regular.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KFUPM Display";
+  src: url("fonts/KFUPM-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "KFUPM Display";
+  src: url("fonts/KFUPM-Black.woff2") format("woff2");
+  font-weight: 900;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("fonts/IBMPlexSansArabic-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("fonts/IBMPlexSansArabic-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("fonts/IBMPlexSansArabic-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "IBM Plex Sans Arabic";
+  src: url("fonts/IBMPlexSansArabic-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+:root {
+  /* KFUPM primary */
+  --ccm-turquoise: #115F66;
+  --ccm-green: #009767;
+  --ccm-beige: #ECE0C7;
+
+  /* KFUPM secondary */
+  --ccm-sand: #AA8C6D;
+  --ccm-yellow: #F0BA4F;
+  --ccm-blue: #71B8D4;
+  --ccm-gray: #ADACAD;
+  --ccm-white: #FFFFFF;
+  --ccm-black: #000000;
+
+  /* College of Computing and Mathematics colour — VALUE UNRESOLVED.
+     Sources disagree: .ase #9BC9C3 · PDF label #6BBDBE · logo SVGs #4EABB1
+     (see reference/brand/kfupm-brand-web.md). Using the .ase screen swatch until
+     the branding team confirms. Brand rule: accent only, always alongside the
+     primary palette. Too light for text on white — rings, bars, borders only. */
+  --ccm-college: #9BC9C3;
+
+  /* UI colours — steps from the brand's web palette (guidelines p39/61) */
+  --ccm-beige-light: #F6EFE3;      /* Beige lighter 2 — soft panels */
+  --ccm-turquoise-dark: #0B3F44;   /* Turquoise darker 1 — hover/pressed */
+  --ccm-ink: #062022;              /* Turquoise darker 3 — body text, 17.5:1 on white */
+  --ccm-ink-muted: #575657;        /* Gray darker 2 — secondary text, 7.4:1 on white */
+  --ccm-line: #E4E3E4;             /* Gray lighter 3 — hairlines */
+
+  /* Shape and depth (not from the guidelines; layout choices) */
+  --ccm-radius: 16px;
+  --ccm-radius-lg: 24px;
+  --ccm-shadow: 0 16px 36px -18px rgb(6 32 34 / .32);
+
+  /* Type — guidelines: KFUPM Display for headlines, IBM Plex Sans Arabic for
+     body, Segoe UI as fallback. KFUPM Display is already slanted 5°: never
+     apply font-style: italic to it. */
+  --ccm-font-display: "KFUPM Display", "Segoe UI", system-ui, sans-serif;
+  --ccm-font-body: "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+}

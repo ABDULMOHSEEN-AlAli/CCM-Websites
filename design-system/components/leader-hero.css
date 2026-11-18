@@ -1,0 +1,109 @@
+/* ==========================================================================
+   Leader hero: OPTION 4 (the Dean)
+   Turquoise banner (primary colour dominates) with the KFUPM FAST Matrix
+   pattern in Green behind the photo, and a college-colour ring as accent.
+   Brand rules followed (guidelines p55–58): one matrix pattern per page,
+   allowed colour pair (Green on Turquoise), no rotation, flip or gradient,
+   and it never covers the face.
+
+   <section class="ccm-section">
+     <div class="ccm-leader">
+       <div class="ccm-leader__media"><img class="ccm-leader__photo" …></div>
+       <div class="ccm-leader__body">
+         <p class="ccm-eyebrow">Dean</p>
+         <h2 class="ccm-leader__name">Name</h2>
+         <p class="ccm-leader__unit">Unit</p>
+         <ul class="ccm-contact ccm-contact--inverse">…</ul>
+         <div class="ccm-actions">…</div>
+       </div>
+     </div>
+   </section>
+   ========================================================================== */
+
+.ccm-leader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-turquoise);
+  color: var(--ccm-white);
+}
+.ccm-leader :focus-visible {
+  outline-color: var(--ccm-beige);
+}
+
+.ccm-leader__media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: 2.25rem 1.5rem 0;
+}
+/* A background image, not a CSS mask: masks loaded from files are blocked
+   in local previews, and the build turns this into a data URI anyway. */
+.ccm-leader__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../graphics/fast-matrix-four-green.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+.ccm-leader__photo {
+  position: relative; /* above the pattern */
+  width: 208px;
+  height: 208px;
+  padding: 5px;
+  border: 5px solid var(--ccm-college);
+  border-radius: 50%;
+  background: var(--ccm-white);
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.ccm-leader__body {
+  padding: 2rem 1.5rem 2.25rem;
+}
+.ccm-leader__body .ccm-eyebrow {
+  color: var(--ccm-beige);
+}
+.ccm-leader__name {
+  margin: 0 0 .35rem;
+  font-family: var(--ccm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem);
+  line-height: 1.12;
+  color: var(--ccm-white);
+}
+.ccm-leader__unit {
+  margin: 0 0 1.5rem;
+  font-size: 1.05rem;
+  color: rgba(255, 255, 255, .88);
+}
+.ccm-leader .ccm-contact {
+  margin-bottom: 1.75rem;
+  font-size: .925rem;
+}
+
+@container (min-width: 720px) {
+  .ccm-leader {
+    grid-template-columns: minmax(260px, 2fr) 3fr;
+    align-items: stretch;
+  }
+  .ccm-leader__media {
+    padding: 2.5rem 2rem;
+  }
+  .ccm-leader__media::before {
+    inset: -6% 0;
+  }
+  .ccm-leader__photo {
+    width: 232px;
+    height: 232px;
+  }
+  .ccm-leader__body {
+    align-self: center;
+    padding: 3rem 3rem 3rem .5rem;
+  }
+  .ccm-leader .ccm-contact {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    column-gap: 2rem;
+  }
+}

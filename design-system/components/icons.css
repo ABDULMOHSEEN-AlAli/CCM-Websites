@@ -1,0 +1,44 @@
+/* ==========================================================================
+   Icons
+   Line icons as data-URI SVGs, drawn with a mask so they take any colour.
+   No <svg> in the HTML, because Sitefinity's content editor can strip it.
+
+   - Contact lines: add a class to the <li>: ccm-c-mail, ccm-c-phone,
+     ccm-c-office, ccm-c-web. The ::before of `.ccm-contact li` draws it.
+   - Anywhere else: <span class="ccm-ico ccm-c-mail" aria-hidden="true"></span>
+   Style: 24px grid, 1.8 stroke, round ends (guidelines p70: simple line
+   icons with rounded ends).
+   ========================================================================== */
+
+:root {
+  --ccm-i-mail: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3' y='5' width='18' height='14' rx='2'/%3E%3Cpath d='m3.5 7 8.5 6 8.5-6'/%3E%3C/svg%3E");
+  --ccm-i-phone: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L15 13l5 2v4a2 2 0 0 1-2 2A16 16 0 0 1 3 6a2 2 0 0 1 2-2'/%3E%3C/svg%3E");
+  --ccm-i-office: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z'/%3E%3Ccircle cx='12' cy='10' r='2.5'/%3E%3C/svg%3E");
+  --ccm-i-web: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18'/%3E%3C/svg%3E");
+  --ccm-i-arrow: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  --ccm-i-close: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M6 6l12 12M18 6 6 18'/%3E%3C/svg%3E");
+  --ccm-i-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
+  --ccm-i-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
+  --ccm-i-external: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5'/%3E%3C/svg%3E");
+}
+
+.ccm-c-mail     { --ccm-icon: var(--ccm-i-mail); }
+.ccm-c-phone    { --ccm-icon: var(--ccm-i-phone); }
+.ccm-c-office   { --ccm-icon: var(--ccm-i-office); }
+.ccm-c-web      { --ccm-icon: var(--ccm-i-web); }
+.ccm-c-arrow    { --ccm-icon: var(--ccm-i-arrow); }
+.ccm-c-close    { --ccm-icon: var(--ccm-i-close); }
+.ccm-c-plus     { --ccm-icon: var(--ccm-i-plus); }
+.ccm-c-chevron  { --ccm-icon: var(--ccm-i-chevron); }
+.ccm-c-external { --ccm-icon: var(--ccm-i-external); }
+
+.ccm-ico {
+  display: inline-block;
+  flex: none;
+  width: 1em;
+  height: 1em;
+  vertical-align: -.125em;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
+          mask: var(--ccm-icon) center / contain no-repeat;
+}

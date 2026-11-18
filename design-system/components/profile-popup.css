@@ -1,0 +1,172 @@
+/* ==========================================================================
+   Profile pop-up: OPTIONS 2 and 3
+   Uses the browser's built-in "popover" feature: no JavaScript.
+   Closes with the × button, the Esc key, or a click outside.
+   On phones it slides up from the bottom of the screen.
+
+   <div class="ccm-profile" id="profile-x" popover role="dialog" aria-labelledby="profile-x-name">
+     <div class="ccm-profile__head">
+       <img class="ccm-profile__photo" …>
+       <div>
+         <p class="ccm-eyebrow">Role</p>
+         <h3 class="ccm-profile__name" id="profile-x-name">Name</h3>
+         <p class="ccm-profile__unit">Unit</p>
+       </div>
+       <button class="ccm-profile__close" type="button" popovertarget="profile-x"
+               popovertargetaction="hide"><span class="ccm-sr-only">Close</span></button>
+     </div>
+     <div class="ccm-profile__body"> <ul class="ccm-contact">…</ul> <div class="ccm-actions">…</div> </div>
+   </div>
+
+   Keep the pop-ups inside .ccm-scope (for fonts) but outside .ccm-section.
+   ========================================================================== */
+
+/* Note: never set `display` on .ccm-profile itself. The browser hides a
+   closed popover with display:none, and our rule would override that. */
+.ccm-profile {
+  position: fixed;
+  inset: 0;
+  width: min(600px, calc(100% - 2rem));
+  height: fit-content;
+  max-height: calc(100% - 2rem);
+  margin: auto;
+  padding: 0;
+  overflow: auto;
+  border: 0;
+  border-radius: 20px;
+  background: var(--ccm-white);
+  color: var(--ccm-ink);
+  font-family: var(--ccm-font-body);
+  line-height: 1.55;
+  box-shadow: 0 30px 80px -20px rgb(6 32 34 / .5);
+}
+.ccm-profile:popover-open {
+  animation: ccm-profile-in .22s ease-out;
+}
+.ccm-profile::backdrop {
+  background: rgb(6 32 34 / .6);
+}
+@keyframes ccm-profile-in {
+  from {
+    opacity: 0;
+    transform: translateY(14px) scale(.98);
+  }
+}
+
+.ccm-profile__head {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  padding: 2rem 4.5rem 1.75rem 2rem;
+  background: var(--ccm-turquoise);
+  color: var(--ccm-white);
+}
+.ccm-profile__head .ccm-eyebrow {
+  color: var(--ccm-beige);
+}
+.ccm-profile__photo {
+  flex: none;
+  width: 112px;
+  height: 112px;
+  padding: 4px;
+  border: 3px solid var(--ccm-college);
+  border-radius: 50%;
+  background: var(--ccm-white);
+  object-fit: cover;
+  object-position: center 20%;
+}
+.ccm-profile__name {
+  margin: 0 0 .25rem;
+  font-family: var(--ccm-font-display);
+  font-weight: 700;
+  font-size: clamp(1.4rem, 1.2rem + .8vw, 1.75rem);
+  line-height: 1.2;
+  color: var(--ccm-white);
+}
+.ccm-profile__unit {
+  margin: 0;
+  color: rgba(255, 255, 255, .85);
+}
+.ccm-profile__close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: grid;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, .14);
+  color: var(--ccm-white);
+  cursor: pointer;
+  transition: background-color .15s ease;
+}
+.ccm-profile__close::before {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-i-close) center / contain no-repeat;
+          mask: var(--ccm-i-close) center / contain no-repeat;
+}
+.ccm-profile__close:hover,
+.ccm-profile__close:focus-visible {
+  background: rgba(255, 255, 255, .26);
+}
+.ccm-profile__close:focus-visible {
+  outline: 3px solid var(--ccm-beige);
+  outline-offset: 2px;
+}
+
+.ccm-profile__body {
+  padding: 1.75rem 2rem 2rem;
+}
+.ccm-profile__body .ccm-contact {
+  --ccm-ico-size: 18px;
+  gap: .8rem;
+  font-size: .95rem;
+  color: var(--ccm-ink);
+}
+.ccm-profile__body .ccm-actions {
+  margin-top: 1.75rem;
+}
+
+/* Phones: bottom sheet */
+@media (max-width: 575.98px) {
+  .ccm-profile {
+    inset: auto 0 0 0;
+    width: 100%;
+    max-width: 100%;
+    max-height: 90vh;
+    margin: 0;
+    border-radius: 20px 20px 0 0;
+  }
+  .ccm-profile:popover-open {
+    animation-name: ccm-profile-up;
+  }
+  .ccm-profile__head {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.75rem 1.5rem 1.5rem;
+  }
+  .ccm-profile__photo {
+    width: 96px;
+    height: 96px;
+  }
+  .ccm-profile__body {
+    padding: 1.5rem 1.5rem 2rem;
+  }
+  .ccm-profile__body .ccm-btn {
+    flex: 1;
+  }
+}
+@keyframes ccm-profile-up {
+  from {
+    transform: translateY(100%);
+  }
+}
