@@ -1,5 +1,6 @@
 /* ==========================================================================
-   Base: scope, layout, page head, sub-nav, sections, buttons, contact list.
+   Base: scope, layout, page head, sub-nav, sections, text styles, buttons,
+   tags, contact list and rich text. Uses tokens only (tokens.css).
    Each rule resets what the live themes set (fonts, margins, list styles,
    link colours), so components look the same on every site.
    ========================================================================== */
@@ -13,9 +14,10 @@
 
 .ccm-scope {
   font-family: var(--ccm-font-body);
-  font-size: 1rem;
-  line-height: 1.55;
-  color: var(--ccm-ink);
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-regular);
+  line-height: var(--ccm-leading-body);
+  color: var(--ccm-text);
   font-synthesis: none; /* no fake bold/italic on the brand fonts */
   -webkit-font-smoothing: antialiased;
 }
@@ -25,8 +27,21 @@
 }
 
 .ccm-scope :focus-visible {
-  outline: 3px solid var(--ccm-turquoise);
-  outline-offset: 3px;
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
+}
+
+/* Plain links in text. :where() keeps this weak, so component link styles
+   (breadcrumbs, contact lines, names) always win over it. */
+.ccm-scope :where(a:not([class])) {
+  color: var(--ccm-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.ccm-scope :where(a:not([class])):hover {
+  color: var(--ccm-link-hover);
+  text-decoration-thickness: 2px;
 }
 
 .ccm-sr-only {
@@ -41,52 +56,68 @@
   border: 0;
 }
 
+/* Which version of ccm-styles.css a page is using: <p class="ccm-build">Design build:</p>.
+   tools/build-sitefinity.mjs replaces "local" with the build number. Used on the test page. */
+.ccm-build {
+  font-size: var(--ccm-text-xs);
+  color: var(--ccm-text-muted);
+}
+.ccm-build::after {
+  content: " local";
+  font-weight: 700;
+}
+
+/* ---- Layout ------------------------------------------------------------- */
 .ccm-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: calc(var(--ccm-container-max) + 2 * var(--ccm-page-margin));
   margin-inline: auto;
-  padding-inline: 1.25rem;
+  padding-inline: var(--ccm-page-margin);
+}
+
+.ccm-page-main {
+  padding-block: var(--ccm-section-space);
 }
 
 /* ---- Page head (title band + breadcrumb) --------------------------------
    Prototype only for now: in Sitefinity the page template draws this band. */
 .ccm-page-head {
-  background: var(--ccm-turquoise);
-  color: var(--ccm-white);
-  border-bottom: 6px solid var(--ccm-college);
-  padding-block: 2.25rem 2.5rem;
+  padding-block: var(--ccm-space-8);
+  background: var(--ccm-surface-strong);
+  color: var(--ccm-text-inverse);
+  border-bottom: var(--ccm-border-band) solid var(--ccm-accent);
 }
 .ccm-page-head__crumbs {
   display: flex;
   flex-wrap: wrap;
-  gap: .4rem;
+  gap: var(--ccm-space-2);
   list-style: none;
-  margin: 0 0 .75rem;
+  margin: 0 0 var(--ccm-space-3);
   padding: 0;
-  font-size: .875rem;
-  color: rgba(255, 255, 255, .85); /* 5.8:1 on turquoise; --ccm-college is only 4.0:1 */
+  font-size: var(--ccm-text-sm);
+  color: var(--ccm-text-inverse-muted);
 }
 .ccm-page-head__crumbs li + li::before {
   content: "/";
-  margin-inline-end: .4rem;
+  margin-inline-end: var(--ccm-space-2);
   opacity: .7;
 }
 .ccm-page-head__crumbs a {
-  color: var(--ccm-white);
+  color: var(--ccm-text-inverse);
   text-decoration: none;
 }
 .ccm-page-head__crumbs a:hover,
 .ccm-page-head__crumbs a:focus-visible {
-  color: var(--ccm-white);
+  color: var(--ccm-text-inverse);
   text-decoration: underline;
 }
 .ccm-page-head__title {
-  font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: clamp(2rem, 1.4rem + 2vw, 2.85rem);
-  line-height: 1.1;
   margin: 0;
-  color: var(--ccm-white);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h1);
+  line-height: var(--ccm-leading-tight);
+  color: var(--ccm-text-inverse);
 }
 .ccm-page-head :focus-visible {
   outline-color: var(--ccm-beige);
@@ -94,12 +125,12 @@
 
 /* ---- Sub-navigation (sibling pages) ------------------------------------- */
 .ccm-subnav {
-  background: var(--ccm-white);
-  border-bottom: 1px solid var(--ccm-line);
+  background: var(--ccm-surface);
+  border-bottom: var(--ccm-border-hairline) solid var(--ccm-line);
 }
 .ccm-subnav__list {
   display: flex;
-  gap: 2rem;
+  gap: var(--ccm-space-7);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -107,115 +138,123 @@
 }
 .ccm-subnav__link {
   display: block;
-  padding-block: 1rem;
-  font-weight: 500;
-  font-size: .95rem;
-  color: var(--ccm-ink-muted);
+  padding-block: var(--ccm-space-4);
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-medium);
+  color: var(--ccm-text-muted);
   text-decoration: none;
   white-space: nowrap;
   border-bottom: 3px solid transparent;
 }
 .ccm-subnav__link:hover,
 .ccm-subnav__link:focus-visible {
-  color: var(--ccm-turquoise);
+  color: var(--ccm-link);
 }
 .ccm-subnav__link[aria-current="page"] {
-  color: var(--ccm-turquoise);
-  font-weight: 600;
+  color: var(--ccm-link);
+  font-weight: var(--ccm-weight-semibold);
   border-bottom-color: var(--ccm-turquoise);
 }
 
-.ccm-page-main {
-  padding-block: 3.5rem 4.5rem;
-}
-
 /* ---- Section ------------------------------------------------------------
-   A section is also the size container for the components inside it. */
+   A section is also the size container for the components inside it.
+   Component breakpoints (container width): 540 · 720 · 860 px. */
 .ccm-section {
   container-type: inline-size;
-  margin: 0 0 3.5rem;
+  margin: 0 0 var(--ccm-section-space);
 }
 .ccm-section:last-child {
   margin-bottom: 0;
 }
 .ccm-section__title {
+  margin: 0 0 var(--ccm-space-7);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: clamp(1.6rem, 1.3rem + 1vw, 2.1rem);
-  line-height: 1.2;
-  color: var(--ccm-ink);
-  margin: 0 0 2rem;
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h2);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-text);
 }
 .ccm-section__title::after {
   content: "";
   display: block;
   width: 56px;
-  height: 4px;
-  margin-top: .65rem;
-  border-radius: 2px;
-  background: var(--ccm-college);
+  height: var(--ccm-border-bar);
+  margin-top: var(--ccm-space-3);
+  border-radius: var(--ccm-radius-pill);
+  background: var(--ccm-accent);
 }
 
-/* Small uppercase label above a name or title */
+/* Small UPPERCASE label above a name or title */
 .ccm-eyebrow {
   display: block;
-  margin: 0 0 .45rem;
+  margin: 0 0 var(--ccm-space-2);
   font-family: var(--ccm-font-body);
-  font-size: .75rem;
-  font-weight: 600;
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
   line-height: 1.35;
-  letter-spacing: .1em;
+  letter-spacing: var(--ccm-tracking-caps);
   text-transform: uppercase;
-  color: var(--ccm-turquoise);
+  color: var(--ccm-link);
+}
+
+/* Intro paragraph under a title */
+.ccm-lead {
+  max-width: var(--ccm-measure);
+  margin: 0 0 var(--ccm-space-7);
+  font-size: var(--ccm-text-lead);
+  line-height: var(--ccm-leading-body);
+  color: var(--ccm-text-muted);
 }
 
 /* ---- Buttons ------------------------------------------------------------ */
 .ccm-actions {
   display: flex;
   flex-wrap: wrap;
-  gap: .75rem;
+  gap: var(--ccm-space-3);
 }
 .ccm-btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  gap: .5rem;
-  min-height: 44px;
-  padding: .6rem 1.35rem;
-  border: 2px solid transparent;
-  border-radius: 999px;
+  gap: var(--ccm-space-2);
+  min-height: var(--ccm-target);
+  padding: var(--ccm-space-2) var(--ccm-space-6);
+  border: var(--ccm-border-control) solid transparent;
+  border-radius: var(--ccm-radius-pill);
   font-family: var(--ccm-font-body);
-  font-size: .9rem;
-  font-weight: 600;
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
   line-height: 1.2;
   text-decoration: none;
   cursor: pointer;
-  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  transition: background-color var(--ccm-duration-fast) var(--ccm-ease),
+              color var(--ccm-duration-fast) var(--ccm-ease),
+              border-color var(--ccm-duration-fast) var(--ccm-ease);
 }
 .ccm-btn--primary,
 .ccm-btn--primary:visited {
-  background: var(--ccm-turquoise);
-  border-color: var(--ccm-turquoise);
-  color: var(--ccm-white);
+  background: var(--ccm-surface-strong);
+  border-color: var(--ccm-surface-strong);
+  color: var(--ccm-text-inverse);
 }
 .ccm-btn--primary:hover,
 .ccm-btn--primary:focus-visible {
-  background: var(--ccm-turquoise-dark);
-  border-color: var(--ccm-turquoise-dark);
-  color: var(--ccm-white);
+  background: var(--ccm-link-hover);
+  border-color: var(--ccm-link-hover);
+  color: var(--ccm-text-inverse);
 }
 .ccm-btn--outline,
 .ccm-btn--outline:visited {
   background: transparent;
   border-color: var(--ccm-turquoise);
-  color: var(--ccm-turquoise);
+  color: var(--ccm-link);
 }
 .ccm-btn--outline:hover,
 .ccm-btn--outline:focus-visible {
-  background: var(--ccm-turquoise);
-  color: var(--ccm-white);
+  background: var(--ccm-surface-strong);
+  color: var(--ccm-text-inverse);
 }
-/* On turquoise backgrounds */
+/* On Turquoise backgrounds */
 .ccm-btn--light,
 .ccm-btn--light:visited {
   background: var(--ccm-beige);
@@ -231,19 +270,33 @@
 .ccm-btn--ghost,
 .ccm-btn--ghost:visited {
   background: transparent;
-  border-color: rgba(255, 255, 255, .55);
-  color: var(--ccm-white);
+  border-color: var(--ccm-line-inverse);
+  color: var(--ccm-text-inverse);
 }
 .ccm-btn--ghost:hover,
 .ccm-btn--ghost:focus-visible {
-  background: rgba(255, 255, 255, .12);
+  background: var(--ccm-fill-inverse);
   border-color: var(--ccm-white);
-  color: var(--ccm-white);
+  color: var(--ccm-text-inverse);
 }
 .ccm-btn--sm {
-  min-height: 36px;
-  padding: .4rem .95rem;
-  font-size: .8rem;
+  min-height: 36px; /* use only where a 44px button doesn't fit; keep space around it */
+  padding: var(--ccm-space-1) var(--ccm-space-4);
+}
+
+/* ---- Tag (short label, e.g. a department code) -------------------------- */
+.ccm-tag {
+  display: inline-flex;
+  align-items: center;
+  padding: var(--ccm-space-1) var(--ccm-space-3);
+  border-radius: var(--ccm-radius-pill);
+  background: var(--ccm-beige);
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.4;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  color: var(--ccm-turquoise); /* 5.6:1 on Beige */
 }
 
 /* ---- Contact list (email, phone, office, website) -----------------------
@@ -252,18 +305,18 @@
 .ccm-contact {
   --ccm-ico-size: 16px;
   display: grid;
-  gap: .45rem;
+  gap: var(--ccm-space-2);
   list-style: none;
   margin: 0;
   padding: 0;
-  font-size: .875rem;
+  font-size: var(--ccm-text-sm);
   line-height: 1.55;
-  color: var(--ccm-ink-muted);
+  color: var(--ccm-text-muted);
 }
 .ccm-contact li {
   display: flex;
   align-items: flex-start;
-  gap: .55rem;
+  gap: var(--ccm-space-2);
   margin: 0;
   overflow-wrap: anywhere;
 }
@@ -285,19 +338,19 @@
 }
 .ccm-contact a:hover,
 .ccm-contact a:focus-visible {
-  color: var(--ccm-turquoise);
+  color: var(--ccm-link);
   text-decoration: underline;
 }
-/* On turquoise backgrounds */
+/* On Turquoise backgrounds */
 .ccm-contact--inverse {
-  color: rgba(255, 255, 255, .88);
+  color: var(--ccm-text-inverse-muted);
 }
 .ccm-contact--inverse li::before {
   background-color: var(--ccm-beige);
 }
 .ccm-contact--inverse a:hover,
 .ccm-contact--inverse a:focus-visible {
-  color: var(--ccm-white);
+  color: var(--ccm-text-inverse);
 }
 
 /* ---- "View profile →" text link ----------------------------------------- */
@@ -305,11 +358,11 @@
 .ccm-more:visited {
   display: inline-flex;
   align-items: center;
-  gap: .4rem;
-  margin-top: 1rem;
-  font-weight: 600;
-  font-size: .9rem;
-  color: var(--ccm-turquoise);
+  gap: var(--ccm-space-2);
+  margin-top: var(--ccm-space-4);
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--ccm-link);
   text-decoration: none;
 }
 .ccm-more::after {
@@ -320,15 +373,106 @@
   background-color: currentColor;
   -webkit-mask: var(--ccm-i-arrow) center / contain no-repeat;
           mask: var(--ccm-i-arrow) center / contain no-repeat;
-  transition: transform .15s ease;
+  transition: transform var(--ccm-duration) var(--ccm-ease);
 }
 .ccm-more:hover,
 .ccm-more:focus-visible {
-  color: var(--ccm-turquoise-dark);
+  color: var(--ccm-link-hover);
   text-decoration: underline;
 }
 .ccm-more:hover::after {
   transform: translateX(3px);
+}
+
+/* ---- Rich text: for normal CMS content (program pages, about pages) -----
+   Wrap editor content in <div class="ccm-prose">. */
+.ccm-prose {
+  color: var(--ccm-text);
+}
+.ccm-prose > * {
+  margin-block: 0;
+}
+.ccm-prose > * + * {
+  margin-top: var(--ccm-space-4);
+}
+.ccm-prose > :is(p, ul, ol, blockquote, h2, h3, h4) {
+  max-width: var(--ccm-measure);
+}
+.ccm-prose h2,
+.ccm-prose h3,
+.ccm-prose h4 {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-text);
+}
+.ccm-prose h2 {
+  margin-top: var(--ccm-space-9);
+  font-size: var(--ccm-text-h2);
+}
+.ccm-prose h3 {
+  margin-top: var(--ccm-space-7);
+  font-size: var(--ccm-text-h3);
+}
+.ccm-prose h4 {
+  margin-top: var(--ccm-space-6);
+  font-size: var(--ccm-text-h4);
+}
+.ccm-prose > :first-child {
+  margin-top: 0;
+}
+.ccm-prose :is(h2, h3, h4) + * {
+  margin-top: var(--ccm-space-3);
+}
+.ccm-prose a,
+.ccm-prose a:visited {
+  color: var(--ccm-link);
+  text-decoration: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 3px;
+}
+.ccm-prose a:hover,
+.ccm-prose a:focus-visible {
+  color: var(--ccm-link-hover);
+  text-decoration-thickness: 2px;
+}
+.ccm-prose strong {
+  font-weight: var(--ccm-weight-bold);
+}
+.ccm-prose ul,
+.ccm-prose ol {
+  padding-left: var(--ccm-space-6);
+}
+.ccm-prose li + li {
+  margin-top: var(--ccm-space-2);
+}
+.ccm-prose li::marker {
+  color: var(--ccm-turquoise);
+}
+.ccm-prose blockquote {
+  padding-left: var(--ccm-space-5);
+  border-left: var(--ccm-border-bar) solid var(--ccm-accent);
+  font-size: var(--ccm-text-lead);
+}
+.ccm-prose img {
+  height: auto;
+  border-radius: var(--ccm-radius-lg);
+}
+.ccm-prose table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: var(--ccm-text-sm);
+}
+.ccm-prose th,
+.ccm-prose td {
+  padding: var(--ccm-space-3) var(--ccm-space-4);
+  border-bottom: var(--ccm-border-hairline) solid var(--ccm-line);
+  text-align: left;
+  vertical-align: top;
+}
+.ccm-prose th {
+  background: var(--ccm-surface-soft);
+  font-weight: var(--ccm-weight-semibold);
 }
 
 @media (prefers-reduced-motion: reduce) {

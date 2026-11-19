@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCM Web Design System</title>
+  <meta name="description" content="Colours, typography, spacing, layout, breakpoints, shape and components for the CCM, ICS, COE, MATH and ISE websites, built on the KFUPM Brand Guidelines.">
+
+  <!-- The real design system: every value on this page is read from it. -->
+  <link rel="stylesheet" href="ccm.css">
+
+  <!-- Styles for this guide page only (prefix ds-). Not part of the design system. -->
+  <style>
+    html { scroll-padding-top: 80px; }
+    body { margin: 0; background: var(--ccm-surface); }
+    .ds code, .ds pre { font-family: Consolas, "Cascadia Mono", "Courier New", monospace; }
+    .ds :not(pre) > code {
+      padding: .1em .4em; border-radius: 6px; background: var(--ccm-surface-soft);
+      font-size: .875em; color: var(--ccm-turquoise-d1); overflow-wrap: anywhere;
+    }
+    .ds h3, .ds h4 { font-family: var(--ccm-font-display); font-weight: 700; color: var(--ccm-text); }
+    .ds :where(p:not([class])) { margin: 0 0 var(--ccm-space-4); }
+    .ds-src { margin: 0 0 var(--ccm-space-4); font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    @media (max-width: 767.98px) {
+      .ds-bar { position: static; }
+      .ds-hero::before { display: none; } /* keep the pattern away from the text on phones */
+    }
+
+    /* Top bar */
+    .ds-bar { position: sticky; top: 0; z-index: 40; background: rgba(255,255,255,.96); border-bottom: 1px solid var(--ccm-line); }
+    .ds-bar__in { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ccm-space-3) var(--ccm-space-4); padding-block: var(--ccm-space-3); }
+    .ds-bar__brand { margin-right: auto; font: 700 var(--ccm-text-h5)/1.2 var(--ccm-font-display); color: var(--ccm-turquoise); text-decoration: none; }
+    .ds-bar__links { display: flex; flex-wrap: wrap; gap: var(--ccm-space-2); }
+
+    /* Hero */
+    .ds-hero { position: relative; overflow: hidden; padding-block: var(--ccm-space-11) var(--ccm-space-10);
+      background: var(--ccm-turquoise); color: var(--ccm-white); border-bottom: var(--ccm-border-band) solid var(--ccm-accent); }
+    .ds-hero::before { content: ""; position: absolute; inset: -10% -4% -10% 55%;
+      background: url("graphics/fast-matrix-four-green.svg") right center / contain no-repeat; pointer-events: none; }
+    .ds-hero .ccm-container { position: relative; }
+    .ds-hero .ccm-eyebrow { color: var(--ccm-beige); }
+    .ds-hero h1 { max-width: 16ch; margin: 0 0 var(--ccm-space-5); font: 700 var(--ccm-text-display)/var(--ccm-leading-tight) var(--ccm-font-display); color: var(--ccm-white); }
+    .ds-hero__lead { max-width: 60ch; font-size: var(--ccm-text-lead); color: rgba(255,255,255,.88); }
+    .ds-hero__meta { display: flex; flex-wrap: wrap; gap: var(--ccm-space-2); margin-top: var(--ccm-space-6); padding: 0; list-style: none; }
+    .ds-hero__meta li { padding: 6px 14px; border: 1px solid rgba(255,255,255,.35); border-radius: var(--ccm-radius-pill); font-size: var(--ccm-text-sm); }
+
+    /* Layout */
+    .ds-layout { display: grid; grid-template-columns: minmax(0, 1fr); gap: var(--ccm-space-7); padding-block: var(--ccm-space-9) var(--ccm-space-12); }
+    .ds-nav { min-width: 0; }
+    .ds-nav ol { display: flex; gap: 4px; margin: 0; padding: 0 0 var(--ccm-space-2); list-style: none; overflow-x: auto; }
+    .ds-nav a { display: block; padding: 6px 12px; border-radius: var(--ccm-radius-sm); font-size: var(--ccm-text-sm); font-weight: 500; color: var(--ccm-text-muted); text-decoration: none; white-space: nowrap; }
+    .ds-nav a:hover { background: var(--ccm-surface-soft); color: var(--ccm-turquoise); }
+    .ds-nav span { display: inline-block; width: 1.7em; color: var(--ccm-sand-d1); font-variant-numeric: tabular-nums; }
+    @media (min-width: 992px) {
+      .ds-layout { grid-template-columns: 210px minmax(0, 1fr); gap: var(--ccm-space-9); }
+      .ds-nav { position: sticky; top: 88px; align-self: start; }
+      .ds-nav ol { flex-direction: column; overflow: visible; }
+    }
+    .ds-main { min-width: 0; }
+    .ds-sec { margin: 0 0 var(--ccm-space-11); padding-bottom: var(--ccm-space-10); border-bottom: 1px solid var(--ccm-line); }
+    .ds-sec:last-child { border-bottom: 0; }
+    .ds-h3 { margin: var(--ccm-space-9) 0 var(--ccm-space-4); font-size: var(--ccm-text-h3); line-height: var(--ccm-leading-snug); }
+    .ds-h3:first-of-type { margin-top: var(--ccm-space-7); }
+    .ds-h4 { margin: var(--ccm-space-6) 0 var(--ccm-space-3); font-size: var(--ccm-text-h5); }
+
+    /* Badges and notes */
+    .ds-badge { display: inline-block; margin-left: var(--ccm-space-2); padding: 2px 10px; border-radius: var(--ccm-radius-pill);
+      font: 600 var(--ccm-text-xs)/1.6 var(--ccm-font-body); letter-spacing: .04em; vertical-align: middle; white-space: nowrap; }
+    .ds-badge--brand { background: var(--ccm-turquoise); color: var(--ccm-white); }
+    .ds-badge--ours { background: var(--ccm-beige); color: var(--ccm-turquoise); }
+    .ds-badge--todo { background: var(--ccm-yellow-l2); color: var(--ccm-yellow-d3); }
+    .ds-note { margin: var(--ccm-space-5) 0; padding: var(--ccm-space-4) var(--ccm-space-5); border-left: 4px solid var(--ccm-turquoise);
+      border-radius: 0 var(--ccm-radius-md) var(--ccm-radius-md) 0; background: var(--ccm-surface-soft); font-size: var(--ccm-text-sm); }
+    .ds-note--todo { border-left-color: var(--ccm-yellow); background: var(--ccm-yellow-l3); }
+    .ds-note > :last-child { margin-bottom: 0; }
+    .ds-list { margin: 0 0 var(--ccm-space-4); padding-left: var(--ccm-space-6); }
+    .ds-list li + li { margin-top: var(--ccm-space-2); }
+
+    /* Cards and grids */
+    .ds-cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(230px, 1fr)); gap: var(--ccm-space-4); margin: 0; padding: 0; list-style: none; }
+    .ds-card { margin: 0; padding: var(--ccm-space-6); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); }
+    .ds-card h3 { margin: 0 0 var(--ccm-space-2); font-size: var(--ccm-text-h5); line-height: var(--ccm-leading-snug); }
+    .ds-card p { margin: 0; font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    .ds-card__n { display: block; margin-bottom: var(--ccm-space-3); font: 700 var(--ccm-text-h3)/1 var(--ccm-font-display); color: var(--ccm-turquoise); } /* text: never the accent */
+    .ds-card__n::after { content: ""; display: block; width: 24px; height: 3px; margin-top: var(--ccm-space-2); border-radius: 2px; background: var(--ccm-accent); }
+
+    /* Tables */
+    .ds-scroll { overflow-x: auto; margin: 0 0 var(--ccm-space-5); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); }
+    .ds-table { width: 100%; min-width: 560px; border-collapse: collapse; font-size: var(--ccm-text-sm); }
+    .ds-table th, .ds-table td { padding: var(--ccm-space-3) var(--ccm-space-4); border-bottom: 1px solid var(--ccm-line); text-align: left; vertical-align: middle; }
+    .ds-table thead th { background: var(--ccm-surface-soft); font-weight: 600; white-space: nowrap; }
+    .ds-table tbody tr:last-child > * { border-bottom: 0; }
+    .ds-table code { white-space: nowrap; }
+    .ds-table small { display: block; margin-top: 2px; color: var(--ccm-text-muted); white-space: nowrap; }
+    .ds-table .num { font-variant-numeric: tabular-nums; white-space: nowrap; }
+    .ds-table tr.is-current { background: var(--ccm-yellow-l3); }
+
+    /* Colour */
+    .ds-swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: var(--ccm-space-4); margin: 0 0 var(--ccm-space-5); padding: 0; list-style: none; }
+    .ds-swatch { overflow: hidden; margin: 0; border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); }
+    .ds-swatch__color { display: flex; align-items: flex-end; height: 112px; padding: var(--ccm-space-3); font: 600 var(--ccm-text-xs)/1.3 var(--ccm-font-body); }
+    .ds-swatches--lg .ds-swatch__color { height: 168px; }
+    .ds-swatch__body { padding: var(--ccm-space-3) var(--ccm-space-4) var(--ccm-space-4); font-size: var(--ccm-text-sm); }
+    .ds-swatch__body h4 { margin: 0 0 2px; font-size: var(--ccm-text-h5); }
+    .ds-swatch__body code { display: inline-block; margin-bottom: var(--ccm-space-2); }
+    .ds-swatch__body p { margin: 0; color: var(--ccm-text-muted); font-size: var(--ccm-text-sm); }
+    .ds-hex { font-family: Consolas, monospace; font-size: var(--ccm-text-sm); }
+
+    .ds-ratio { display: flex; height: 56px; overflow: hidden; margin: var(--ccm-space-4) 0 var(--ccm-space-2); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-md); font: 600 var(--ccm-text-sm)/1.2 var(--ccm-font-body); }
+    .ds-ratio > div { display: flex; align-items: center; padding: 0 var(--ccm-space-4); }
+
+    .ds-ramps { min-width: 680px; padding: var(--ccm-space-4); }
+    .ds-ramp { display: grid; grid-template-columns: 96px repeat(7, minmax(0, 1fr)); gap: 4px; margin-bottom: 4px; }
+    .ds-ramp__name { align-self: center; font-weight: 600; font-size: var(--ccm-text-sm); }
+    .ds-chip { display: flex; flex-direction: column; justify-content: flex-end; height: 64px; padding: 6px 8px; border-radius: var(--ccm-radius-sm); font: 500 11px/1.3 var(--ccm-font-body); }
+    .ds-chip.is-base { box-shadow: inset 0 0 0 2px rgb(255 255 255 / .6), 0 0 0 2px var(--ccm-text); }
+    .ds-ramp--head .ds-chip { height: auto; padding: 0 8px; background: none; color: var(--ccm-text-muted); font-weight: 600; }
+
+    .ds-matrix { border-collapse: separate; border-spacing: 4px; font-size: var(--ccm-text-xs); }
+    .ds-matrix th { padding: 4px 6px; font-weight: 600; text-align: left; white-space: nowrap; }
+    .ds-matrix thead th { text-align: center; }
+    .ds-cell { width: 78px; height: 64px; padding: 6px; border-radius: var(--ccm-radius-sm); text-align: center; vertical-align: middle; line-height: 1.25; }
+    .ds-cell b { display: block; font: 700 18px/1 var(--ccm-font-display); }
+    .ds-cell small { display: block; margin-top: 3px; font: 600 10px/1.2 var(--ccm-font-body); }
+    .ds-cell.is-self { background: repeating-linear-gradient(45deg, var(--ccm-gray-l3) 0 4px, transparent 4px 8px); }
+    .ds-mark { box-shadow: 0 0 0 1px rgb(255 255 255 / .9); display: inline-block; min-width: 18px; margin-top: 3px; padding: 1px 5px; border-radius: 4px; background: var(--ccm-white); font: 700 10px/1.4 var(--ccm-font-body); color: var(--ccm-text); }
+    .ds-mark--ok { background: var(--ccm-green-d1); color: var(--ccm-white); }
+    .ds-mark--lg { background: var(--ccm-yellow); color: var(--ccm-black); }
+    .ds-mark--no { background: var(--ccm-error-strong); color: var(--ccm-white); }
+    .ds-legend { display: flex; flex-wrap: wrap; gap: var(--ccm-space-2) var(--ccm-space-5); margin: 0 0 var(--ccm-space-3); padding: 0; list-style: none; font-size: var(--ccm-text-sm); }
+
+    /* College colour */
+    .ds-sites { display: grid; grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); gap: var(--ccm-space-4); margin: 0 0 var(--ccm-space-5); padding: 0; list-style: none; }
+    .ds-site { overflow: hidden; margin: 0; border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); }
+    .ds-site__head { padding: var(--ccm-space-4) var(--ccm-space-5); background: var(--ccm-turquoise); border-bottom: var(--ccm-border-band) solid var(--ccm-accent); color: var(--ccm-white); }
+    .ds-site__head b { display: block; font: 700 var(--ccm-text-h3)/1.1 var(--ccm-font-display); }
+    .ds-site__head span { font-size: var(--ccm-text-xs); color: rgba(255,255,255,.85); }
+    .ds-site__body { padding: var(--ccm-space-5); font-size: var(--ccm-text-sm); }
+    .ds-site__demo { display: flex; align-items: center; gap: var(--ccm-space-3); margin-bottom: var(--ccm-space-4); }
+    .ds-site__ring { width: 48px; height: 48px; padding: 3px; border: 3px solid var(--ccm-accent); border-radius: 50%; background: var(--ccm-beige) content-box; }
+    .ds-site__bar { flex: 1; }
+    .ds-site__bar::before, .ds-site__bar::after { content: ""; display: block; height: 10px; border-radius: 3px; background: var(--ccm-gray-l3); }
+    .ds-site__bar::before { width: 80%; margin-bottom: 6px; background: var(--ccm-text); opacity: .85; }
+    .ds-site__bar::after { width: 36px; height: 4px; background: var(--ccm-accent); }
+    .ds-site dl { display: grid; margin: 0; }
+    .ds-site dt { margin-top: var(--ccm-space-2); font-size: var(--ccm-text-xs); color: var(--ccm-text-muted); }
+    .ds-site dd { margin: 0; font-weight: 500; overflow-wrap: anywhere; }
+    .ds-cands { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr)); gap: var(--ccm-space-4); margin: 0 0 var(--ccm-space-5); padding: 0; list-style: none; }
+    .ds-cand { display: flex; flex-direction: column; overflow: hidden; margin: 0; border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); }
+    .ds-cand.is-on { border-color: var(--ccm-turquoise); box-shadow: 0 0 0 1px var(--ccm-turquoise); }
+    .ds-cand__color { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--ccm-space-2); height: 104px; padding: var(--ccm-space-3); color: var(--ccm-text); font: 600 var(--ccm-text-sm)/1.3 var(--ccm-font-body); }
+    .ds-cand__color em { padding: 2px 10px; border-radius: var(--ccm-radius-pill); background: var(--ccm-white); color: var(--ccm-turquoise); font: 700 var(--ccm-text-xs)/1.6 var(--ccm-font-body); font-style: normal; white-space: nowrap; }
+    .ds-cand__body { display: flex; flex: 1; flex-direction: column; padding: var(--ccm-space-4) var(--ccm-space-5) var(--ccm-space-5); font-size: var(--ccm-text-sm); }
+    .ds-cand__body h4 { margin: 0 0 var(--ccm-space-1); font-size: var(--ccm-text-h5); line-height: var(--ccm-leading-snug); }
+    .ds-cand__src { margin: 0 0 var(--ccm-space-3); font-weight: 600; color: var(--ccm-turquoise); }
+    .ds-cand__body p { margin: 0 0 var(--ccm-space-3); color: var(--ccm-text-muted); }
+    .ds-cand__body .ccm-btn { align-self: flex-start; margin-top: auto; transition: none; }
+    .ds-cand__body .ccm-btn[aria-pressed="true"] { background: var(--ccm-turquoise); color: var(--ccm-white); }
+    .ds-formula { margin: 0 0 var(--ccm-space-5); padding: var(--ccm-space-5) var(--ccm-space-6); border-radius: var(--ccm-radius-lg); background: var(--ccm-surface-soft); }
+    .ds-formula__eq { margin: 0 0 var(--ccm-space-3); font: 700 var(--ccm-text-h4)/1.3 var(--ccm-font-display); color: var(--ccm-turquoise); }
+    .ds-formula dl { display: grid; grid-template-columns: max-content minmax(0, 1fr); gap: var(--ccm-space-2) var(--ccm-space-5); margin: 0; font-size: var(--ccm-text-sm); }
+    .ds-formula dt { font-weight: 600; }
+    .ds-formula dd { margin: 0; }
+    @media (max-width: 575.98px) { .ds-formula dl { grid-template-columns: minmax(0, 1fr); } .ds-formula dd { margin-bottom: var(--ccm-space-2); } }
+
+    /* Typography */
+    .ds-faces { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--ccm-space-4); }
+    .ds-face { padding: var(--ccm-space-6); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); }
+    .ds-face .ds-face__aa { margin: 0 0 var(--ccm-space-4); font-size: 88px; line-height: 1; color: var(--ccm-turquoise); }
+    .ds-face h4 { margin: 0 0 var(--ccm-space-2); font-size: var(--ccm-text-h4); }
+    .ds-face p { font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    .ds-weights { display: flex; flex-wrap: wrap; gap: var(--ccm-space-2) var(--ccm-space-4); margin: var(--ccm-space-4) 0; font-size: var(--ccm-text-h5); }
+    .ds-arabic { margin: 0; font-size: var(--ccm-text-h4); color: var(--ccm-text); }
+    .ds-spec { display: block; max-width: 240px; color: var(--ccm-text); }
+    .ds-dodont { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: var(--ccm-space-4); }
+    .ds-dodont > div { padding: var(--ccm-space-5) var(--ccm-space-6); border-radius: var(--ccm-radius-lg); border-top: 4px solid var(--ccm-green-d1); background: var(--ccm-surface-soft); }
+    .ds-dodont > div + div { border-top-color: var(--ccm-error-strong); }
+    .ds-dodont h4 { margin: 0 0 var(--ccm-space-3); font-size: var(--ccm-text-h5); }
+    .ds-dodont ul { margin: 0; padding-left: var(--ccm-space-5); font-size: var(--ccm-text-sm); }
+    .ds-dodont li + li { margin-top: var(--ccm-space-2); }
+
+    /* Spacing */
+    .ds-space { display: grid; grid-template-columns: 120px 70px minmax(0, 1fr); align-items: center; gap: var(--ccm-space-3); padding: 6px 0; border-bottom: 1px solid var(--ccm-line); font-size: var(--ccm-text-sm); }
+    .ds-space i { display: block; height: 16px; border-radius: 3px; background: var(--ccm-turquoise-l2); }
+    .ds-space em { grid-column: 3; margin-top: -2px; font-style: normal; font-size: var(--ccm-text-xs); color: var(--ccm-text-muted); }
+
+    /* Layout diagrams */
+    .ds-devices { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--ccm-space-5); align-items: end; margin-bottom: var(--ccm-space-5); }
+    .ds-device { margin: 0; }
+    .ds-device__screen { display: grid; gap: 3px; padding: 0 var(--pm); border: 6px solid var(--ccm-text); border-radius: 14px; background: var(--ccm-white); }
+    .ds-device__screen i { background: var(--ccm-accent); opacity: .35; }
+    .ds-device figcaption { margin-top: var(--ccm-space-3); font-size: var(--ccm-text-sm); }
+    .ds-device figcaption b { display: block; font: 700 var(--ccm-text-h5)/1.3 var(--ccm-font-display); }
+
+    /* Shape */
+    .ds-shapes { display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); gap: var(--ccm-space-4); margin: 0 0 var(--ccm-space-5); padding: 0; list-style: none; }
+    .ds-shape { margin: 0; font-size: var(--ccm-text-sm); }
+    .ds-shape__box { height: 96px; margin-bottom: var(--ccm-space-3); background: var(--ccm-surface-soft); border: 2px solid var(--ccm-turquoise); }
+    .ds-shape p { margin: 0; color: var(--ccm-text-muted); }
+    .ds-line { height: 0; margin: var(--ccm-space-6) 0 var(--ccm-space-3); }
+
+    /* Icons */
+    .ds-icons { display: grid; grid-template-columns: repeat(auto-fill, minmax(120px, 1fr)); gap: var(--ccm-space-3); margin: 0 0 var(--ccm-space-5); padding: 0; list-style: none; }
+    .ds-icons li { display: flex; flex-direction: column; align-items: center; gap: var(--ccm-space-2); padding: var(--ccm-space-4) var(--ccm-space-2); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-md); font-size: var(--ccm-text-xs); color: var(--ccm-text-muted); }
+    .ds-icons .ccm-ico { font-size: 24px; color: var(--ccm-turquoise); }
+
+    /* Logos */
+    .ds-logos { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr)); gap: var(--ccm-space-4); margin: 0 0 var(--ccm-space-5); padding: 0; list-style: none; }
+    .ds-logo { overflow: hidden; margin: 0; border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); }
+    .ds-logo__light, .ds-logo__dark { padding: var(--ccm-space-3) var(--ccm-space-4); }
+    .ds-logo__dark { background: var(--ccm-turquoise); }
+    .ds-logo img { display: block; width: 100%; height: auto; }
+    .ds-logo p { margin: 0; padding: var(--ccm-space-3) var(--ccm-space-4); border-top: 1px solid var(--ccm-line); font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    .ds-logo b { color: var(--ccm-text); }
+
+    /* Demos and code */
+    .ds-demo { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ccm-space-4); margin: 0 0 var(--ccm-space-3); padding: var(--ccm-space-6); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); }
+    .ds-demo--block { display: block; }
+    .ds-demo--dark { background: var(--ccm-turquoise); border-color: var(--ccm-turquoise); }
+    .ds-demo--flush { padding: 0; overflow: hidden; }
+    .ds-pre { margin: 0 0 var(--ccm-space-7); padding: var(--ccm-space-4) var(--ccm-space-5); overflow-x: auto; border-radius: var(--ccm-radius-md); background: var(--ccm-turquoise-d3); color: var(--ccm-gray-l3); font-size: 13px; line-height: 1.6; }
+
+    /* Live breakpoint pill + grid overlay */
+    .ds-bp { position: fixed; right: 12px; bottom: 12px; z-index: 60; max-width: calc(100% - 24px); padding: 8px 14px; border-radius: var(--ccm-radius-pill);
+      background: var(--ccm-turquoise-d3); color: var(--ccm-white); font: 600 12px/1.3 var(--ccm-font-body); box-shadow: var(--ccm-shadow-md); }
+    .ds-bp b { color: var(--ccm-beige); }
+    .ds-overlay { position: fixed; inset: 0; z-index: 30; pointer-events: none; }
+    .ds-overlay[hidden] { display: none; }
+    .ds-overlay .ccm-container { display: grid; grid-template-columns: repeat(var(--ccm-cols), minmax(0, 1fr)); gap: var(--ccm-gutter); height: 100%; }
+    .ds-overlay i { background: var(--ccm-accent); opacity: .16; }
+  </style>
+</head>
+<body>
+<div class="ccm-scope ds">
+
+  <!-- ===================== Top bar ===================== -->
+  <div class="ds-bar">
+    <div class="ccm-container ds-bar__in">
+      <a class="ds-bar__brand" href="#top">CCM Web Design System</a>
+      <div class="ds-bar__links">
+        <a class="ccm-btn ccm-btn--outline ccm-btn--sm" href="page-types.html">Page types</a>
+        <a class="ccm-btn ccm-btn--primary ccm-btn--sm" href="checklist.html">Page checklist</a>
+        <button class="ccm-btn ccm-btn--outline ccm-btn--sm" type="button" id="grid-toggle" aria-pressed="false">Show layout grid</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===================== Hero ===================== -->
+  <header class="ds-hero" id="top">
+    <div class="ccm-container">
+      <p class="ccm-eyebrow">KFUPM · College of Computing and Mathematics</p>
+      <h1>CCM Web Design System</h1>
+      <p class="ds-hero__lead">One set of colours, type, spacing, layout and components for the college website and the four department websites. Built on the KFUPM Brand Guidelines.</p>
+      <ul class="ds-hero__meta">
+        <li>Version 0.2 (draft)</li>
+        <li>19 November 2026</li>
+        <li>ccm · ics · coe · math · ise .kfupm.edu.sa</li>
+        <li>One look for all five sites</li>
+      </ul>
+    </div>
+  </header>
+
+  <div class="ccm-container ds-layout">
+
+    <!-- ===================== Navigation ===================== -->
+    <nav class="ds-nav" aria-label="Sections">
+      <ol>
+        <li><a href="#principles"><span>01</span>Principles</a></li>
+        <li><a href="#colour"><span>02</span>Colour</a></li>
+        <li><a href="#college"><span>03</span>College colour</a></li>
+        <li><a href="#type"><span>04</span>Typography</a></li>
+        <li><a href="#spacing"><span>05</span>Spacing</a></li>
+        <li><a href="#layout"><span>06</span>Layout &amp; breakpoints</a></li>
+        <li><a href="#shape"><span>07</span>Shape &amp; depth</a></li>
+        <li><a href="#motion"><span>08</span>Motion</a></li>
+        <li><a href="#icons"><span>09</span>Icons</a></li>
+        <li><a href="#imagery"><span>10</span>Photos, logos, graphics</a></li>
+        <li><a href="#components"><span>11</span>Components</a></li>
+        <li><a href="#a11y"><span>12</span>Accessibility</a></li>
+        <li><a href="#use"><span>13</span>How to use it</a></li>
+        <li><a href="#open"><span>14</span>Open decisions</a></li>
+      </ol>
+    </nav>
+
+    <main class="ds-main">
+
+      <!-- ===================== 01 Principles ===================== -->
+      <section class="ds-sec" id="principles" aria-labelledby="h-principles">
+        <p class="ccm-eyebrow">01</p>
+        <h2 class="ccm-section__title" id="h-principles">Principles</h2>
+        <p class="ccm-lead">Five rules sit behind every decision on this page. Labels show where each rule comes from:
+          <span class="ds-badge ds-badge--brand">KFUPM rule</span> from the brand guidelines, must follow;
+          <span class="ds-badge ds-badge--ours">Our choice</span> decided for the web, can change;
+          <span class="ds-badge ds-badge--todo">Needs approval</span> waiting for the KFUPM branding team.</p>
+        <ul class="ds-cards">
+          <li class="ds-card"><span class="ds-card__n">1</span><h3>KFUPM brand first</h3><p>The primary colours dominate. Turquoise, Beige and White make up most of every page.</p></li>
+          <li class="ds-card"><span class="ds-card__n">2</span><h3>One look, five sites</h3><p>All five websites use the same colours. The CCM college colour is the only accent: for rings, bars and lines, never for text.</p></li>
+          <li class="ds-card"><span class="ds-card__n">3</span><h3>Two typefaces</h3><p>KFUPM Display for headings, IBM Plex Sans Arabic for everything else.</p></li>
+          <li class="ds-card"><span class="ds-card__n">4</span><h3>Accessible by default</h3><p>Text contrast of at least 4.5:1, 44px touch targets, visible focus and calm motion.</p></li>
+          <li class="ds-card"><span class="ds-card__n">5</span><h3>Made for the CMS</h3><p>Every class starts with <code>ccm-</code>, there's no JavaScript, and components fit any column they're placed in.</p></li>
+        </ul>
+      </section>
+
+      <!-- ===================== 02 Colour ===================== -->
+      <section class="ds-sec" id="colour" aria-labelledby="h-colour">
+        <p class="ccm-eyebrow">02</p>
+        <h2 class="ccm-section__title" id="h-colour">Colour</h2>
+        <p class="ccm-lead">Most of every page is White, Beige and Turquoise. Green, the secondary colours and the CCM college colour are small accents.</p>
+
+        <h3 class="ds-h3">How much of each <span class="ds-badge ds-badge--ours">Our choice</span></h3>
+        <p>The guidelines say the primary colours "should be the dominant elements" (p31), but give no exact ratio. Use this split as a guide:</p>
+        <div class="ds-ratio" role="img" aria-label="About 60% White and Beige, 30% Turquoise, 10% accents">
+          <div style="flex:60;background:var(--ccm-surface-soft);color:var(--ccm-text)">60% White and Beige: page and panels</div>
+          <div style="flex:30;background:var(--ccm-turquoise);color:#fff">30% Turquoise</div>
+          <div style="flex:10;background:var(--ccm-accent);color:var(--ccm-text)">10%</div>
+        </div>
+        <p class="ccm-sr-only">The last 10% is Green, the secondary colours and the CCM college colour.</p>
+
+        <h3 class="ds-h3">Primary <span class="ds-badge ds-badge--brand">KFUPM rule · p31</span></h3>
+        <ul class="ds-swatches ds-swatches--lg">
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-turquoise"></div><div class="ds-swatch__body"><h4>Turquoise</h4><code>--ccm-turquoise</code><p>The KFUPM colour. Bands, buttons, links, icons and the logo.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-green"></div><div class="ds-swatch__body"><h4>Green</h4><code>--ccm-green</code><p>Graphics, the FAST Matrix, and headlines of 24px and up. For smaller green text use Green d1.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-beige"></div><div class="ds-swatch__body"><h4>Beige</h4><code>--ccm-beige</code><p>Warm surfaces, tags and light buttons on Turquoise.</p></div></li>
+        </ul>
+
+        <h3 class="ds-h3">Secondary <span class="ds-badge ds-badge--brand">KFUPM rule · p31</span></h3>
+        <p>These "add flexibility and variety, complementing the primary colors without diminishing their prominence". Use them small.</p>
+        <ul class="ds-swatches">
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-sand"></div><div class="ds-swatch__body"><h4>Sand</h4><code>--ccm-sand</code><p>Borders of controls (3.1:1) and quiet accents.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-yellow"></div><div class="ds-swatch__body"><h4>Yellow</h4><code>--ccm-yellow</code><p>Highlights. As text, only large text on Turquoise.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-blue"></div><div class="ds-swatch__body"><h4>Blue</h4><code>--ccm-blue</code><p>Accents and information. Never text on White.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-gray"></div><div class="ds-swatch__body"><h4>Gray</h4><code>--ccm-gray</code><p>Disabled states and dividers.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-white" style="border-bottom:1px solid var(--ccm-line)"></div><div class="ds-swatch__body"><h4>White</h4><code>--ccm-white</code><p>Page background and text on Turquoise.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-black"></div><div class="ds-swatch__body"><h4>Black</h4><code>--ccm-black</code><p>Rarely needed. Body text uses Turquoise d3.</p></div></li>
+        </ul>
+
+        <h3 class="ds-h3">Web palette: tints and shades <span class="ds-badge ds-badge--brand">KFUPM rule · p39</span></h3>
+        <p>Each colour has three lighter steps (<code>-l1</code> to <code>-l3</code>) and three darker steps (<code>-d1</code> to <code>-d3</code>). When you need a lighter or darker colour, pick a step. Don't invent hex values.</p>
+        <div class="ds-scroll"><div class="ds-ramps" id="ramps"></div></div>
+
+        <h3 class="ds-h3">Feedback <span class="ds-badge ds-badge--brand">KFUPM rule · p39</span></h3>
+        <ul class="ds-swatches">
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-success"></div><div class="ds-swatch__body"><h4>Success</h4><code>--ccm-success</code><p>Icons and borders. Text: Green d1.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-error-strong"></div><div class="ds-swatch__body"><h4>Error</h4><code>--ccm-error-strong</code><p>The only red that passes 4.5:1 as text on White.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-warning"></div><div class="ds-swatch__body"><h4>Warning</h4><code>--ccm-warning</code><p>Backgrounds and icons. Never text.</p></div></li>
+          <li class="ds-swatch"><div class="ds-swatch__color" data-swatch="--ccm-info"></div><div class="ds-swatch__body"><h4>Info</h4><code>--ccm-info</code><p>Backgrounds and icons. Never text.</p></div></li>
+        </ul>
+
+        <h3 class="ds-h3">Colour roles: what components use <span class="ds-badge ds-badge--ours">Our choice</span></h3>
+        <p>Components never use a raw colour. They use a role, so a role can change in one place.</p>
+        <div class="ds-scroll">
+          <table class="ds-table">
+            <thead><tr><th>Role token</th><th>Colour</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td><code>--ccm-text</code></td><td data-chip="--ccm-text"></td><td>Body text and headings (Turquoise d3).</td></tr>
+              <tr><td><code>--ccm-text-muted</code></td><td data-chip="--ccm-text-muted"></td><td>Secondary text: departments, dates, contact lines.</td></tr>
+              <tr><td><code>--ccm-text-inverse</code></td><td data-chip="--ccm-text-inverse"></td><td>Text on Turquoise.</td></tr>
+              <tr><td><code>--ccm-text-inverse-muted</code></td><td data-chip="--ccm-text-inverse-muted"></td><td>Secondary text on Turquoise (shown on Turquoise).</td></tr>
+              <tr><td><code>--ccm-line-inverse</code></td><td data-chip="--ccm-line-inverse"></td><td>Borders on Turquoise, such as the ghost button.</td></tr>
+              <tr><td><code>--ccm-fill-inverse</code></td><td data-chip="--ccm-fill-inverse"></td><td>Light fill on Turquoise: icon buttons, ghost-button hover.</td></tr>
+              <tr><td><code>--ccm-fill-inverse-strong</code></td><td data-chip="--ccm-fill-inverse-strong"></td><td>Hover of a filled control on Turquoise.</td></tr>
+              <tr><td><code>--ccm-backdrop</code></td><td data-chip="--ccm-backdrop"></td><td>Dims the page behind a pop-up.</td></tr>
+              <tr><td><code>--ccm-link</code></td><td data-chip="--ccm-link"></td><td>Links and text buttons.</td></tr>
+              <tr><td><code>--ccm-link-hover</code></td><td data-chip="--ccm-link-hover"></td><td>Hover and pressed state.</td></tr>
+              <tr><td><code>--ccm-surface</code></td><td data-chip="--ccm-surface"></td><td>Page background.</td></tr>
+              <tr><td><code>--ccm-surface-soft</code></td><td data-chip="--ccm-surface-soft"></td><td>Panels and highlighted cards.</td></tr>
+              <tr><td><code>--ccm-surface-strong</code></td><td data-chip="--ccm-surface-strong"></td><td>Bands, banners, primary buttons.</td></tr>
+              <tr><td><code>--ccm-line</code></td><td data-chip="--ccm-line"></td><td>Card borders and dividers (decorative).</td></tr>
+              <tr><td><code>--ccm-line-strong</code></td><td data-chip="--ccm-line-strong"></td><td>Borders that people must see: inputs, icon buttons.</td></tr>
+              <tr><td><code>--ccm-focus</code></td><td data-chip="--ccm-focus"></td><td>Keyboard focus ring.</td></tr>
+              <tr><td><code>--ccm-accent</code></td><td data-chip="--ccm-accent"></td><td>The CCM college colour, the same on all five sites: rings, bars, lines. Never text.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="ds-h3">Text on backgrounds</h3>
+        <p>The guidelines list approved pairs (p32), but a brand "Pass" doesn't always meet the web accessibility standard (WCAG AA). For example, Yellow on Turquoise is a brand Pass but measures only 4.15:1. <strong>Use a pair only if both agree.</strong> Each cell below shows the measured ratio.</p>
+        <ul class="ds-legend">
+          <li><span class="ds-mark ds-mark--ok">OK</span> Any text size: brand Pass and at least 4.5:1</li>
+          <li><span class="ds-mark ds-mark--lg">L</span> Large text only (24px+, or 18.66px+ bold): brand allows and at least 3:1</li>
+          <li><span class="ds-mark ds-mark--no">No</span> Don't use</li>
+        </ul>
+        <div class="ds-scroll"><table class="ds-matrix" id="matrix"></table></div>
+        <p class="ds-src">The White row isn't in the guidelines' grid, so it's judged on the measured ratio alone.</p>
+      </section>
+
+      <!-- ===================== 03 College colour ===================== -->
+      <section class="ds-sec" id="college" aria-labelledby="h-college">
+        <p class="ccm-eyebrow">03</p>
+        <h2 class="ccm-section__title" id="h-college">The CCM college colour</h2>
+        <p class="ccm-lead">All five websites use CCM colouring. The CCM college colour is the only extra colour, and departments don't have colours of their own.</p>
+
+        <h3 class="ds-h3">One look for all five sites <span class="ds-badge ds-badge--ours">Our decision</span></h3>
+        <p>CCM, ICS, COE, MATH and ISE share every colour, font, size and component in this guide. The sites are told apart by the name and logo in the header, not by colour.</p>
+        <p>This matches the guidelines: KFUPM defines a colour for each college but none for departments (p34), and a design must never use two college colours (p36). The departments are part of CCM, so they use the CCM colour.</p>
+        <ul class="ds-sites">
+          <li class="ds-site"><div class="ds-site__head"><b>CCM</b><span>College of Computing and Mathematics</span></div><div class="ds-site__body"><div class="ds-site__demo"><span class="ds-site__ring"></span><span class="ds-site__bar"></span></div><dl><dt>Site</dt><dd>ccm.kfupm.edu.sa</dd><dt>Platform</dt><dd>Sitefinity 14.4</dd></dl></div></li>
+          <li class="ds-site"><div class="ds-site__head"><b>ICS</b><span>Information &amp; Computer Science</span></div><div class="ds-site__body"><div class="ds-site__demo"><span class="ds-site__ring"></span><span class="ds-site__bar"></span></div><dl><dt>Site</dt><dd>ics.kfupm.edu.sa</dd><dt>Platform</dt><dd>Sitefinity 14.4</dd></dl></div></li>
+          <li class="ds-site"><div class="ds-site__head"><b>COE</b><span>Computer Engineering</span></div><div class="ds-site__body"><div class="ds-site__demo"><span class="ds-site__ring"></span><span class="ds-site__bar"></span></div><dl><dt>Site</dt><dd>coe.kfupm.edu.sa</dd><dt>Platform</dt><dd>Sitefinity 15.1</dd></dl></div></li>
+          <li class="ds-site"><div class="ds-site__head"><b>MATH</b><span>Mathematics</span></div><div class="ds-site__body"><div class="ds-site__demo"><span class="ds-site__ring"></span><span class="ds-site__bar"></span></div><dl><dt>Site</dt><dd>math.kfupm.edu.sa</dd><dt>Platform</dt><dd>Sitefinity 14.4</dd></dl></div></li>
+          <li class="ds-site"><div class="ds-site__head"><b>ISE</b><span>Industrial &amp; Systems Engineering</span></div><div class="ds-site__body"><div class="ds-site__demo"><span class="ds-site__ring"></span><span class="ds-site__bar"></span></div><dl><dt>Site</dt><dd>ise.kfupm.edu.sa</dd><dt>Platform</dt><dd>Django (Wagtail) · later</dd></dl></div></li>
+        </ul>
+
+        <h3 class="ds-h3">How to use it <span class="ds-badge ds-badge--brand">KFUPM rule · p34–36</span></h3>
+        <ul class="ds-list">
+          <li><strong>An accent, never the main colour.</strong> Always use it together with Turquoise, Beige and White, and only in small amounts.</li>
+          <li><strong>Decoration only:</strong> the band under the page head, the bar under section titles, rings around photos, lines in diagrams and quote borders.</li>
+          <li><strong>Never for text,</strong> and never as a large background. White text on it measures only <b id="college-white"></b>, far below the 4.5:1 minimum.</li>
+          <li><strong>Not in the FAST Matrix</strong> (p56), and <strong>not in the logo</strong>. Use the Turquoise-and-Green logo on light backgrounds and the white logo on dark ones.</li>
+        </ul>
+
+        <h3 class="ds-h3">Why the exact value isn't settled yet <span class="ds-badge ds-badge--todo">Needs approval</span></h3>
+        <p>The KFUPM brand package should give one value for the CCM colour, but it gives four, in four different places. Press <b>Preview</b> on a card to see this whole page with that colour. To share a preview, add it to the address, for example <code>index.html?college=4EABB1</code>.</p>
+        <ul class="ds-cands">
+          <li class="ds-cand" data-cand="#6BBDBE">
+            <div class="ds-cand__color" style="background:#6BBDBE"><span class="ds-hex">#6BBDBE</span></div>
+            <div class="ds-cand__body">
+              <h4>1 · Written in the guidelines</h4>
+              <p class="ds-cand__src">Brand Guidelines PDF, page 34</p>
+              <p>The college-colours page prints it in four formats: HEX 6BBDBE, RGB 107-189-190, CMYK 59-0-27-0 and Pantone 7472 U. All four describe the same colour.</p>
+              <button class="ccm-btn ccm-btn--outline ccm-btn--sm" type="button" data-try="#6BBDBE">Preview</button>
+            </div>
+          </li>
+          <li class="ds-cand" data-cand="#49C0BF">
+            <div class="ds-cand__color" style="background:#49C0BF"><span class="ds-hex">#49C0BF</span></div>
+            <div class="ds-cand__body">
+              <h4>2 · What the PDF shows on screen</h4>
+              <p class="ds-cand__src">Same PDF, pages 34–36 (measured)</p>
+              <p>The colour you actually see in the swatch box and the CCM examples. A PDF stores colours for printing (CMYK), and the screen converts them, so the box looks a little different from its own label.</p>
+              <button class="ccm-btn ccm-btn--outline ccm-btn--sm" type="button" data-try="#49C0BF">Preview</button>
+            </div>
+          </li>
+          <li class="ds-cand" data-cand="#4EABB1">
+            <div class="ds-cand__color" style="background:#4EABB1"><span class="ds-hex">#4EABB1</span><em>In use now</em></div>
+            <div class="ds-cand__body">
+              <h4>3 · Inside the logo files</h4>
+              <p class="ds-cand__src">Branding › CCM Logo › *_CollegeColor.svg</p>
+              <p>The college-colour versions of the CCM logo use a slightly darker teal, probably converted from print colour by different software. <strong>This is the value the CCM team already uses.</strong></p>
+              <button class="ccm-btn ccm-btn--outline ccm-btn--sm" type="button" data-try="#4EABB1">Preview</button>
+            </div>
+          </li>
+          <li class="ds-cand" data-cand="#9BC9C3">
+            <div class="ds-cand__color" style="background:#9BC9C3"><span class="ds-hex">#9BC9C3</span></div>
+            <div class="ds-cand__body">
+              <h4>4 · In the colour swatch files</h4>
+              <p class="ds-cand__src">Branding › 02 Colors › .ase files</p>
+              <p>The files designers load into Illustrator or Photoshop. The screen file says #9BC9C3 and the print file says CMYK 36-7-24-0. Both agree with each other, but it's a paler colour than the guidelines.</p>
+              <button class="ccm-btn ccm-btn--outline ccm-btn--sm" type="button" data-try="#9BC9C3">Preview</button>
+            </div>
+          </li>
+        </ul>
+        <div class="ds-note">
+          <p><strong>What this means:</strong> there are really <strong>two different colours</strong>, not four.</p>
+          <ul class="ds-list">
+            <li><strong>Values 1, 2 and 3 are the same medium teal.</strong> They differ only because each one was converted between print colour (CMYK) and screen colour (RGB) in a different way.</li>
+            <li><strong>Value 4 is a paler teal.</strong> Its print recipe (36% cyan) is different from the guidelines (59% cyan), so it isn't a conversion difference. It may be an older version or a mistake, but we can't tell.</li>
+          </ul>
+          <p><strong>What we use now: value 3, #4EABB1,</strong> because the CCM team already uses it, and it's the same colour family as the guidelines. It's one line in <code>tokens.css</code> (<code>--ccm-college</code>), so if the branding team chooses another value, one change updates all five sites.</p>
+        </div>
+        <div class="ds-note ds-note--todo">
+          <p><strong>Question for the KFUPM branding team:</strong> "We use #4EABB1 (from the CCM logo files) as the screen colour of the College of Computing and Mathematics. Can you confirm it? The Brand Guidelines (page 34) say #6BBDBE, and the .ase colour files say #9BC9C3."</p>
+        </div>
+      </section>
+
+      <!-- ===================== 04 Typography ===================== -->
+      <section class="ds-sec" id="type" aria-labelledby="h-type">
+        <p class="ccm-eyebrow">04</p>
+        <h2 class="ccm-section__title" id="h-type">Typography</h2>
+        <p class="ccm-lead">Two typefaces and one size rule, a <strong>fluid modular scale</strong>: heading sizes come from a formula and grow smoothly from phone to desktop.</p>
+
+        <h3 class="ds-h3">Typefaces <span class="ds-badge ds-badge--brand">KFUPM rule · p42, p46, p47</span></h3>
+        <div class="ds-faces">
+          <div class="ds-face">
+            <p class="ds-face__aa" style="font-family:var(--ccm-font-display);font-weight:700">Aa</p>
+            <h4>KFUPM Display</h4>
+            <p>Headlines and key statements. Already slanted 5°, so it's never set in italic. Use it at 18px and up only.</p>
+            <div class="ds-weights" style="font-family:var(--ccm-font-display)"><span style="font-weight:400">Regular 400</span><span style="font-weight:700">Bold 700 · web</span><span style="font-weight:900">Black 900</span></div>
+            <p class="ds-arabic" lang="ar" dir="rtl" style="font-family:var(--ccm-font-display);font-weight:700">كلية الحوسبة والرياضيات</p>
+          </div>
+          <div class="ds-face">
+            <p class="ds-face__aa" style="font-family:var(--ccm-font-body);font-weight:600">Aa</p>
+            <h4>IBM Plex Sans Arabic</h4>
+            <p>Everything that isn't a heading: paragraphs, labels, buttons, tables, menus.</p>
+            <div class="ds-weights"><span style="font-weight:400">Regular 400</span><span style="font-weight:500">Medium 500</span><span style="font-weight:600">SemiBold 600</span><span style="font-weight:700">Bold 700</span></div>
+            <p class="ds-arabic" lang="ar" dir="rtl">كلية الحوسبة والرياضيات</p>
+          </div>
+        </div>
+        <p class="ds-src" style="margin-top:var(--ccm-space-4)">Fallback when a font can't load: Segoe UI (p47). On the websites, the font files (WOFF2, the web format) are uploaded once to each site's Sitefinity library and the CSS links to them. See <a href="#use">How to use it</a>.</p>
+
+        <h3 class="ds-h3">Type scale: fluid modular scale <span class="ds-badge ds-badge--ours">Our choice</span></h3>
+        <p>The rule has two parts:</p>
+        <ul class="ds-list">
+          <li><strong>Modular scale.</strong> Every size is the size below it multiplied by the same number, the <em>ratio</em>. This keeps the jump between heading levels even. The common ratios are named after musical intervals; we use two of them.</li>
+          <li><strong>Fluid type.</strong> Phones use a smaller ratio and desktops a bigger one. In between, every size grows smoothly with the screen width, with no sudden jumps at breakpoints. In CSS this is <code>clamp(phone size, growth, desktop size)</code>. It's the same method as the Utopia type calculator (utopia.fyi).</li>
+        </ul>
+        <div class="ds-formula">
+          <p class="ds-formula__eq">size = 16px × ratio<sup>step</sup></p>
+          <dl>
+            <dt>Base (step 0)</dt><dd>16px, the body text size, on every screen.</dd>
+            <dt>Phones (360px)</dt><dd>ratio <b>1.125</b>, called <b>Major Second</b>. Small steps keep long titles, such as "College of Computing and Mathematics", on fewer lines.</dd>
+            <dt>Desktops (1280px+)</dt><dd>ratio <b>1.2</b>, called <b>Minor Third</b>. Bigger steps make the heading levels easier to tell apart.</dd>
+            <dt>In between</dt><dd>Sizes grow smoothly from 360px to 1280px, then stop. 1280px is where the content reaches its 1200px maximum width.</dd>
+            <dt>Example: H2</dt><dd>step 4. Phone: 16 × 1.125<sup>4</sup> = 25.6px. Desktop: 16 × 1.2<sup>4</sup> = 33.2px.</dd>
+            <dt>Below 16px</dt><dd>Small (14px) and Label (12px) are fixed sizes, not steps: following the ratio down makes text too small to read.</dd>
+          </dl>
+        </div>
+        <p>The sizes in the table are calculated from the CSS, so they always match the code.</p>
+        <div class="ds-scroll">
+          <table class="ds-table" id="type-table">
+            <thead><tr><th>Style</th><th>Specimen</th><th class="num">Step</th><th class="num">Phone<br>360px</th><th class="num">Tablet<br>820px</th><th class="num">Desktop<br>1280px+</th><th>Use for</th></tr></thead>
+            <tbody></tbody>
+          </table>
+        </div>
+
+        <h3 class="ds-h3">Rules</h3>
+        <div class="ds-dodont">
+          <div>
+            <h4>Do</h4>
+            <ul>
+              <li>Use KFUPM Display Bold for every heading. <span class="ds-badge ds-badge--brand">p42</span></li>
+              <li>Use only the sizes in the scale (the <code>--ccm-text-*</code> tokens). Never type a pixel size for text.</li>
+              <li>Use Plex for all other text, at 16px minimum for paragraphs. <span class="ds-badge ds-badge--brand">p46</span></li>
+              <li>Keep paragraphs under 70 characters per line, with 1.6 line height.</li>
+              <li>Use 14px only for meta text (contact lines, dates, captions) and 12px only for UPPERCASE labels.</li>
+              <li>Use Title Case for page and section titles, and Sentence case for buttons, labels and text.</li>
+              <li>Use weight to show importance: 400 for text, 500 for emphasis in UI, 600 for labels and buttons, 700 for strong text.</li>
+            </ul>
+          </div>
+          <div>
+            <h4>Don't</h4>
+            <ul>
+              <li>Italicise KFUPM Display. It already has a 5° slant. <span class="ds-badge ds-badge--brand">p45</span></li>
+              <li>Use Plex for headlines. <span class="ds-badge ds-badge--brand">p49</span></li>
+              <li>Use KFUPM Display for paragraphs or below 18px. <span class="ds-badge ds-badge--brand">p49</span></li>
+              <li>Set whole sentences in UPPERCASE.</li>
+              <li>Underline anything that isn't a link.</li>
+              <li>Use any other fonts (Open Sans, Hacen Tunisia and KacstOffice are on the live sites today).</li>
+            </ul>
+          </div>
+        </div>
+
+        <h3 class="ds-h3">Rich text: normal content pages</h3>
+        <p>Most pages (programs, about, research) are typed into the CMS editor. Wrap that content in <code>.ccm-prose</code> and it follows the scale automatically.</p>
+        <div class="ds-demo ds-demo--block">
+          <div class="ccm-prose">
+            <h2>Bachelor of Science in Computer Science</h2>
+            <p>The program prepares students to design and build software systems. Graduates work in industry, research and government. Read the <a href="#type">degree plan</a> for the full list of courses.</p>
+            <h3>Program objectives</h3>
+            <ul>
+              <li>Apply computing theory to solve real problems.</li>
+              <li>Work in teams and communicate clearly.</li>
+              <li>Keep learning throughout their careers.</li>
+            </ul>
+            <blockquote>A short quote or key statement uses the CCM college colour as its border.</blockquote>
+            <table>
+              <thead><tr><th>Course</th><th>Title</th><th>Credits</th></tr></thead>
+              <tbody><tr><td>ICS 104</td><td>Introduction to Programming</td><td>3</td></tr><tr><td>ICS 108</td><td>Object-Oriented Programming</td><td>4</td></tr></tbody>
+            </table>
+          </div>
+        </div>
+        <p class="ds-src">Sample text for illustration only.</p>
+      </section>
+
+      <!-- ===================== 05 Spacing ===================== -->
+      <section class="ds-sec" id="spacing" aria-labelledby="h-spacing">
+        <p class="ccm-eyebrow">05</p>
+        <h2 class="ccm-section__title" id="h-spacing">Spacing <span class="ds-badge ds-badge--ours">Our choice</span></h2>
+        <p class="ccm-lead">All space is a multiple of 4px. Pick a step from the scale. Don't use values in between.</p>
+        <div id="space-scale"></div>
+        <h4 class="ds-h4">Which step to use</h4>
+        <ul class="ds-list">
+          <li><strong>4 to 12px:</strong> inside small elements, such as the gap between an icon and its text, or tag padding.</li>
+          <li><strong>16 to 24px:</strong> inside cards, and between related items such as a name and its role.</li>
+          <li><strong>32 to 48px:</strong> between components, such as a title and the cards below it.</li>
+          <li><strong>48 to 80px:</strong> between page sections. Use <code>--ccm-section-space</code>, which changes by device (48, 64, 80).</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 06 Layout ===================== -->
+      <section class="ds-sec" id="layout" aria-labelledby="h-layout">
+        <p class="ccm-eyebrow">06</p>
+        <h2 class="ccm-section__title" id="h-layout">Layout &amp; breakpoints</h2>
+        <p class="ccm-lead">Pages switch layout at six screen widths. Margins, gutters, columns and section spacing grow with the screen. Resize this window and watch the pill in the bottom corner.</p>
+
+        <h3 class="ds-h3">Breakpoints <span class="ds-badge ds-badge--ours">Our choice · same as Bootstrap 5</span></h3>
+        <p>These are the same breakpoints as Bootstrap 5, which all four Sitefinity themes use, so our pages change layout at the same widths as each site's header and menu.</p>
+        <div class="ds-scroll">
+          <table class="ds-table" id="bp-table">
+            <thead><tr><th>Device</th><th>Name</th><th class="num">Screen width</th><th class="num">Columns</th><th class="num">Page margin</th><th class="num">Gutter</th><th class="num">Section space</th><th>Typical devices</th></tr></thead>
+            <tbody>
+              <tr data-min="0"><td><b>Phone</b></td><td><code>xs</code></td><td class="num">0–575px</td><td class="num">4</td><td class="num">16px</td><td class="num">16px</td><td class="num">48px</td><td>iPhone, Android phones</td></tr>
+              <tr data-min="576"><td><b>Large phone</b></td><td><code>sm</code></td><td class="num">576–767px</td><td class="num">4</td><td class="num">24px</td><td class="num">16px</td><td class="num">48px</td><td>Phones sideways, small tablets</td></tr>
+              <tr data-min="768"><td><b>Tablet</b></td><td><code>md</code></td><td class="num">768–991px</td><td class="num">8</td><td class="num">32px</td><td class="num">24px</td><td class="num">64px</td><td>iPad upright</td></tr>
+              <tr data-min="992"><td><b>Laptop</b></td><td><code>lg</code></td><td class="num">992–1199px</td><td class="num">12</td><td class="num">32px</td><td class="num">24px</td><td class="num">64px</td><td>iPad sideways, small laptops</td></tr>
+              <tr data-min="1200"><td><b>Desktop</b></td><td><code>xl</code></td><td class="num">1200–1399px</td><td class="num">12</td><td class="num">40px</td><td class="num">32px</td><td class="num">80px</td><td>Most laptops</td></tr>
+              <tr data-min="1400"><td><b>Large desktop</b></td><td><code>xxl</code></td><td class="num">1400px+</td><td class="num">12</td><td class="num">40px+</td><td class="num">32px</td><td class="num">80px</td><td>Office monitors</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="ds-list">
+          <li><strong>Page margin</strong> is the space between the screen edge and the content. <strong>Gutter</strong> is the space between columns.</li>
+          <li><strong>Content is never wider than 1200px.</strong> On bigger screens it stays centred and the margins grow.</li>
+          <li>The values live in <code>tokens.css</code> (<code>--ccm-page-margin</code>, <code>--ccm-gutter</code>, <code>--ccm-cols</code>, <code>--ccm-section-space</code>) and change automatically at each breakpoint.</li>
+        </ul>
+
+        <div class="ds-devices" aria-hidden="true">
+          <figure class="ds-device"><div class="ds-device__screen" style="--pm:6px;grid-template-columns:repeat(4,1fr);height:200px;width:110px"><i></i><i></i><i></i><i></i></div><figcaption><b>Phone</b>4 columns · 16px margin</figcaption></figure>
+          <figure class="ds-device"><div class="ds-device__screen" style="--pm:10px;grid-template-columns:repeat(8,1fr);height:200px;width:160px"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><figcaption><b>Tablet</b>8 columns · 32px margin</figcaption></figure>
+          <figure class="ds-device"><div class="ds-device__screen" style="--pm:14px;grid-template-columns:repeat(12,1fr);height:150px;width:100%"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div><figcaption><b>Laptop and desktop</b>12 columns · 32–40px margin · max 1200px</figcaption></figure>
+        </div>
+
+        <h3 class="ds-h3">Inside Sitefinity: components fit their column <span class="ds-badge ds-badge--ours">Our choice</span></h3>
+        <p>Sitefinity page templates put a sidebar next to the content, so the content column is narrower than the screen. Our components therefore measure the <strong>width of their column</strong>, not the screen (CSS container queries). Every component uses the same three column widths:</p>
+        <div class="ds-scroll">
+          <table class="ds-table">
+            <thead><tr><th class="num">Column width</th><th>What components do</th><th>Example</th></tr></thead>
+            <tbody>
+              <tr><td class="num">under 540px</td><td>Compact: one column, smaller photos, small cards two per row</td><td>Phones</td></tr>
+              <tr><td class="num">540–719px</td><td>Roomier spacing, still one main column</td><td>Large phones, tablet with sidebar</td></tr>
+              <tr><td class="num">720–859px</td><td>Two columns</td><td>Tablets, laptop content column</td></tr>
+              <tr><td class="num">860px+</td><td>Up to four columns</td><td>Desktop content column</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>Pop-ups are the exception: they measure the screen, because they cover it.</p>
+      </section>
+
+      <!-- ===================== 07 Shape ===================== -->
+      <section class="ds-sec" id="shape" aria-labelledby="h-shape">
+        <p class="ccm-eyebrow">07</p>
+        <h2 class="ccm-section__title" id="h-shape">Shape &amp; depth</h2>
+        <p class="ccm-lead">Soft, consistent corners; thin borders; shadows only when something lifts or floats.</p>
+
+        <h3 class="ds-h3">Corner rounding <span class="ds-badge ds-badge--ours">Our choice</span></h3>
+        <p>The guidelines don't specify rounded corners. KFUPM's own shapes are the octagon in the logo and the 5° slant. Keep those for the logo and the FAST graphics, and don't slant UI boxes.</p>
+        <ul class="ds-shapes">
+          <li class="ds-shape"><div class="ds-shape__box" style="border-radius:var(--ccm-radius-sm)"></div><code>--ccm-radius-sm</code> <b data-val="--ccm-radius-sm"></b><p>Inputs, small images</p></li>
+          <li class="ds-shape"><div class="ds-shape__box" style="border-radius:var(--ccm-radius-md)"></div><code>--ccm-radius-md</code> <b data-val="--ccm-radius-md"></b><p>List rows, small panels</p></li>
+          <li class="ds-shape"><div class="ds-shape__box" style="border-radius:var(--ccm-radius-lg)"></div><code>--ccm-radius-lg</code> <b data-val="--ccm-radius-lg"></b><p>Cards and panels</p></li>
+          <li class="ds-shape"><div class="ds-shape__box" style="border-radius:var(--ccm-radius-xl)"></div><code>--ccm-radius-xl</code> <b data-val="--ccm-radius-xl"></b><p>Banners, bands, pop-ups</p></li>
+          <li class="ds-shape"><div class="ds-shape__box" style="height:48px;margin-block:24px;border-radius:var(--ccm-radius-pill)"></div><code>--ccm-radius-pill</code><p>Buttons and tags</p></li>
+          <li class="ds-shape"><div class="ds-shape__box" style="width:96px;border-radius:var(--ccm-radius-round)"></div><code>--ccm-radius-round</code><p>Photos and icon buttons</p></li>
+        </ul>
+        <p>Rule: a box inside another box uses a smaller radius, for example a large card (16px) holding a list row (12px).</p>
+
+        <h3 class="ds-h3">Borders</h3>
+        <div class="ds-scroll">
+          <table class="ds-table">
+            <thead><tr><th>Token</th><th>Width</th><th>Sample</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td><code>--ccm-border-hairline</code></td><td class="num">1px</td><td><div style="width:120px;border-top:1px solid var(--ccm-line)"></div></td><td>Card borders, dividers (Gray l3)</td></tr>
+              <tr><td><code>--ccm-border-control</code></td><td class="num">2px</td><td><div style="width:120px;border-top:2px solid var(--ccm-turquoise)"></div></td><td>Outline buttons, focusable controls</td></tr>
+              <tr><td><code>--ccm-border-ring</code></td><td class="num">3px</td><td><div style="width:120px;border-top:3px solid var(--ccm-accent)"></div></td><td>Accent ring around photos</td></tr>
+              <tr><td><code>--ccm-border-bar</code></td><td class="num">4px</td><td><div style="width:120px;border-top:4px solid var(--ccm-accent)"></div></td><td>Bar under section titles, quote border</td></tr>
+              <tr><td><code>--ccm-border-band</code></td><td class="num">6px</td><td><div style="width:120px;border-top:6px solid var(--ccm-accent)"></div></td><td>Band under the page head</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3 class="ds-h3">Shadows</h3>
+        <ul class="ds-shapes">
+          <li class="ds-shape"><div class="ds-shape__box" style="border:0;background:#fff;border-radius:var(--ccm-radius-lg);box-shadow:var(--ccm-shadow-sm)"></div><code>--ccm-shadow-sm</code><p>Small lift: menus, sticky bars</p></li>
+          <li class="ds-shape"><div class="ds-shape__box" style="border:0;background:#fff;border-radius:var(--ccm-radius-lg);box-shadow:var(--ccm-shadow-md)"></div><code>--ccm-shadow-md</code><p>A card on hover</p></li>
+          <li class="ds-shape"><div class="ds-shape__box" style="border:0;background:#fff;border-radius:var(--ccm-radius-lg);box-shadow:var(--ccm-shadow-lg)"></div><code>--ccm-shadow-lg</code><p>Pop-ups and dialogs</p></li>
+        </ul>
+        <p>Cards at rest use a 1px border, not a shadow. Shadows are tinted with Turquoise d3, never pure black.</p>
+      </section>
+
+      <!-- ===================== 08 Motion ===================== -->
+      <section class="ds-sec" id="motion" aria-labelledby="h-motion">
+        <p class="ccm-eyebrow">08</p>
+        <h2 class="ccm-section__title" id="h-motion">Motion <span class="ds-badge ds-badge--ours">Our choice</span></h2>
+        <p class="ccm-lead">Short and quiet. Motion shows that something responded, and is never decoration.</p>
+        <div class="ds-scroll">
+          <table class="ds-table">
+            <thead><tr><th>Token</th><th class="num">Value</th><th>Use</th></tr></thead>
+            <tbody>
+              <tr><td><code>--ccm-duration-fast</code></td><td class="num" data-val="--ccm-duration-fast"></td><td>Hover colour changes</td></tr>
+              <tr><td><code>--ccm-duration</code></td><td class="num" data-val="--ccm-duration"></td><td>Cards lifting, arrows, toggles</td></tr>
+              <tr><td><code>--ccm-duration-slow</code></td><td class="num" data-val="--ccm-duration-slow"></td><td>Pop-ups and panels opening</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <ul class="ds-list">
+          <li>Move things by at most a few pixels (a card lifts 3px, an arrow moves 3px).</li>
+          <li>No auto-playing carousels, parallax or bouncing.</li>
+          <li>When someone's device asks for reduced motion, all animation is switched off. This is built into <code>base.css</code>.</li>
+          <li>An animated FAST Matrix must also respect reduced motion.</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 09 Icons ===================== -->
+      <section class="ds-sec" id="icons" aria-labelledby="h-icons">
+        <p class="ccm-eyebrow">09</p>
+        <h2 class="ccm-section__title" id="h-icons">Icons</h2>
+        <p class="ccm-lead">Simple line icons with rounded ends, in Turquoise. <span class="ds-badge ds-badge--brand">p70</span></p>
+        <ul class="ds-icons">
+          <li><span class="ccm-ico ccm-c-mail" aria-hidden="true"></span>ccm-c-mail</li>
+          <li><span class="ccm-ico ccm-c-phone" aria-hidden="true"></span>ccm-c-phone</li>
+          <li><span class="ccm-ico ccm-c-office" aria-hidden="true"></span>ccm-c-office</li>
+          <li><span class="ccm-ico ccm-c-web" aria-hidden="true"></span>ccm-c-web</li>
+          <li><span class="ccm-ico ccm-c-arrow" aria-hidden="true"></span>ccm-c-arrow</li>
+          <li><span class="ccm-ico ccm-c-external" aria-hidden="true"></span>ccm-c-external</li>
+          <li><span class="ccm-ico ccm-c-plus" aria-hidden="true"></span>ccm-c-plus</li>
+          <li><span class="ccm-ico ccm-c-chevron" aria-hidden="true"></span>ccm-c-chevron</li>
+          <li><span class="ccm-ico ccm-c-close" aria-hidden="true"></span>ccm-c-close</li>
+        </ul>
+        <ul class="ds-list">
+          <li><strong>Grid and stroke:</strong> 24px grid, 1.8px stroke, round ends and joins. <span class="ds-badge ds-badge--ours">Our choice</span></li>
+          <li><strong>Sizes:</strong> 16px next to 14px text, 18px next to 16px text, 24px standalone.</li>
+          <li><strong>Colour:</strong> Turquoise, or the text colour around it. Beige or White on Turquoise.</li>
+          <li><strong>Always with a label.</strong> An icon-only button needs hidden text (<code>ccm-sr-only</code>) saying what it does.</li>
+          <li><strong>Built with CSS, not &lt;svg&gt; tags</strong>, because Sitefinity's editor can strip SVG. Add classes to an element that has text:
+            icon and text <code>&lt;a class="ccm-has-ico ccm-c-mail" href="…"&gt;Email&lt;/a&gt;</code>;
+            icon alone <code>&lt;span class="ccm-ico ccm-c-mail"&gt;&lt;span class="ccm-sr-only"&gt;Email&lt;/span&gt;&lt;/span&gt;</code>.
+            Never leave the tag empty: the editor deletes empty tags.</li>
+          <li><strong>Illustrative icons:</strong> the official KFUPM icon set (Branding/04 Icongraphy, 13 icons) is for infographics and feature blocks, not small UI icons.</li>
+        </ul>
+        <p>Font Awesome, which the live sites use today, should be phased out. Its style doesn't match the brand.</p>
+      </section>
+
+      <!-- ===================== 10 Imagery ===================== -->
+      <section class="ds-sec" id="imagery" aria-labelledby="h-imagery">
+        <p class="ccm-eyebrow">10</p>
+        <h2 class="ccm-section__title" id="h-imagery">Photos, logos and brand graphics</h2>
+
+        <h3 class="ds-h3">People photos <span class="ds-badge ds-badge--ours">Our choice</span></h3>
+        <p>Today's photos are too small and inconsistent (the Dean's is 300 × 300px). New photos should follow one standard:</p>
+        <ul class="ds-list">
+          <li><strong>Original:</strong> at least 1000 × 1250px (4:5 portrait), head and shoulders, eyes in the top third.</li>
+          <li><strong>Background:</strong> plain and light, the same for everyone. Natural light, a real smile. <span class="ds-badge ds-badge--brand">p61: authentic</span></li>
+          <li><strong>For the web:</strong> export 800px wide, JPG, under 200 KB. The CMS crops circles and squares from it.</li>
+          <li><strong>Alt text:</strong> the person's name. Never "..." or the file name.</li>
+        </ul>
+
+        <h3 class="ds-h3">FAST Matrix <span class="ds-badge ds-badge--brand">KFUPM rule · p51–58</span></h3>
+        <p>The vertical-bar pattern in the header of this page is the FAST Matrix (pattern "Four", Green on Turquoise).</p>
+        <ul class="ds-list">
+          <li>Optional, and used sparingly: <strong>at most one pattern per page</strong>, like here.</li>
+          <li>Only the allowed colour pairs. On Turquoise: Green, Beige, White, Yellow, Sand, Blue or Gray. Never the college colour or Black.</li>
+          <li>Never rotate, flip, stretch, add a gradient, make the slant steeper, or cover a face with it.</li>
+          <li>Use the official SVG files (Branding/03 Fast Matrix). Mark it as decoration so screen readers skip it.</li>
+        </ul>
+
+        <h3 class="ds-h3">Logos <span class="ds-badge ds-badge--brand">KFUPM rule · p3–29</span></h3>
+        <ul class="ds-list">
+          <li>Use only the official files. Never redraw, recolour, stretch, outline or add shadows.</li>
+          <li><strong>Turquoise logo on light backgrounds, white logo on dark backgrounds.</strong> CCM files: <code>Computing_ShortHorizontal_C.svg</code> (light) and <code>Computing_ShortStack_W.svg</code> (dark).</li>
+          <li>Keep clear space equal to the icon height (1X) on every side. Keep the icon at least 24px tall. <span class="ds-badge ds-badge--ours">24px is our choice</span></li>
+          <li><strong>Each website uses its own logo:</strong> the CCM logo on the CCM site, the department logo on each department site. Upload it to that site's Images library and use its link.</li>
+        </ul>
+
+        <h4 class="ds-h4">Department logos</h4>
+        <p>From the branding team, in <code>Branding › CCM Logo › Departmentes Logo</code>. Each department has four versions: <strong>Shorthand Stacked</strong> (KFUPM Computing, with the department below) and <strong>Full Stacked</strong> (KFUPM, with the department below), each in colour and in white ("Negative").</p>
+        <ul class="ds-logos">
+          <li class="ds-logo"><div class="ds-logo__light"><img src="logos/ics-full-stacked.png" alt="KFUPM, Department of Information and Computer Science" width="2644" height="944" loading="lazy"></div><div class="ds-logo__dark"><img src="logos/ics-full-stacked-white.png" alt="" width="2644" height="944" loading="lazy"></div><p><b>ICS</b> · Full Stacked</p></li>
+          <li class="ds-logo"><div class="ds-logo__light"><img src="logos/coe-full-stacked.png" alt="KFUPM, Department of Computer Engineering" width="2558" height="944" loading="lazy"></div><div class="ds-logo__dark"><img src="logos/coe-full-stacked-white.png" alt="" width="2557" height="944" loading="lazy"></div><p><b>COE</b> · Full Stacked</p></li>
+          <li class="ds-logo"><div class="ds-logo__light"><img src="logos/math-full-stacked.png" alt="KFUPM, Department of Mathematics" width="2765" height="749" loading="lazy"></div><div class="ds-logo__dark"><img src="logos/math-full-stacked-white.png" alt="" width="2766" height="749" loading="lazy"></div><p><b>MATH</b> · Full Stacked</p></li>
+          <li class="ds-logo"><div class="ds-logo__light"><img src="logos/ise-full-stacked.png" alt="KFUPM, Department of Industrial and Systems Engineering" width="2459" height="944" loading="lazy"></div><div class="ds-logo__dark"><img src="logos/ise-full-stacked-white.png" alt="" width="2458" height="944" loading="lazy"></div><p><b>ISE</b> · Full Stacked</p></li>
+          <li class="ds-logo"><div class="ds-logo__light"><img src="logos/ics-shorthand-stacked.png" alt="KFUPM Computing, Department of Information and Computer Science" width="2692" height="701" loading="lazy"></div><div class="ds-logo__dark"><img src="logos/ics-shorthand-stacked-white.png" alt="" width="2693" height="701" loading="lazy"></div><p><b>ICS</b> · Shorthand Stacked (only when wide)</p></li>
+        </ul>
+        <ul class="ds-list">
+          <li><strong>Which version: Full Stacked by default.</strong> Its department name is about twice as big as in Shorthand Stacked, so it stays readable in a header. At 300px wide, the department name is about 21px in Full Stacked but only about 11px in Shorthand Stacked. <span class="ds-badge ds-badge--ours">Our choice</span></li>
+          <li><strong>Shorthand Stacked</strong> (which also shows "Computing") only where it can be <strong>at least 400px wide</strong>, for example in the footer or a large banner on desktop. Narrower than that, its department name gets smaller than 14px.</li>
+          <li><strong>Colour version on White or Beige; white version on Turquoise.</strong></li>
+          <li><strong>On the web, use the PNG files, not the SVG files.</strong> In the SVG files the department name is live text in Helvetica Now Display, a font browsers don't have, so it would show in the wrong font. The PNGs are about 2,700px wide, sharp at any size we need.</li>
+        </ul>
+        <div class="ds-note ds-note--todo"><p><strong>Still needed from the branding team:</strong> the CCM logo has SVG files only, and they have the same live-text problem. Ask for SVGs with the text outlined (converted to shapes) for CCM and the departments, a CCM PNG until then, and a favicon.</p></div>
+      </section>
+
+      <!-- ===================== 11 Components ===================== -->
+      <section class="ds-sec" id="components" aria-labelledby="h-components">
+        <p class="ccm-eyebrow">11</p>
+        <h2 class="ccm-section__title" id="h-components">Components</h2>
+        <p class="ccm-lead">The shared building blocks so far. People components (cards, org chart, directory) are on the <a href="../CCM/pages/dean-chairmen/index.html">Dean &amp; Chairmen options page</a>. New components are added here as we design more pages.</p>
+
+        <h3 class="ds-h3">Buttons</h3>
+        <div class="ds-demo">
+          <a class="ccm-btn ccm-btn--primary" href="#components">Primary</a>
+          <a class="ccm-btn ccm-btn--outline" href="#components">Outline</a>
+          <a class="ccm-btn ccm-btn--primary ccm-btn--sm" href="#components">Small</a>
+          <a class="ccm-more" href="#components" style="margin:0">Text link with arrow</a>
+        </div>
+        <div class="ds-demo ds-demo--dark">
+          <a class="ccm-btn ccm-btn--light" href="#components">Light (on Turquoise)</a>
+          <a class="ccm-btn ccm-btn--ghost" href="#components">Ghost (on Turquoise)</a>
+        </div>
+        <pre class="ds-pre"><code>&lt;a class="ccm-btn ccm-btn--primary" href="…"&gt;Apply now&lt;/a&gt;
+&lt;a class="ccm-btn ccm-btn--outline" href="…"&gt;Learn more&lt;/a&gt;
+&lt;a class="ccm-more" href="…"&gt;View profile&lt;/a&gt;</code></pre>
+        <p>One primary button per area. Labels are short verbs ("Apply now", "View profile"). Buttons are at least 44px tall; small buttons are 36px and need space around them.</p>
+
+        <h3 class="ds-h3">Titles and labels</h3>
+        <div class="ds-demo ds-demo--block">
+          <p class="ccm-eyebrow">Eyebrow label</p>
+          <h2 class="ccm-section__title" style="margin-bottom:var(--ccm-space-5)">Section Title</h2>
+          <p class="ccm-lead" style="margin-bottom:var(--ccm-space-4)">A lead paragraph introduces the section in one or two sentences.</p>
+          <span class="ccm-tag">COE</span> <span class="ccm-tag">Graduate</span> <span class="ccm-tag">New</span>
+        </div>
+        <pre class="ds-pre"><code>&lt;p class="ccm-eyebrow"&gt;Eyebrow label&lt;/p&gt;
+&lt;h2 class="ccm-section__title"&gt;Section Title&lt;/h2&gt;
+&lt;p class="ccm-lead"&gt;A lead paragraph…&lt;/p&gt;
+&lt;span class="ccm-tag"&gt;COE&lt;/span&gt;</code></pre>
+
+        <h3 class="ds-h3">Contact list</h3>
+        <div class="ds-demo ds-demo--block">
+          <ul class="ccm-contact">
+            <li class="ccm-c-mail"><a href="#components">name@kfupm.edu.sa</a></li>
+            <li class="ccm-c-phone"><a href="#components">+966 13 860 0000</a></li>
+            <li class="ccm-c-office">Building 22, Room 000</li>
+            <li class="ccm-c-web"><a href="#components">Personal website</a></li>
+          </ul>
+        </div>
+        <pre class="ds-pre"><code>&lt;ul class="ccm-contact"&gt;
+  &lt;li class="ccm-c-mail"&gt;&lt;a href="mailto:…"&gt;…&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="ccm-c-phone"&gt;&lt;a href="tel:+9661386…"&gt;+966 13 86…&lt;/a&gt;&lt;/li&gt;
+  &lt;li class="ccm-c-office"&gt;Building 22, Room 000&lt;/li&gt;
+&lt;/ul&gt;</code></pre>
+        <p>Phone numbers use one format everywhere: <code>+966 13 860 0000</code>, and offices use <code>Building 22, Room 000</code>. The live sites mix several formats today.</p>
+
+        <h3 class="ds-h3">Page head and sub-navigation</h3>
+        <div class="ds-demo ds-demo--flush">
+          <header class="ccm-page-head" style="padding-block:var(--ccm-space-7)">
+            <div class="ccm-container">
+              <ol class="ccm-page-head__crumbs"><li><a href="#components">Home</a></li><li><a href="#components">People</a></li><li aria-current="page">Faculty</li></ol>
+              <p class="ccm-page-head__title">Faculty</p>
+            </div>
+          </header>
+          <nav class="ccm-subnav" aria-label="Example"><div class="ccm-container"><ul class="ccm-subnav__list"><li><a class="ccm-subnav__link" href="#components" aria-current="page">Faculty</a></li><li><a class="ccm-subnav__link" href="#components">Staff</a></li><li><a class="ccm-subnav__link" href="#components">Adjunct Professors</a></li></ul></div></nav>
+        </div>
+        <p class="ds-src">On the live sites the page head comes from the Sitefinity page template. Changing it needs template access.</p>
+      </section>
+
+      <!-- ===================== 12 Accessibility ===================== -->
+      <section class="ds-sec" id="a11y" aria-labelledby="h-a11y">
+        <p class="ccm-eyebrow">12</p>
+        <h2 class="ccm-section__title" id="h-a11y">Accessibility</h2>
+        <p class="ccm-lead">Target: WCAG 2.2 level AA. These rules are also part of the <a href="checklist.html">page checklist</a>.</p>
+        <ul class="ds-list">
+          <li><strong>Contrast:</strong> text at least 4.5:1 (large text 3:1), and borders people must see at least 3:1. Use the table in section 02.</li>
+          <li><strong>Focus:</strong> every link and button shows a 3px Turquoise ring when reached with the keyboard (Beige on Turquoise).</li>
+          <li><strong>Touch targets:</strong> at least 44 × 44px.</li>
+          <li><strong>Headings in order:</strong> one H1 per page (the page title), then H2 for sections and H3 inside them. Don't skip levels for looks.</li>
+          <li><strong>Images:</strong> meaningful alt text. Decorative images and patterns use <code>alt=""</code> or <code>aria-hidden</code>.</li>
+          <li><strong>Links say where they go:</strong> "View Dr. Sultan's profile", not "Read more" repeated many times.</li>
+          <li><strong>No colour-only meaning:</strong> pair colour with text or an icon.</li>
+          <li><strong>Zoom:</strong> pages work at 200% zoom and at 320px width without sideways scrolling.</li>
+          <li><strong>Motion:</strong> respects reduced motion (built in).</li>
+        </ul>
+      </section>
+
+      <!-- ===================== 13 Use ===================== -->
+      <section class="ds-sec" id="use" aria-labelledby="h-use">
+        <p class="ccm-eyebrow">13</p>
+        <h2 class="ccm-section__title" id="h-use">How to use it</h2>
+        <h3 class="ds-h3">Files</h3>
+        <div class="ds-scroll">
+          <table class="ds-table">
+            <thead><tr><th>File</th><th>What it holds</th></tr></thead>
+            <tbody>
+              <tr><td><code>design-system/tokens.css</code></td><td>Every value on this page: colours, type, spacing, radius, breakpoints. <strong>Change values here only.</strong></td></tr>
+              <tr><td><code>design-system/components/*.css</code></td><td>Components, built only from tokens.</td></tr>
+              <tr><td><code>design-system/ccm.css</code></td><td>The single entry file that loads everything in order.</td></tr>
+              <tr><td><code>design-system/index.html</code></td><td>This guide. It reads its values from the CSS, so it's always up to date.</td></tr>
+              <tr><td><code>design-system/checklist.html</code></td><td>The page checklist: go through it after building every page.</td></tr>
+              <tr><td><code>design-system/page-types.html</code></td><td>Every page of the five sites grouped into page types, the order of work, how we agree on a design, and the decisions so far.</td></tr>
+              <tr><td><code>design-system/review.js</code></td><td>The review tools on compare pages: First choice / Could work / No, comments, Copy feedback. Preview only.</td></tr>
+              <tr><td><code>tools/check-page.mjs</code></td><td>The automatic part of the checklist. It reads a page and lists what breaks the rules.</td></tr>
+              <tr><td><code>&lt;SITE&gt;/upload/ccm-styles.css</code></td><td>Everything above in one file, built by <code>node tools/build-sitefinity.mjs</code>. Uploaded once to each site's library; every page links to it.</td></tr>
+              <tr><td><code>tools/compare-saved.mjs</code></td><td>Compares the HTML we pasted into a Content block with what Sitefinity saved, and lists anything the editor removed.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <h3 class="ds-h3">On a page</h3>
+        <pre class="ds-pre"><code>&lt;!-- 1. Once per page (Sitefinity: CSS widget → Link to a file). Later: once in the page template. --&gt;
+&lt;link rel="stylesheet" href="https://ccm.kfupm.edu.sa/docs/…/ccm-styles.css"&gt;
+
+&lt;!-- 2. Content (Sitefinity: Content block or Embed code) --&gt;
+&lt;div class="ccm-scope"&gt;
+  &lt;section class="ccm-section"&gt;
+    &lt;h2 class="ccm-section__title"&gt;Faculty&lt;/h2&gt;
+    …
+  &lt;/section&gt;
+&lt;/div&gt;</code></pre>
+        <h3 class="ds-h3">Content comes from the CMS <span class="ds-badge ds-badge--ours">Our decision</span></h3>
+        <p>Everything a page shows is put into Sitefinity first, and the page uses its <strong>link</strong>:</p>
+        <ul class="ds-list">
+          <li><strong>Photos and logos:</strong> upload them to <em>Content → Images</em>, then use the image's link in <code>src</code>.</li>
+          <li><strong>Documents</strong> (PDFs, forms, plans): upload them to <em>Content → Documents &amp; Files</em>, then link to them.</li>
+          <li><strong>Fonts and graphics used by the CSS:</strong> upload them once per site, and paste their links into <code>&lt;SITE&gt;/cms-links.json</code>. The build then writes those links into <code>ccm-styles.css</code>.</li>
+          <li><strong>The CSS itself:</strong> <code>ccm-styles.css</code> is uploaded once per site to <em>Documents &amp; Files</em>, and each page's CSS widget links to it. When the design changes, replace that one file and every page updates. The build prints a build code, and the test page shows which code a page is using.</li>
+          <li><strong>Text:</strong> typed into the page's Content block. Later, people pages will read straight from Sitefinity's People records, once template access arrives.</li>
+          <li>Never link to a file on a computer, a shared drive or another website, and never paste a file into the code. The automatic check stops these.</li>
+        </ul>
+        <div class="ds-note">
+          <p><strong>Why fonts must be uploaded:</strong> a font installed on your computer shows only on your computer. Visitors don't have it, so their browser downloads it from the website. That's why the font files go into each site's library. Each site needs its own copy, because browsers block fonts that come from another website.</p>
+        </div>
+
+        <h3 class="ds-h3">When to add something new</h3>
+        <ul class="ds-list">
+          <li>Need a colour, size or space that isn't here? First check whether an existing token works. If a new one is really needed, add it to <code>tokens.css</code> and to this page together.</li>
+          <li>New components go in <code>components/</code>, use the <code>ccm-</code> prefix, use only tokens, and get a demo in section 11.</li>
+          <li>No empty HTML tags and no &lt;svg&gt; in uploaded content: Sitefinity's editor can delete them.</li>
+        </ul>
+        <h3 class="ds-h3">After you build a page</h3>
+        <ol class="ds-list">
+          <li>Run the automatic check, and fix everything it marks as an error:
+            <pre class="ds-pre" style="margin:var(--ccm-space-3) 0"><code>node tools/check-page.mjs CCM/pages/dean-chairmen</code></pre></li>
+          <li>Open the <a href="checklist.html">page checklist</a> and go through the items a person has to look at: phone, tablet and desktop, the live page, keyboard use and wording.</li>
+          <li>Only then upload it to Sitefinity: Preview and Save as draft, never Publish before approval.</li>
+        </ol>
+      </section>
+
+      <!-- ===================== 14 Open decisions ===================== -->
+      <section class="ds-sec" id="open" aria-labelledby="h-open">
+        <p class="ccm-eyebrow">14</p>
+        <h2 class="ccm-section__title" id="h-open">Open decisions</h2>
+        <p class="ccm-lead">Things this system needs from other people before it's final.</p>
+        <div class="ds-scroll">
+          <table class="ds-table">
+            <thead><tr><th>#</th><th>Decision</th><th>Who</th><th>Until then</th></tr></thead>
+            <tbody>
+              <tr><td>1</td><td>The exact CCM college colour, used on all five sites (<a href="#college">section 03</a>)</td><td>KFUPM branding team</td><td>#4EABB1, the value the CCM team uses</td></tr>
+              <tr><td>2</td><td>Logo SVGs with the text outlined (CCM and departments), a CCM PNG, and a favicon. Department logos: received.</td><td>KFUPM branding team</td><td>Department PNGs</td></tr>
+              <tr><td>3</td><td>Access to Sitefinity page and widget templates (People, News and Events widgets; page layouts). The header, footer and side menu stay as they are for now.</td><td>Site administrator</td><td>Pages built as HTML + CSS</td></tr>
+              <tr><td>4</td><td>Allow <code>.woff2</code> font files and <code>.css</code> in each site's Documents library, if Sitefinity refuses them (the Sitefinity test checks this)</td><td>Site administrator</td><td>Plex from Google Fonts, KFUPM Display embedded, CSS pasted into each page</td></tr>
+              <tr><td>5</td><td>The ISE site (Django, not Sitefinity)</td><td>Later: one department at a time</td><td>On hold</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Live breakpoint pill and layout-grid overlay (guide only) -->
+  <div class="ds-bp" id="bp" aria-live="polite"></div>
+  <div class="ds-overlay" id="overlay" hidden><div class="ccm-container" id="overlay-cols"></div></div>
+</div>
+
+<script>
+// Guide-page script: fills swatches and tables from the live CSS values.
+(function () {
+  var root = document.documentElement;
+  function tok(name, el) { return getComputedStyle(el || root).getPropertyValue(name).trim(); }
+
+  // ---- contrast maths (WCAG 2) ----
+  function rgb(hex) {
+    hex = hex.replace('#', '');
+    if (hex.length === 3) hex = hex.replace(/./g, '$&$&');
+    return [0, 2, 4].map(function (i) { return parseInt(hex.substr(i, 2), 16); });
+  }
+  function lum(hex) {
+    var c = rgb(hex).map(function (v) { v /= 255; return v <= 0.04045 ? v / 12.92 : Math.pow((v + 0.055) / 1.055, 2.4); });
+    return 0.2126 * c[0] + 0.7152 * c[1] + 0.0722 * c[2];
+  }
+  function ratio(a, b) { var x = lum(a), y = lum(b); return (Math.max(x, y) + 0.05) / (Math.min(x, y) + 0.05); }
+  function onColour(bg) { return ratio('#FFFFFF', bg) >= ratio('#062022', bg) ? '#FFFFFF' : '#062022'; }
+
+  // ---- swatches ----
+  function fillSwatches() {
+    document.querySelectorAll('[data-swatch]').forEach(function (el) {
+      var name = el.getAttribute('data-swatch'), hex = tok(name).toUpperCase();
+      el.style.background = 'var(' + name + ')';
+      el.style.color = onColour(hex);
+      el.innerHTML = '<span><span class="ds-hex">' + hex + '</span><br>' + ratio(hex, '#FFFFFF').toFixed(2) + ':1 on White</span>';
+    });
+    document.querySelectorAll('[data-chip]').forEach(function (el) {
+      var name = el.getAttribute('data-chip'), v = tok(name), see = v.indexOf('rgb') === 0;
+      var bg = see ? 'linear-gradient(' + v + ',' + v + '),var(--ccm-turquoise)' : v; // see-through colours shown on Turquoise
+      el.innerHTML = '<span style="display:inline-flex;align-items:center;gap:8px"><i style="width:22px;height:22px;border-radius:6px;border:1px solid var(--ccm-line);background:' + bg + '"></i><span class="ds-hex" style="white-space:nowrap">' + (see ? v : v.toUpperCase()) + '</span></span>';
+    });
+    document.querySelectorAll('[data-val]').forEach(function (el) { el.textContent = tok(el.getAttribute('data-val')); });
+    var college = tok('--ccm-college').toUpperCase();
+    document.getElementById('college-white').textContent = ratio('#FFFFFF', college).toFixed(2) + ':1';
+    document.querySelectorAll('[data-cand]').forEach(function (c) { c.classList.toggle('is-on', c.getAttribute('data-cand') === college); });
+    document.querySelectorAll('[data-try]').forEach(function (b) {
+      var on = b.getAttribute('data-try') === college;
+      b.setAttribute('aria-pressed', on);
+      b.textContent = on ? 'Shown on this page' : 'Preview';
+    });
+  }
+
+  // ---- college colour preview (this page only; tokens.css is unchanged) ----
+  // A link can open the page with a candidate: index.html?college=4EABB1#college
+  document.querySelectorAll('[data-try]').forEach(function (b) {
+    b.addEventListener('click', function () {
+      root.style.setProperty('--ccm-college', b.getAttribute('data-try'));
+      fillSwatches();
+    });
+  });
+  var asked = (location.search.match(/[?&]college=([0-9a-f]{6})\b/i) || [])[1];
+  if (asked && document.querySelector('[data-try="#' + asked.toUpperCase() + '"]')) root.style.setProperty('--ccm-college', '#' + asked.toUpperCase());
+
+  // ---- web palette ramps ----
+  var colours = [['turquoise', 'Turquoise'], ['green', 'Green'], ['beige', 'Beige'], ['sand', 'Sand'], ['yellow', 'Yellow'], ['blue', 'Blue'], ['gray', 'Gray']];
+  var steps = ['l3', 'l2', 'l1', '', 'd1', 'd2', 'd3'];
+  var ramps = '<div class="ds-ramp ds-ramp--head"><span></span>' + steps.map(function (s) { return '<span class="ds-chip">' + (s || 'base') + '</span>'; }).join('') + '</div>';
+  colours.forEach(function (c) {
+    ramps += '<div class="ds-ramp"><span class="ds-ramp__name">' + c[1] + '</span>' + steps.map(function (s) {
+      var name = '--ccm-' + c[0] + (s ? '-' + s : ''), hex = tok(name).toUpperCase();
+      return '<span class="ds-chip' + (s ? '' : ' is-base') + '" style="background:' + hex + ';color:' + onColour(hex) + '" title="' + name + '"><b class="ds-hex" style="font-size:11px">' + hex + '</b>' + name.replace('--ccm-', '') + '</span>';
+    }).join('') + '</div>';
+  });
+  document.getElementById('ramps').innerHTML = ramps;
+
+  // ---- contrast matrix: brand statuses from guidelines p32 ----
+  var names = { White: '#FFFFFF', Black: '#000000', Turquoise: '#115F66', Green: '#009767', Beige: '#ECE0C7', Sand: '#AA8C6D', Yellow: '#F0BA4F', Blue: '#71B8D4', Gray: '#ADACAD' };
+  var brand = { // background: { pass: [...], large: [...] } (anything else: not approved)
+    Turquoise: { pass: ['White', 'Beige', 'Yellow'], large: ['Green', 'Sand', 'Blue'] },
+    Green: { pass: ['White', 'Black'], large: ['Turquoise', 'Beige'] },
+    Beige: { pass: ['Turquoise', 'Green', 'Black'], large: ['Sand'] },
+    Sand: { pass: ['White'], large: ['Beige', 'Yellow', 'Black'] },
+    Yellow: { pass: ['Turquoise', 'Black'], large: ['White'] },
+    Blue: { pass: ['White', 'Turquoise', 'Black'], large: [] },
+    Gray: { pass: ['White', 'Turquoise', 'Black'], large: [] },
+    White: null
+  };
+  var texts = ['White', 'Black', 'Turquoise', 'Green', 'Beige', 'Sand', 'Yellow', 'Blue', 'Gray'];
+  var m = '<thead><tr><th>Background ↓ · Text →</th>' + texts.map(function (t) { return '<th>' + t + '</th>'; }).join('') + '</tr></thead><tbody>';
+  Object.keys(brand).forEach(function (bg) {
+    m += '<tr><th>' + bg + '</th>';
+    texts.forEach(function (t) {
+      if (t === bg) { m += '<td class="ds-cell is-self"></td>'; return; }
+      var r = ratio(names[t], names[bg]), b = brand[bg], status;
+      var brandOk = !b || b.pass.indexOf(t) > -1, brandLarge = !b || brandOk || b.large.indexOf(t) > -1;
+      if (brandOk && r >= 4.5) status = ['ok', 'OK'];
+      else if (brandLarge && r >= 3) status = ['lg', 'L'];
+      else status = ['no', 'No'];
+      m += '<td class="ds-cell" style="background:' + names[bg] + ';color:' + names[t] + (bg === 'White' ? ';box-shadow:inset 0 0 0 1px var(--ccm-line)' : '') + '"><b>Aa</b><small>' + r.toFixed(2) + '</small><span class="ds-mark ds-mark--' + status[0] + '">' + status[1] + '</span></td>';
+    });
+    m += '</tr>';
+  });
+  document.getElementById('matrix').innerHTML = m + '</tbody>';
+
+  // ---- type scale ----
+  var rem = 16;
+  function sizeAt(value, width) {
+    var px, c = value.match(/clamp\(\s*([\d.]+)rem\s*,\s*([\d.]+)rem\s*\+\s*([\d.]+)vw\s*,\s*([\d.]+)rem\s*\)/);
+    if (c) px = Math.min(Math.max(c[2] * rem + c[3] * width / 100, c[1] * rem), c[4] * rem);
+    else { var f = value.match(/([\d.]+)rem/); if (!f) return '?'; px = f[1] * rem; }
+    return String(Math.round(px * 10) / 10);
+  }
+  var D = 'KFUPM Display', P = 'Plex';
+  var styles = [
+    ['Display', '--ccm-text-display', D, 700, '--ccm-leading-tight', 'Homepage hero only', 'Computing the future', 6],
+    ['H1', '--ccm-text-h1', D, 700, '--ccm-leading-tight', 'Page title (one per page)', 'Dean & Chairmen', 5],
+    ['H2', '--ccm-text-h2', D, 700, '--ccm-leading-snug', 'Section titles', 'Academic Chairmen', 4],
+    ['H3', '--ccm-text-h3', D, 700, '--ccm-leading-snug', 'Sub-sections, featured names', 'Program objectives', 3],
+    ['H4', '--ccm-text-h4', D, 700, '--ccm-leading-snug', 'Card titles, person names', 'Dr. Malak Baslyman', 2],
+    ['H5', '--ccm-text-h5', D, 700, '--ccm-leading-snug', 'Small cards (smallest Display size)', 'Embedded Systems Lab', 1],
+    ['Lead', '--ccm-text-lead', P, 400, '--ccm-leading-body', 'Intro paragraph under a title', 'One or two sentences of context.', 1],
+    ['Body', '--ccm-text-body', P, 400, '--ccm-leading-body', 'Paragraphs, lists (minimum size)', 'The department offers BS, MS and PhD programs.', 0],
+    ['Small', '--ccm-text-sm', P, '400–600', '1.55', 'Contact lines, dates, buttons, captions', 'Building 22, Room 305', 'fixed'],
+    ['Label', '--ccm-text-xs', P, 600, '1.35', 'UPPERCASE labels and tags only', 'CHAIRMAN', 'fixed']
+  ];
+  var rows = styles.map(function (s) {
+    var v = tok(s[1]), lh = s[4].indexOf('--') === 0 ? tok(s[4]) : s[4];
+    var font = s[2] === D ? 'var(--ccm-font-display)' : 'var(--ccm-font-body)';
+    var w = String(s[3]).split('–')[0];
+    var spec = '<span class="ds-spec" style="font-family:' + font + ';font-weight:' + w + ';font-size:var(' + s[1] + ');line-height:' + lh + (s[0] === 'Label' ? ';text-transform:uppercase;letter-spacing:var(--ccm-tracking-caps)' : '') + '">' + s[6].replace('&', '&amp;') + '</span>';
+    return '<tr><td><b>' + s[0] + '</b> <code>' + s[1] + '</code><small>' + s[2] + ' ' + s[3] + ' · line height ' + lh + '</small></td><td>' + spec + '</td>' +
+      '<td class="num">' + s[7] + '</td>' +
+      [360, 820, 1280].map(function (w) { return '<td class="num">' + sizeAt(v, w) + 'px</td>'; }).join('') +
+      '<td>' + s[5] + '</td></tr>';
+  });
+  document.querySelector('#type-table tbody').innerHTML = rows.join('');
+
+  // ---- spacing scale ----
+  var uses = ['Icon to text', 'Small gaps, tag padding', 'Between lines of a list', 'Card padding (small), between items', 'Between name and details', 'Card padding', 'Title to content', 'Between groups', 'Between components', 'Between sections (tablet)', 'Between sections (desktop)', 'Large hero spacing'];
+  var sp = '';
+  for (var i = 1; i <= 12; i++) {
+    var v = tok('--ccm-space-' + i), px = Math.round(parseFloat(v) * rem);
+    sp += '<div class="ds-space"><code>--ccm-space-' + i + '</code><span class="num">' + px + 'px</span><i style="width:' + px * 3 + 'px;max-width:100%"></i><em>' + uses[i - 1] + '</em></div>';
+  }
+  document.getElementById('space-scale').innerHTML = sp;
+
+  // ---- live breakpoint pill ----
+  var bps = [[0, 'Phone', 'xs'], [576, 'Large phone', 'sm'], [768, 'Tablet', 'md'], [992, 'Laptop', 'lg'], [1200, 'Desktop', 'xl'], [1400, 'Large desktop', 'xxl']];
+  function updateBp() {
+    var w = window.innerWidth, cur = bps[0];
+    bps.forEach(function (b) { if (w >= b[0]) cur = b; });
+    document.getElementById('bp').innerHTML = w + 'px · <b>' + cur[1] + ' (' + cur[2] + ')</b> · ' + tok('--ccm-cols') + ' columns · margin ' + tok('--ccm-page-margin') + ' · gutter ' + tok('--ccm-gutter');
+    document.querySelectorAll('#bp-table tbody tr').forEach(function (tr) { tr.classList.toggle('is-current', +tr.getAttribute('data-min') === cur[0]); });
+    var cols = +tok('--ccm-cols') || 12, ov = document.getElementById('overlay-cols');
+    if (ov.children.length !== cols) ov.innerHTML = new Array(cols + 1).join('<i></i>');
+  }
+  window.addEventListener('resize', updateBp);
+
+  // ---- grid overlay ----
+  var gridBtn = document.getElementById('grid-toggle');
+  gridBtn.addEventListener('click', function () {
+    var on = gridBtn.getAttribute('aria-pressed') !== 'true';
+    gridBtn.setAttribute('aria-pressed', on);
+    gridBtn.textContent = on ? 'Hide layout grid' : 'Show layout grid';
+    document.getElementById('overlay').hidden = !on;
+  });
+
+  fillSwatches();
+  updateBp();
+})();
+</script>
+</body>
+</html>

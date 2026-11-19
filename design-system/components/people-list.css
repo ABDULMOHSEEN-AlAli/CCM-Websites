@@ -29,22 +29,22 @@
   width: 148px;
   height: 148px;
   padding: 4px;
-  border: 3px solid var(--ccm-college);
-  border-radius: 50%;
+  border: 3px solid var(--ccm-accent);
+  border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
   object-position: center 20%;
 }
 .ccm-person__body {
   min-width: 0;
-  padding-top: .6rem;
+  padding-top: var(--ccm-space-2);
 }
 .ccm-person__name {
   font-family: var(--ccm-font-display);
   font-weight: 700;
-  font-size: 1.375rem;
+  font-size: var(--ccm-text-h4);
   line-height: 1.25;
-  margin: 0 0 .3rem;
+  margin: 0 0 var(--ccm-space-1);
   color: var(--ccm-turquoise);
 }
 .ccm-person__name a,
@@ -56,19 +56,19 @@
 .ccm-person__name a:focus-visible {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: var(--ccm-college);
+  text-decoration-color: var(--ccm-accent);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
 }
 .ccm-person__role {
   margin: 0 0 1rem;
   font-weight: 500;
-  color: var(--ccm-ink);
+  color: var(--ccm-text);
 }
 .ccm-person__unit {
   display: block;
   font-weight: 400;
-  color: var(--ccm-ink-muted);
+  color: var(--ccm-text-muted);
 }
 
 /* Featured: the Dean */
@@ -76,15 +76,15 @@
   grid-column: 1 / -1;
   gap: 2.25rem;
   padding: 2rem;
-  border-radius: var(--ccm-radius);
-  background: var(--ccm-beige-light);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface-soft);
 }
 .ccm-person--featured .ccm-person__photo {
   width: 200px;
   height: 200px;
 }
 .ccm-person--featured .ccm-person__name {
-  font-size: clamp(1.6rem, 1.3rem + 1vw, 2rem);
+  font-size: var(--ccm-text-h3);
 }
 .ccm-person--featured .ccm-contact {
   grid-template-columns: repeat(auto-fit, minmax(240px, max-content));
@@ -92,9 +92,9 @@
 }
 
 /* Narrow column (phones) */
-@container (max-width: 540px) {
+@container (max-width: 539.98px) {
   .ccm-person {
-    gap: 1.1rem;
+    gap: var(--ccm-space-4);
   }
   .ccm-person__photo {
     width: 104px;
@@ -102,10 +102,10 @@
     padding: 3px;
   }
   .ccm-person__body {
-    padding-top: .2rem;
+    padding-top: var(--ccm-space-1);
   }
   .ccm-person__name {
-    font-size: 1.2rem;
+    font-size: var(--ccm-text-h5);
   }
   .ccm-person--featured {
     flex-direction: column;

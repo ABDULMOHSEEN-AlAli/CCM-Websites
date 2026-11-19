@@ -1,22 +1,28 @@
 /* ==========================================================================
-   CCM design system: entry file
+   CCM Web Design System: entry file
    ONE stylesheet shared by all five sites (CCM, ICS, COE, MATH, ISE).
+   Visual guide: design-system/index.html
 
    - Prototypes link this file.
    - tools/build-sitefinity.mjs inlines the imports below, in this order,
      into a single paste-ready file.
    - Every class starts with `ccm-` and lives inside `.ccm-scope`, so nothing
      collides with each site's own theme (Bootstrap etc.).
-   - Components that respond to width use container queries on
-     `.ccm-section`, so they adapt to the column they are placed in, not the
-     whole screen. (In Sitefinity the content column sits beside a sidebar.)
+   - All five sites use the same CCM colouring. Departments have no colour
+     of their own, so there is nothing to switch per site.
+   - Components that respond to width use container queries on `.ccm-section`
+     at 540 / 720 / 860 px, so they adapt to the column they are placed in,
+     not the whole screen. (In Sitefinity the content column sits beside a
+     sidebar.)
    ========================================================================== */
 @import url("tokens.css");
 @import url("components/base.css");
 @import url("components/icons.css");
 
-/* People components. Several are design options for the Dean & Chairmen
-   page. Delete the ones that are not chosen. */
+/* People components. These are design options for the Dean & Chairmen
+   page. Colours, radius, shadows and motion use tokens; some spacing and
+   font sizes are still fixed values. Align the chosen ones to the scale
+   and delete the rest. */
 @import url("components/people-list.css");    /* option 1 */
 @import url("components/people-cards.css");   /* options 2 and 3 */
 @import url("components/profile-popup.css");  /* options 2 and 3 */

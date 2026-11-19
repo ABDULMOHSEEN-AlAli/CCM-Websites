@@ -18,8 +18,14 @@
      <div class="ccm-profile__body"> <ul class="ccm-contact">…</ul> <div class="ccm-actions">…</div> </div>
    </div>
 
-   Keep the pop-ups inside .ccm-scope (for fonts) but outside .ccm-section.
+   Keep the pop-ups inside .ccm-scope (for fonts) but outside .ccm-section,
+   grouped in one <div class="ccm-profiles"> after the last section.
    ========================================================================== */
+
+/* The group of pop-ups: takes no space on the page (they open on top). */
+.ccm-profiles {
+  display: contents;
+}
 
 /* Note: never set `display` on .ccm-profile itself. The browser hides a
    closed popover with display:none, and our rule would override that. */
@@ -33,18 +39,18 @@
   padding: 0;
   overflow: auto;
   border: 0;
-  border-radius: 20px;
+  border-radius: var(--ccm-radius-xl);
   background: var(--ccm-white);
-  color: var(--ccm-ink);
+  color: var(--ccm-text);
   font-family: var(--ccm-font-body);
   line-height: 1.55;
-  box-shadow: 0 30px 80px -20px rgb(6 32 34 / .5);
+  box-shadow: var(--ccm-shadow-lg);
 }
 .ccm-profile:popover-open {
-  animation: ccm-profile-in .22s ease-out;
+  animation: ccm-profile-in var(--ccm-duration-slow) var(--ccm-ease-out);
 }
 .ccm-profile::backdrop {
-  background: rgb(6 32 34 / .6);
+  background: var(--ccm-backdrop);
 }
 @keyframes ccm-profile-in {
   from {
@@ -70,8 +76,8 @@
   width: 112px;
   height: 112px;
   padding: 4px;
-  border: 3px solid var(--ccm-college);
-  border-radius: 50%;
+  border: 3px solid var(--ccm-accent);
+  border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
   object-position: center 20%;
@@ -80,13 +86,13 @@
   margin: 0 0 .25rem;
   font-family: var(--ccm-font-display);
   font-weight: 700;
-  font-size: clamp(1.4rem, 1.2rem + .8vw, 1.75rem);
+  font-size: var(--ccm-text-h3);
   line-height: 1.2;
   color: var(--ccm-white);
 }
 .ccm-profile__unit {
   margin: 0;
-  color: rgba(255, 255, 255, .85);
+  color: var(--ccm-text-inverse-muted);
 }
 .ccm-profile__close {
   position: absolute;
@@ -99,11 +105,11 @@
   margin: 0;
   padding: 0;
   border: 0;
-  border-radius: 50%;
-  background: rgba(255, 255, 255, .14);
+  border-radius: var(--ccm-radius-round);
+  background: var(--ccm-fill-inverse);
   color: var(--ccm-white);
   cursor: pointer;
-  transition: background-color .15s ease;
+  transition: background-color var(--ccm-duration-fast) var(--ccm-ease);
 }
 .ccm-profile__close::before {
   content: "";
@@ -115,7 +121,7 @@
 }
 .ccm-profile__close:hover,
 .ccm-profile__close:focus-visible {
-  background: rgba(255, 255, 255, .26);
+  background: var(--ccm-fill-inverse-strong);
 }
 .ccm-profile__close:focus-visible {
   outline: 3px solid var(--ccm-beige);
@@ -127,9 +133,9 @@
 }
 .ccm-profile__body .ccm-contact {
   --ccm-ico-size: 18px;
-  gap: .8rem;
-  font-size: .95rem;
-  color: var(--ccm-ink);
+  gap: var(--ccm-space-3);
+  font-size: var(--ccm-text-sm);
+  color: var(--ccm-text);
 }
 .ccm-profile__body .ccm-actions {
   margin-top: 1.75rem;
@@ -143,7 +149,7 @@
     max-width: 100%;
     max-height: 90vh;
     margin: 0;
-    border-radius: 20px 20px 0 0;
+    border-radius: var(--ccm-radius-xl) var(--ccm-radius-xl) 0 0;
   }
   .ccm-profile:popover-open {
     animation-name: ccm-profile-up;

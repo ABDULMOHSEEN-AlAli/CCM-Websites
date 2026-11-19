@@ -1,7 +1,7 @@
 // Take preview screenshots of prototype pages with Microsoft Edge (headless).
 //
 //   node tools/screenshot.mjs CCM/pages/dean-chairmen
-//       → every option-*.html in that folder
+//       → every page in that folder (each .html except index.html)
 //   node tools/screenshot.mjs CCM/pages/dean-chairmen/option-2-name-cards.html "#show=profile-sultan" popup
 //       → one page, in a given state (see design-system/preview.js), saved with a suffix
 //
@@ -32,7 +32,7 @@ if (!target) {
 }
 const abs = path.resolve(ROOT, target);
 const files = statSync(abs).isDirectory()
-  ? readdirSync(abs).filter((f) => /^option-.*\.html$/.test(f)).sort().map((f) => path.join(abs, f))
+  ? readdirSync(abs).filter((f) => f.endsWith('.html') && f !== 'index.html').sort().map((f) => path.join(abs, f))
   : [abs];
 
 const tmp = mkdtempSync(path.join(tmpdir(), 'ccm-shot-'));

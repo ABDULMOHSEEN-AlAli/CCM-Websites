@@ -1,11 +1,17 @@
 /* ==========================================================================
-   CCM design tokens
-   Source of truth: KFUPM Branding folder (OneDrive) — see CLAUDE.md.
-   Colours marked "derived" are not in the brand swatches; they are tints/shades
-   used for UI states and should be reviewed against the brand guidelines.
+   CCM Web Design System: TOKENS
+   The single source of truth for colour, type, spacing, shape, motion and
+   layout, shared by all five sites (CCM, ICS, COE, MATH, ISE).
+   Shown visually in design-system/index.html, which reads these values live.
+
+   Source: KFUPM Brand Guidelines (Branding folder), summarised in
+   reference/brand/kfupm-brand-web.md. "p39" = PDF page 39.
+   Anything marked (our choice) is not specified in the guidelines.
    ========================================================================== */
 
-/* ---- Fonts (files copied from Branding/01 Font) ---- */
+/* ---- Fonts (from Branding/01 Font; Plex converted to WOFF2, the web format) ----
+   These local files are for the prototypes. On the live sites the build links
+   to the copies uploaded to each site's Sitefinity library (<SITE>/cms-links.json). */
 @font-face {
   font-family: "KFUPM Display";
   src: url("fonts/KFUPM-Regular.woff2") format("woff2");
@@ -29,40 +35,40 @@
 }
 @font-face {
   font-family: "IBM Plex Sans Arabic";
-  src: url("fonts/IBMPlexSansArabic-Regular.ttf") format("truetype");
+  src: url("fonts/IBMPlexSansArabic-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "IBM Plex Sans Arabic";
-  src: url("fonts/IBMPlexSansArabic-Medium.ttf") format("truetype");
+  src: url("fonts/IBMPlexSansArabic-Medium.woff2") format("woff2");
   font-weight: 500;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "IBM Plex Sans Arabic";
-  src: url("fonts/IBMPlexSansArabic-SemiBold.ttf") format("truetype");
+  src: url("fonts/IBMPlexSansArabic-SemiBold.woff2") format("woff2");
   font-weight: 600;
   font-style: normal;
   font-display: swap;
 }
 @font-face {
   font-family: "IBM Plex Sans Arabic";
-  src: url("fonts/IBMPlexSansArabic-Bold.ttf") format("truetype");
+  src: url("fonts/IBMPlexSansArabic-Bold.woff2") format("woff2");
   font-weight: 700;
   font-style: normal;
   font-display: swap;
 }
 
 :root {
-  /* KFUPM primary */
+  /* ---- 1. Brand palette (p31) ------------------------------------------ */
+  /* Primary: must dominate every page */
   --ccm-turquoise: #115F66;
   --ccm-green: #009767;
   --ccm-beige: #ECE0C7;
-
-  /* KFUPM secondary */
+  /* Secondary (accent) colours */
   --ccm-sand: #AA8C6D;
   --ccm-yellow: #F0BA4F;
   --ccm-blue: #71B8D4;
@@ -70,28 +76,184 @@
   --ccm-white: #FFFFFF;
   --ccm-black: #000000;
 
-  /* College of Computing and Mathematics colour — VALUE UNRESOLVED.
-     Sources disagree: .ase #9BC9C3 · PDF label #6BBDBE · logo SVGs #4EABB1
-     (see reference/brand/kfupm-brand-web.md). Using the .ase screen swatch until
-     the branding team confirms. Brand rule: accent only, always alongside the
-     primary palette. Too light for text on white — rings, bars, borders only. */
-  --ccm-college: #9BC9C3;
+  /* ---- 2. Web palette (p39): 3 lighter (l1–l3) and 3 darker (d1–d3) steps
+          per colour. Use only these for UI colours; never invent new ones. -- */
+  --ccm-turquoise-l1: #699599;  --ccm-turquoise-l2: #8FAFB3;  --ccm-turquoise-l3: #B5CACC;
+  --ccm-turquoise-d1: #0B3F44;  --ccm-turquoise-d2: #093032;  --ccm-turquoise-d3: #062022;
+  --ccm-green-l1: #70BA9A;      --ccm-green-l2: #95CBB3;      --ccm-green-l3: #B9DDCD;
+  --ccm-green-d1: #016445;      --ccm-green-d2: #014C34;      --ccm-green-d3: #003222;
+  --ccm-beige-l1: #F3EADA;      --ccm-beige-l2: #F6EFE3;      --ccm-beige-l3: #F9F5EC;
+  --ccm-beige-d1: #C2B8A3;      --ccm-beige-d2: #9B9283;      --ccm-beige-d3: #767064;
+  --ccm-sand-l1: #C6B29E;       --ccm-sand-l2: #D5C6B6;       --ccm-sand-l3: #E3D9CF;
+  --ccm-sand-d1: #715D49;       --ccm-sand-d2: #554637;       --ccm-sand-d3: #392F24;
+  --ccm-yellow-l1: #F5D18E;     --ccm-yellow-l2: #F8DDAB;     --ccm-yellow-l3: #FAE8C7;
+  --ccm-yellow-d1: #9D7C35;     --ccm-yellow-d2: #785D28;     --ccm-yellow-d3: #503E1A;
+  --ccm-blue-l1: #A2D0E3;       --ccm-blue-l2: #BADCEA;       --ccm-blue-l3: #D1E8F1;
+  --ccm-blue-d1: #4B7B8A;       --ccm-blue-d2: #395C6A;       --ccm-blue-d3: #263C47;
+  --ccm-gray-l1: #C8C8C8;       --ccm-gray-l2: #D6D5D6;       --ccm-gray-l3: #E4E3E4;
+  --ccm-gray-d1: #737373;       --ccm-gray-d2: #575657;       --ccm-gray-d3: #3A393A;
 
-  /* UI colours — steps from the brand's web palette (guidelines p39/61) */
-  --ccm-beige-light: #F6EFE3;      /* Beige lighter 2 — soft panels */
-  --ccm-turquoise-dark: #0B3F44;   /* Turquoise darker 1 — hover/pressed */
-  --ccm-ink: #062022;              /* Turquoise darker 3 — body text, 17.5:1 on white */
-  --ccm-ink-muted: #575657;        /* Gray darker 2 — secondary text, 7.4:1 on white */
-  --ccm-line: #E4E3E4;             /* Gray lighter 3 — hairlines */
+  /* ---- 3. Feedback colours (p39) ------------------------------------- */
+  --ccm-success: #2AA880;
+  --ccm-error: #DE5E5E;
+  --ccm-error-strong: #D54040;  /* the only error red that passes 4.5:1 on white */
+  --ccm-warning: #F2C56C;
+  --ccm-info: #89C4DB;
 
-  /* Shape and depth (not from the guidelines; layout choices) */
-  --ccm-radius: 16px;
-  --ccm-radius-lg: 24px;
-  --ccm-shadow: 0 16px 36px -18px rgb(6 32 34 / .32);
+  /* ---- 4. CCM college colour: EXACT VALUE NOT CONFIRMED YET ------------
+     The brand files disagree (see "The CCM college colour" in index.html):
+       #6BBDBE  guidelines PDF label, p34 (HEX, RGB, CMYK and Pantone 7472 U agree)
+       #49C0BF  how the PDF actually shows it on screen (about)
+       #4EABB1  the CCM logo files (*_CollegeColor.svg)
+       #9BC9C3  the colour swatch file (.ase): paler, the odd one out
+     Using #4EABB1, the value the CCM team already uses (decision,
+     19 Nov 2026), until the KFUPM branding team confirms.
+     Brand rule (p36): an accent only, always next to the primary palette. */
+  --ccm-college: #4EABB1;
 
-  /* Type — guidelines: KFUPM Display for headlines, IBM Plex Sans Arabic for
-     body, Segoe UI as fallback. KFUPM Display is already slanted 5°: never
-     apply font-style: italic to it. */
+  /* ---- 5. Accent: the CCM college colour, the SAME on all five sites ----
+     CCM, ICS, COE, MATH and ISE all use CCM colouring. Departments have no
+     colour of their own (decision, 19 Nov 2026).
+     Decoration only: rings, bars, lines and bands. Never text, never a
+     large background. */
+  --ccm-accent: var(--ccm-college);
+
+  /* ---- 6. Semantic roles: components use THESE, not raw colours ------- */
+  --ccm-text: var(--ccm-turquoise-d3);          /* body text and headings, 17.5:1 on white */
+  --ccm-text-muted: var(--ccm-gray-d2);         /* secondary text, 7.4:1 on white */
+  --ccm-text-inverse: var(--ccm-white);         /* text on Turquoise */
+  --ccm-text-inverse-muted: rgb(255 255 255 / .86); /* secondary text on Turquoise, 5.8:1 */
+  --ccm-line-inverse: rgb(255 255 255 / .55);   /* borders on Turquoise */
+  --ccm-fill-inverse: rgb(255 255 255 / .14);   /* light fill on Turquoise: icon buttons, ghost-button hover */
+  --ccm-fill-inverse-strong: rgb(255 255 255 / .26); /* hover of a filled control on Turquoise */
+  --ccm-backdrop: rgb(6 32 34 / .6);            /* dims the page behind a pop-up (Turquoise d3) */
+  --ccm-link: var(--ccm-turquoise);             /* 7.4:1 on white */
+  --ccm-link-hover: var(--ccm-turquoise-d1);
+  --ccm-surface: var(--ccm-white);              /* page background */
+  --ccm-surface-soft: var(--ccm-beige-l2);      /* panels, highlighted cards */
+  --ccm-surface-strong: var(--ccm-turquoise);   /* bands, banners, primary buttons */
+  --ccm-line: var(--ccm-gray-l3);               /* hairlines and card borders (decorative) */
+  --ccm-line-strong: var(--ccm-sand);           /* borders of controls, 3.1:1 on white */
+  --ccm-focus: var(--ccm-turquoise);            /* keyboard focus ring */
+
+  /* ---- 7. Typography ---------------------------------------------------
+     KFUPM Display: headlines only, 18px and up, weight 700 (p42, p49).
+     IBM Plex Sans Arabic: everything else (p46). Segoe UI: fallback (p47). */
   --ccm-font-display: "KFUPM Display", "Segoe UI", system-ui, sans-serif;
   --ccm-font-body: "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+
+  --ccm-weight-regular: 400;
+  --ccm-weight-medium: 500;
+  --ccm-weight-semibold: 600;
+  --ccm-weight-bold: 700;
+
+  /* Type scale (our choice): a FLUID MODULAR SCALE.
+     - Modular scale: each step is the one below it times a fixed ratio.
+       size = 16px × ratio^step
+     - Ratio 1.125 ("Major Second") on phones (360px screen), growing to
+       1.2 ("Minor Third") on desktops (1280px screen and wider).
+     - Between 360 and 1280px the size grows smoothly (fluid type), written
+       as clamp(phone size, growth, desktop size). Sizes stop growing at
+       1280px, where the content area reaches its 1200px maximum.
+     - Body, small and label text stay fixed (16 / 14 / 12px): text below
+       16px gets too small to read if it follows the ratio down.
+     Regenerate: min = 16 × 1.125^n, max = 16 × 1.2^n, interpolated 360→1280. */
+  --ccm-text-display: clamp(2.0273rem, 1.6521rem + 1.6673vw, 2.986rem); /* step 6: 32.4 → 47.8px  homepage hero */
+  --ccm-text-h1: clamp(1.802rem, 1.5335rem + 1.1935vw, 2.4883rem);      /* step 5: 28.8 → 39.8px  page title */
+  --ccm-text-h2: clamp(1.6018rem, 1.4172rem + .8205vw, 2.0736rem);      /* step 4: 25.6 → 33.2px  section title */
+  --ccm-text-h3: clamp(1.4238rem, 1.3048rem + .529vw, 1.728rem);        /* step 3: 22.8 → 27.6px  sub-section, featured name */
+  --ccm-text-h4: clamp(1.2656rem, 1.1974rem + .3033vw, 1.44rem);        /* step 2: 20.3 → 23.0px  card title, person name */
+  --ccm-text-h5: clamp(1.125rem, 1.0957rem + .1304vw, 1.2rem);          /* step 1: 18.0 → 19.2px  small card title (smallest Display size) */
+  --ccm-text-lead: var(--ccm-text-h5);                                  /* step 1: 18.0 → 19.2px  intro paragraph */
+  --ccm-text-body: 1rem;     /* step 0: 16px  body text, the minimum for paragraphs */
+  --ccm-text-sm: .875rem;    /* fixed 14px  meta, contact lines, buttons, captions */
+  --ccm-text-xs: .75rem;     /* fixed 12px  UPPERCASE labels and tags only */
+
+  --ccm-leading-tight: 1.15; /* display, h1 */
+  --ccm-leading-snug: 1.25;  /* h2–h5, names */
+  --ccm-leading-body: 1.6;   /* paragraphs */
+  --ccm-tracking-caps: .1em; /* UPPERCASE labels */
+  --ccm-measure: 70ch;       /* max line length for paragraphs */
+
+  /* ---- 8. Spacing: 4px base (our choice) ----------------------------- */
+  --ccm-space-1: .25rem;   /*  4px */
+  --ccm-space-2: .5rem;    /*  8px */
+  --ccm-space-3: .75rem;   /* 12px */
+  --ccm-space-4: 1rem;     /* 16px */
+  --ccm-space-5: 1.25rem;  /* 20px */
+  --ccm-space-6: 1.5rem;   /* 24px */
+  --ccm-space-7: 2rem;     /* 32px */
+  --ccm-space-8: 2.5rem;   /* 40px */
+  --ccm-space-9: 3rem;     /* 48px */
+  --ccm-space-10: 4rem;    /* 64px */
+  --ccm-space-11: 5rem;    /* 80px */
+  --ccm-space-12: 6rem;    /* 96px */
+
+  /* ---- 9. Shape (our choice; the guidelines give no corner radius) ---- */
+  --ccm-radius-sm: 8px;       /* inputs, small images */
+  --ccm-radius-md: 12px;      /* list rows, small panels */
+  --ccm-radius-lg: 16px;      /* cards and panels */
+  --ccm-radius-xl: 24px;      /* banners, bands, pop-ups */
+  --ccm-radius-pill: 999px;   /* buttons, tags */
+  --ccm-radius-round: 50%;    /* photos, icon buttons */
+
+  --ccm-border-hairline: 1px; /* card borders, dividers */
+  --ccm-border-control: 2px;  /* buttons, focusable controls */
+  --ccm-border-ring: 3px;     /* accent ring around photos */
+  --ccm-border-bar: 4px;      /* accent bar under titles */
+  --ccm-border-band: 6px;     /* accent band under the page head */
+
+  /* ---- 10. Elevation ------------------------------------------------- */
+  --ccm-shadow-sm: 0 2px 8px -2px rgb(6 32 34 / .14);       /* small lift */
+  --ccm-shadow-md: 0 16px 36px -18px rgb(6 32 34 / .32);    /* card hover */
+  --ccm-shadow-lg: 0 30px 80px -20px rgb(6 32 34 / .5);     /* pop-ups */
+
+  /* ---- 11. Motion ---------------------------------------------------- */
+  --ccm-duration-fast: 150ms;  /* hover colour changes */
+  --ccm-duration: 200ms;       /* cards, arrows, toggles */
+  --ccm-duration-slow: 250ms;  /* panels and pop-ups opening */
+  --ccm-ease: ease;
+  --ccm-ease-out: cubic-bezier(.2, .7, .2, 1);
+
+  /* ---- 12. Accessibility --------------------------------------------- */
+  --ccm-target: 44px;          /* minimum touch target */
+  --ccm-focus-width: 3px;
+  --ccm-focus-offset: 3px;
+
+  /* ---- 13. Layout (phone values; larger screens below) ---------------- */
+  --ccm-container-max: 1200px; /* widest content area */
+  --ccm-page-margin: 16px;     /* space between the screen edge and content */
+  --ccm-gutter: 16px;          /* space between grid columns */
+  --ccm-cols: 4;               /* layout grid columns */
+  --ccm-section-space: 48px;   /* space between page sections */
+}
+
+/* ---- Breakpoints (the same as Bootstrap 5, used by all four Sitefinity themes)
+   xs 0–575 phone · sm 576–767 large phone · md 768–991 tablet
+   lg 992–1199 laptop · xl 1200–1399 desktop · xxl 1400+ large desktop
+   CSS variables can't be used inside @media, so these numbers are written out. */
+@media (min-width: 576px) {
+  :root {
+    --ccm-page-margin: 24px;
+  }
+}
+@media (min-width: 768px) {
+  :root {
+    --ccm-page-margin: 32px;
+    --ccm-gutter: 24px;
+    --ccm-cols: 8;
+    --ccm-section-space: 64px;
+  }
+}
+@media (min-width: 992px) {
+  :root {
+    --ccm-cols: 12;
+  }
+}
+@media (min-width: 1200px) {
+  :root {
+    --ccm-page-margin: 40px;
+    --ccm-gutter: 32px;
+    --ccm-section-space: 80px;
+  }
 }

@@ -5,7 +5,9 @@
 
    - Contact lines: add a class to the <li>: ccm-c-mail, ccm-c-phone,
      ccm-c-office, ccm-c-web. The ::before of `.ccm-contact li` draws it.
-   - Anywhere else: <span class="ccm-ico ccm-c-mail" aria-hidden="true"></span>
+   - Icon in front of text: <a class="ccm-has-ico ccm-c-mail" href="…">Email</a>
+   - Icon alone: <span class="ccm-ico ccm-c-mail"><span class="ccm-sr-only">Email</span></span>
+   Never leave the tag empty: the Sitefinity editor deletes empty tags.
    Style: 24px grid, 1.8 stroke, round ends (guidelines p70: simple line
    icons with rounded ends).
    ========================================================================== */
@@ -32,7 +34,25 @@
 .ccm-c-chevron  { --ccm-icon: var(--ccm-i-chevron); }
 .ccm-c-external { --ccm-icon: var(--ccm-i-external); }
 
+/* Icon in front of any text */
+.ccm-has-ico {
+  display: inline-flex;
+  align-items: center;
+  gap: .4em;
+}
+.ccm-has-ico::before {
+  content: "";
+  flex: none;
+  width: 1em;
+  height: 1em;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
+          mask: var(--ccm-icon) center / contain no-repeat;
+}
+
+/* Icon on its own (put its meaning in a ccm-sr-only span inside) */
 .ccm-ico {
+  position: relative;
   display: inline-block;
   flex: none;
   width: 1em;

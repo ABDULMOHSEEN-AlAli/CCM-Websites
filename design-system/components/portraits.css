@@ -10,8 +10,8 @@
 
 .ccm-band {
   padding: 2.5rem 1.5rem;
-  border-radius: var(--ccm-radius-lg);
-  background: var(--ccm-beige-light);
+  border-radius: var(--ccm-radius-xl);
+  background: var(--ccm-surface-soft);
 }
 @container (min-width: 720px) {
   .ccm-band {
@@ -45,14 +45,14 @@
 .ccm-portrait__frame {
   position: relative;
   margin: 0 0 1.25rem;
-  padding: 10px 0 0 10px;
+  padding: var(--ccm-space-2) 0 0 var(--ccm-space-2);
 }
 .ccm-portrait__frame::before {
   content: "";
   position: absolute;
-  inset: 0 10px 10px 0;
-  border: 3px solid var(--ccm-college);
-  border-radius: 50% 50% 14px 14px / 40% 40% 14px 14px;
+  inset: 0 var(--ccm-space-2) var(--ccm-space-2) 0;
+  border: 3px solid var(--ccm-accent);
+  border-radius: 50% 50% var(--ccm-radius-md) var(--ccm-radius-md) / 40% 40% var(--ccm-radius-md) var(--ccm-radius-md);
 }
 .ccm-portrait__photo {
   position: relative;
@@ -60,17 +60,17 @@
   width: 100%;
   height: auto;
   aspect-ratio: 4 / 5;
-  border-radius: 50% 50% 14px 14px / 40% 40% 14px 14px;
+  border-radius: 50% 50% var(--ccm-radius-md) var(--ccm-radius-md) / 40% 40% var(--ccm-radius-md) var(--ccm-radius-md);
   background: var(--ccm-beige);
   object-fit: cover;
   object-position: center 20%;
 }
 
 .ccm-portrait__name {
-  margin: 0 0 .3rem;
+  margin: 0 0 var(--ccm-space-1);
   font-family: var(--ccm-font-display);
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: var(--ccm-text-h5);
   line-height: 1.25;
   color: var(--ccm-turquoise);
 }
@@ -83,20 +83,20 @@
 .ccm-portrait__name a:focus-visible {
   color: inherit;
   text-decoration: underline;
-  text-decoration-color: var(--ccm-college);
+  text-decoration-color: var(--ccm-accent);
   text-decoration-thickness: 2px;
   text-underline-offset: 4px;
 }
 .ccm-portrait__role {
   margin: 0 0 1rem;
-  font-size: .9rem;
+  font-size: var(--ccm-text-sm);
   line-height: 1.45;
-  color: var(--ccm-ink-muted);
+  color: var(--ccm-text-muted);
 }
 .ccm-portrait__role strong {
   display: block;
   font-weight: 600;
-  color: var(--ccm-ink);
+  color: var(--ccm-text);
 }
 
 /* Round icon buttons */
@@ -118,11 +118,11 @@
   width: 42px;
   height: 42px;
   border: 1px solid var(--ccm-sand);
-  border-radius: 50%;
+  border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   color: var(--ccm-turquoise);
   text-decoration: none;
-  transition: background-color .15s ease, color .15s ease, border-color .15s ease;
+  transition: background-color var(--ccm-duration-fast) var(--ccm-ease), color var(--ccm-duration-fast) var(--ccm-ease), border-color var(--ccm-duration-fast) var(--ccm-ease);
 }
 .ccm-icon-btn::before {
   content: "";
@@ -150,17 +150,17 @@
   margin: 0;
 }
 .ccm-portrait--feature .ccm-portrait__name {
-  font-size: clamp(1.7rem, 1.3rem + 1.4vw, 2.3rem);
+  font-size: var(--ccm-text-h3);
 }
 .ccm-portrait--feature .ccm-portrait__role {
   margin-bottom: 1.5rem;
-  font-size: 1.05rem;
+  font-size: var(--ccm-text-body);
 }
 .ccm-portrait--feature .ccm-contact {
   margin-bottom: 1.5rem;
-  font-size: .925rem;
+  font-size: var(--ccm-text-sm);
 }
-@container (min-width: 640px) {
+@container (min-width: 720px) {
   .ccm-portrait--feature {
     grid-template-columns: 260px minmax(0, 1fr);
     align-items: center;

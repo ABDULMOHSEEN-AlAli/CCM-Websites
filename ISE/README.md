@@ -1,5 +1,7 @@
 # ISE: Department of Industrial & Systems Engineering
 
+> **On hold (decided 2026-11-19).** We work one department at a time, and ISE comes later. Nothing here is being built yet. Its logo is already in `design-system/logos/ise-*.png`.
+
 | | |
 |---|---|
 | Website | https://ise.kfupm.edu.sa |

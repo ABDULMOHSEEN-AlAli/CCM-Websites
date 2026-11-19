@@ -24,7 +24,7 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
-  border-radius: var(--ccm-radius-lg);
+  border-radius: var(--ccm-radius-xl);
   background: var(--ccm-turquoise);
   color: var(--ccm-white);
 }
@@ -51,9 +51,9 @@
   position: relative; /* above the pattern */
   width: 208px;
   height: 208px;
-  padding: 5px;
-  border: 5px solid var(--ccm-college);
-  border-radius: 50%;
+  padding: var(--ccm-space-1);
+  border: 5px solid var(--ccm-accent);
+  border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
   object-position: center 20%;
@@ -66,21 +66,21 @@
   color: var(--ccm-beige);
 }
 .ccm-leader__name {
-  margin: 0 0 .35rem;
+  margin: 0 0 var(--ccm-space-1);
   font-family: var(--ccm-font-display);
   font-weight: 700;
-  font-size: clamp(1.9rem, 1.4rem + 1.6vw, 2.6rem);
+  font-size: var(--ccm-text-h2);
   line-height: 1.12;
   color: var(--ccm-white);
 }
 .ccm-leader__unit {
   margin: 0 0 1.5rem;
-  font-size: 1.05rem;
-  color: rgba(255, 255, 255, .88);
+  font-size: var(--ccm-text-body);
+  color: var(--ccm-text-inverse-muted);
 }
 .ccm-leader .ccm-contact {
   margin-bottom: 1.75rem;
-  font-size: .925rem;
+  font-size: var(--ccm-text-sm);
 }
 
 @container (min-width: 720px) {

@@ -30,7 +30,7 @@
   height: 148px;
 }
 .ccm-org__head > .ccm-card .ccm-card__name {
-  font-size: 1.5rem;
+  font-size: var(--ccm-text-h3);
 }
 .ccm-org__head::after {
   content: "";
@@ -39,7 +39,7 @@
   left: calc(50% - var(--ccm-org-line) / 2);
   width: var(--ccm-org-line);
   height: var(--ccm-org-drop);
-  background: var(--ccm-college);
+  background: var(--ccm-accent);
 }
 
 .ccm-org__level {
@@ -64,7 +64,7 @@
   left: calc(50% - var(--ccm-org-line) / 2);
   width: var(--ccm-org-line);
   height: var(--ccm-org-drop);
-  background: var(--ccm-college);
+  background: var(--ccm-accent);
 }
 /* horizontal line joining the cards (each item draws its share) */
 .ccm-org__item::after {
@@ -74,7 +74,7 @@
   left: calc(var(--ccm-org-gap) / -2);
   right: calc(var(--ccm-org-gap) / -2);
   height: var(--ccm-org-line);
-  background: var(--ccm-college);
+  background: var(--ccm-accent);
 }
 .ccm-org__item:first-child::after {
   left: calc(50% - var(--ccm-org-line) / 2);
@@ -90,11 +90,11 @@
   height: 112px;
 }
 .ccm-org__item .ccm-card__name {
-  font-size: 1.1rem;
+  font-size: var(--ccm-text-h5);
 }
 
 /* ---- Narrow column: vertical tree --------------------------------------- */
-@container (max-width: 760px) {
+@container (max-width: 859.98px) {
   .ccm-org {
     --ccm-org-indent: 1.25rem; /* where the vertical line sits */
     --ccm-org-arm: 1.1rem;     /* line from the spine to each card */
@@ -143,7 +143,7 @@
     flex-direction: row;
     align-items: center;
     gap: 1rem;
-    padding: 1rem 1.1rem;
+    padding: var(--ccm-space-4);
     text-align: left;
   }
   .ccm-org .ccm-card .ccm-card__photo,
@@ -155,7 +155,7 @@
   }
   .ccm-org__head > .ccm-card .ccm-card__name,
   .ccm-org .ccm-card__name {
-    font-size: 1.1rem;
+    font-size: var(--ccm-text-h5);
   }
   .ccm-org .ccm-card__hint {
     display: none;

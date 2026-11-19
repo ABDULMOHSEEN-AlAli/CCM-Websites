@@ -6,6 +6,8 @@
   <title>Dean &amp; Chairmen: design options (CCM)</title>
   <link rel="stylesheet" href="../../../design-system/ccm.css">
   <link rel="stylesheet" href="../../../design-system/preview.css">
+  <!-- Review tools: First choice / Could work / No, comments, Copy feedback. Preview only. -->
+  <script src="../../../design-system/review.js" defer></script>
 </head>
 <body>
   <div class="ccm-scope">
@@ -23,7 +25,7 @@
     </header>
 
     <main class="cmp">
-      <p class="cmp__lead">Same people, same KFUPM colours and fonts, one shared stylesheet. Only the layout changes. Open each option, make the window narrow to see the phone layout, then pick a direction. Mixing is fine, for example the banner from option 4 with the cards from option 2.</p>
+      <p class="cmp__lead">Same people, same KFUPM colours and fonts, one shared stylesheet. Only the layout changes. Open each option and make the window narrow to see the phone layout. Then mark each option under its picture and add comments. Mixing is fine, for example the banner from option 4 with the cards from option 2. When you are done, copy your feedback at the bottom of the page and send it to Claude.</p>
 
       <ul class="cmp__grid">
 
@@ -153,7 +155,7 @@
         <ul>
           <li><strong>Photos are small.</strong> The Dean's photo is 300 &times; 300 px and Dr. Malak's web copy is 280 &times; 230 px. Options 4 and 5 show photos larger, so they need new, sharper photos.</li>
           <li><strong>Two profile links use old addresses.</strong> Dr. Malak's and Dr. Yasser's profiles open correctly, but their web addresses still say <code>dr.-motaz-alfarraj</code> and <code>dr.-anas-alghazi</code>. Fix them in Content &rarr; People &rarr; URL.</li>
-          <li><strong>Clicks without JavaScript.</strong> The pop-ups (options 2 and 3) and the expanding rows (option 6) use built-in browser features. Sitefinity's Content block editor might remove the attributes they need. If so, use the Embed code widget instead.</li>
+          <li><strong>Clicks without JavaScript.</strong> The pop-ups (options 2 and 3) and the expanding rows (option 6) use built-in browser features. Sitefinity's Content block editor might remove the attributes they need. The Sitefinity test (<code>CCM/upload/sitefinity-test/</code>) checks this. If it does, we use the Embed code widget instead.</li>
           <li><strong>Wording.</strong> The live site says "Chairman" for all four chairs, including Dr. Malak. You may prefer "Chair".</li>
           <li><strong>College colour.</strong> The rings and lines use the CCM college colour, which still needs confirming with the KFUPM branding team.</li>
         </ul>

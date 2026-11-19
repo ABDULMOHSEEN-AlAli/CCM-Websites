@@ -6,17 +6,21 @@ We make a hidden copy of the page, put the new design on the copy, and look at i
 > **Golden rule:** never click **Publish** on the test page. Use only **Preview** and **Save as draft**.
 > Menu names below are from Sitefinity 14. If yours look a little different, look for the closest match.
 
-## Files
+> **Do the Sitefinity test first:** [`../sitefinity-test/HOW-TO-TEST.md`](../sitefinity-test/HOW-TO-TEST.md).
+> It uploads the design file (`ccm-styles.css`) and the fonts to the CCM library once, and tells us whether the pop-ups survive the Content block. The steps below assume it's done.
 
-Each design option has its own folder here, for example `option-2-name-cards/`. Pick the option you want to test and use the files inside that folder:
+## Files
 
 | File | What it is |
 |---|---|
-| `00-check-in-live-site.html` | Open this in your browser first. It shows what you should get. The empty little boxes in the header and footer only appear in this local copy; ignore them. |
-| `01-styles.css` | The design: colours, fonts, layout. It's long (about 85 KB) because the KFUPM font is built in. That's expected. This file is **the same for every option and every site**. |
-| `02-content.html` | The content: the Dean and the chairmen, in that option's layout. |
+| [`../ccm-styles.css`](../ccm-styles.css) | **The design**: colours, fonts, layout. **One file for every page of the CCM site.** It's uploaded once to the library (Sitefinity test, Part A) and every page links to it. |
+| `<option>/01-content.html` | The content: the Dean and the chairmen, in that option's layout. Each design option has its own folder, for example `option-2-name-cards/`. |
+| `<option>/00-check-in-live-site.html` | Open this in your browser first. It shows what you should get. The empty little boxes in the header and footer only appear in this local copy; ignore them. |
 
 To rebuild these files after a design change: `node tools/build-sitefinity.mjs CCM/pages/dean-chairmen`
+Before uploading, run the automatic check: `node tools/check-page.mjs CCM/pages/dean-chairmen`, then go through `design-system/checklist.html`.
+
+**When the build says `ccm-styles.css … CHANGED`:** the design changed. Replace the file in the CCM library (Content → Documents & Files → `ccm-styles`, then **Replace file**). Every page that links to it updates by itself. You don't need to edit the pages.
 
 ---
 
@@ -44,23 +48,23 @@ To rebuild these files after a design change: `node tools/build-sitefinity.mjs C
 ## Step 3: Add the design (CSS widget)
 
 10. The widget panel is on the right side. Open the **Scripts & Styles** group and **drag the "CSS" widget** into the empty main area.
-11. Click **Edit** on the new widget and choose **Write CSS**.
-12. In VS Code, open `01-styles.css`, press **Ctrl+A** then **Ctrl+C**, and paste it into the box. Click **Save**.
+11. Click **Edit** on the new widget and choose **Link to a file**. Paste the link of `ccm-styles.css` from [`CCM/cms-links.json`](../../cms-links.json). Click **Save**.
+    *If the Sitefinity test showed that linking doesn't work:* choose **Write CSS** instead, and paste the whole of `ccm-styles.css` (**Ctrl+A**, **Ctrl+C** in VS Code).
 
 ## Step 4: Add the content (Content block)
 
-13. Open the **Content** group and **drag a "Content block"** just **below** the CSS widget.
-14. Click **Edit**. In the editor's toolbar, click the **HTML** button (it may look like **`<>`**) to switch to code view.
-15. In VS Code, open `02-content.html` and copy everything (**Ctrl+A**, **Ctrl+C**). Paste it into the code view and click **Save**.
+12. Open the **Content** group and **drag a "Content block"** just **below** the CSS widget.
+13. Click **Edit**. In the editor's toolbar, click the **HTML** button (it may look like **`<>`**) to switch to code view.
+14. In VS Code, open `<option>/01-content.html` and copy everything (**Ctrl+A**, **Ctrl+C**). Paste it into the code view and click **Save**.
     Don't switch back to the normal view before saving, because the visual editor can rewrite the code.
 
-> **Options 2, 3 and 6 have clicks** (a pop-up, or a row that opens). They work without JavaScript, but the Content block editor may delete the special attributes they need (`popover`, `popovertarget`, `<details>`). In Preview, click a card or row. If nothing happens, use the **Embed code** widget instead (see the table below).
+> **Options 2, 3 and 6 have clicks** (a pop-up, or a row that opens). If the Sitefinity test showed that the Content block removes them, use the **Embed code** widget (in *Scripts & Styles*) instead of the Content block, with the same `01-content.html`.
 
 ## Step 5: Look at it (Preview, not Publish)
 
-16. Click **Preview** at the top of the editor. A tab opens showing the page as a visitor would see it.
+15. Click **Preview** at the top of the editor. A tab opens showing the page as a visitor would see it.
     Compare it with `00-check-in-live-site.html`. Also make the browser window narrow to check the phone layout.
-17. Click **Save as draft**, then **Back to Pages**. **Don't click Publish.**
+16. Click **Save as draft**, then **Back to Pages**. **Don't click Publish.**
 
 ## Step 6: Tell Claude how it went
 
@@ -75,8 +79,9 @@ To rebuild these files after a design change: `node tools/build-sitefinity.mjs C
 | What you see | What to do |
 |---|---|
 | No **CSS** widget in *Scripts & Styles* | Tell Claude. There's another way to add it. |
-| The people show up but **without the design** (plain text, square photos) | The CSS didn't get saved. Open the CSS widget again and check the box isn't empty. |
-| The design shows, but **icons are missing or the layout is jumbled** after saving | The Content block editor changed the HTML. Delete it, and use the **Embed code** widget (in *Scripts & Styles*) instead, with the same `02-content.html`. It keeps the code exactly as pasted. |
+| The people show up but **without the design** (plain text, square photos) | The CSS didn't load. Open the CSS widget again and check the link (or the pasted CSS). Open the link in a new tab: it should show CSS code. |
+| Text shows in a plain font (not KFUPM Display or Plex) in Preview | A font link in `CCM/cms-links.json` is wrong or the file isn't uploaded. Open each link in the browser: it should download the file. Fix the link, build again, and replace `ccm-styles.css` in the library. |
+| The design shows, but **icons are missing or the layout is jumbled** after saving | The Content block editor changed the HTML. Delete it, and use the **Embed code** widget (in *Scripts & Styles*) instead, with the same `01-content.html`. It keeps the code exactly as pasted. |
 | **Clicking a card or row does nothing** (options 2, 3 and 6) | Same cause: the editor removed the attributes the click needs. Use the **Embed code** widget instead. |
 | "This page is locked by …" | Someone else is editing it. Wait, or ask them. |
 | You accidentally changed the **real** page | Don't publish. Open it and look for **Revision history** in the page's Actions menu to go back to the last published version. Or leave it unpublished and tell Claude. |

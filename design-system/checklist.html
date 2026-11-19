@@ -1,0 +1,359 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCM Page Checklist</title>
+  <meta name="description" content="The checklist to go through after building every page of the CCM, ICS, COE, MATH and ISE websites, before it is uploaded.">
+  <link rel="stylesheet" href="ccm.css">
+
+  <!-- Styles for this checklist page only (prefix ck-). -->
+  <style>
+    html { scroll-padding-top: 96px; }
+    body { margin: 0; background: var(--ccm-surface-soft); }
+    .ck code { padding: .1em .4em; border-radius: 6px; background: var(--ccm-beige-l3); color: var(--ccm-turquoise-d1); font: .875em Consolas, "Cascadia Mono", monospace; overflow-wrap: anywhere; }
+    .ck :where(p:not([class])) { margin: 0 0 var(--ccm-space-3); }
+    .ck-col { max-width: 920px; margin-inline: auto; }
+
+    /* Top bar with live progress */
+    .ck-bar { position: sticky; top: 0; z-index: 20; background: rgb(255 255 255 / .97); border-bottom: 1px solid var(--ccm-line); }
+    .ck-bar__in { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ccm-space-2) var(--ccm-space-4); padding-block: var(--ccm-space-3); }
+    .ck-bar__brand { margin-right: auto; font: 700 var(--ccm-text-h5)/1.2 var(--ccm-font-display); color: var(--ccm-turquoise); text-decoration: none; }
+    .ck-bar__count { font-size: var(--ccm-text-sm); font-weight: 600; color: var(--ccm-text-muted); font-variant-numeric: tabular-nums; }
+    .ck-progress { height: 4px; background: var(--ccm-gray-l3); }
+    .ck-progress i { display: block; height: 100%; width: 0; background: var(--ccm-turquoise); transition: width var(--ccm-duration) var(--ccm-ease-out); }
+
+    /* Header */
+    .ck-head { padding-block: var(--ccm-space-10) var(--ccm-space-9); background: var(--ccm-turquoise); color: var(--ccm-white); border-bottom: var(--ccm-border-band) solid var(--ccm-accent); }
+    .ck-head .ccm-eyebrow { color: var(--ccm-beige); }
+    .ck-head h1 { margin: 0 0 var(--ccm-space-4); font: 700 var(--ccm-text-h1)/var(--ccm-leading-tight) var(--ccm-font-display); color: var(--ccm-white); }
+    .ck-head__lead { max-width: 62ch; margin: 0; font-size: var(--ccm-text-lead); line-height: var(--ccm-leading-body); color: var(--ccm-text-inverse-muted); }
+    .ck-head__lead a { color: var(--ccm-white); }
+
+    .ck-main { padding-block: var(--ccm-space-8) var(--ccm-space-12); }
+    .ck-panel { margin: 0 0 var(--ccm-space-6); padding: var(--ccm-space-6); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); }
+    .ck-panel > h2 { margin: 0 0 var(--ccm-space-4); font: 700 var(--ccm-text-h3)/var(--ccm-leading-snug) var(--ccm-font-display); color: var(--ccm-text); }
+
+    /* How it works */
+    .ck-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: var(--ccm-space-4); margin: 0; padding: 0; list-style: none; counter-reset: step; }
+    .ck-steps li { counter-increment: step; font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    .ck-steps li::before { content: counter(step); display: grid; place-items: center; width: 32px; height: 32px; margin-bottom: var(--ccm-space-2); border-radius: 50%; background: var(--ccm-turquoise); color: var(--ccm-white); font: 700 var(--ccm-text-body)/1 var(--ccm-font-display); }
+    .ck-steps b { display: block; margin-bottom: var(--ccm-space-1); font-size: var(--ccm-text-body); color: var(--ccm-text); }
+
+    /* Page details */
+    .ck-fields { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: var(--ccm-space-4); }
+    .ck-field label { display: block; margin-bottom: var(--ccm-space-1); font-size: var(--ccm-text-sm); font-weight: 600; color: var(--ccm-text); }
+    .ck-field input, .ck-field select, .ck-field textarea {
+      box-sizing: border-box; width: 100%; min-height: var(--ccm-target); padding: var(--ccm-space-2) var(--ccm-space-3);
+      border: var(--ccm-border-hairline) solid var(--ccm-line-strong); border-radius: var(--ccm-radius-sm); background: var(--ccm-white);
+      font: 400 var(--ccm-text-body)/1.4 var(--ccm-font-body); color: var(--ccm-text);
+    }
+    .ck-field textarea { min-height: 96px; resize: vertical; }
+    .ck-field input:focus-visible, .ck-field select:focus-visible, .ck-field textarea:focus-visible { outline: var(--ccm-focus-width) solid var(--ccm-focus); outline-offset: 1px; }
+
+    /* Groups and items */
+    .ck-group { margin: 0 0 var(--ccm-space-6); padding: 0; border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); overflow: hidden; }
+    .ck-group__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--ccm-space-2) var(--ccm-space-4); padding: var(--ccm-space-5) var(--ccm-space-6) var(--ccm-space-4); border-bottom: 1px solid var(--ccm-line); }
+    .ck-group__head h2 { margin: 0; font: 700 var(--ccm-text-h4)/var(--ccm-leading-snug) var(--ccm-font-display); color: var(--ccm-text); }
+    .ck-group__head h2 span { color: var(--ccm-sand-d1); }
+    .ck-group__head p { flex: 1 1 260px; margin: 0; font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    .ck-group__head a { font-size: var(--ccm-text-sm); font-weight: 600; white-space: nowrap; }
+    .ck-items { margin: 0; padding: 0; list-style: none; }
+    .ck-item { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: var(--ccm-space-3) var(--ccm-space-5); align-items: center; padding: var(--ccm-space-4) var(--ccm-space-6); border-left: var(--ccm-border-bar) solid transparent; }
+    .ck-item + .ck-item { border-top: 1px solid var(--ccm-line); }
+    .ck-item[data-answer="no"] { border-left-color: var(--ccm-error-strong); background: #FDF3F3; }
+    .ck-item[data-answer="yes"] { border-left-color: var(--ccm-green-d1); }
+    .ck-item[data-answer="na"] { border-left-color: var(--ccm-gray); }
+    .ck-item__text { margin: 0; font-weight: 500; color: var(--ccm-text); }
+    .ck-item__how { margin: var(--ccm-space-1) 0 0; font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    @media (max-width: 639.98px) {
+      .ck-item { grid-template-columns: minmax(0, 1fr); padding-inline: var(--ccm-space-4); }
+      .ck-group__head, .ck-panel { padding-inline: var(--ccm-space-4); }
+    }
+
+    /* Yes / No / N/A buttons (real radio buttons, styled) */
+    .ck-ans { display: flex; gap: 4px; margin: 0; padding: 4px; border: 0; border-radius: var(--ccm-radius-pill); background: var(--ccm-surface-soft); }
+    .ck-ans legend { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+    .ck-ans label { position: relative; display: inline-flex; align-items: center; justify-content: center; min-width: 56px; min-height: 40px; padding: 0 var(--ccm-space-3); border-radius: var(--ccm-radius-pill); cursor: pointer; font: 600 var(--ccm-text-sm)/1 var(--ccm-font-body); color: var(--ccm-text-muted); transition: background-color var(--ccm-duration-fast) var(--ccm-ease); }
+    .ck-ans input { position: absolute; inset: 0; width: 100%; height: 100%; margin: 0; opacity: 0; cursor: pointer; }
+    .ck-ans label:hover { background: var(--ccm-white); color: var(--ccm-turquoise); }
+    .ck-ans label:has(input:focus-visible) { outline: var(--ccm-focus-width) solid var(--ccm-focus); outline-offset: 2px; }
+    .ck-ans label:has(input[value="yes"]:checked) { background: var(--ccm-green-d1); color: var(--ccm-white); }
+    .ck-ans label:has(input[value="no"]:checked) { background: var(--ccm-error-strong); color: var(--ccm-white); }
+    .ck-ans label:has(input[value="na"]:checked) { background: var(--ccm-turquoise-d1); color: var(--ccm-white); }
+
+    /* What the automatic check covers */
+    .ck-auto { margin: 0; padding: var(--ccm-space-4) var(--ccm-space-6) var(--ccm-space-5); border-top: 1px solid var(--ccm-line); background: var(--ccm-beige-l3); font-size: var(--ccm-text-sm); }
+    .ck-auto summary { min-height: var(--ccm-target); display: flex; align-items: center; cursor: pointer; font-weight: 600; color: var(--ccm-turquoise); }
+    .ck-auto ul { margin: var(--ccm-space-2) 0 0; padding-left: var(--ccm-space-5); columns: 2 300px; column-gap: var(--ccm-space-7); }
+    .ck-auto li { break-inside: avoid; margin-bottom: var(--ccm-space-2); }
+    .ck .ck-cmd { display: block; margin: var(--ccm-space-2) 0 var(--ccm-space-1); padding: var(--ccm-space-3) var(--ccm-space-4); border-radius: var(--ccm-radius-md); background: var(--ccm-turquoise-d3); color: var(--ccm-gray-l3); font: 13px/1.5 Consolas, "Cascadia Mono", monospace; overflow-x: auto; white-space: nowrap; }
+
+    /* Result */
+    .ck-result { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ccm-space-3) var(--ccm-space-5); }
+    .ck-status { display: inline-flex; align-items: center; min-height: 36px; padding: 0 var(--ccm-space-4); border-radius: var(--ccm-radius-pill); font: 700 var(--ccm-text-sm)/1 var(--ccm-font-body); }
+    .ck-status--wait { background: var(--ccm-yellow-l2); color: var(--ccm-yellow-d3); }
+    .ck-status--no { background: var(--ccm-error-strong); color: var(--ccm-white); }
+    .ck-status--ok { background: var(--ccm-green-d1); color: var(--ccm-white); }
+    .ck-result__nums { margin: 0; font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); font-variant-numeric: tabular-nums; }
+    .ck-actions { display: flex; flex-wrap: wrap; gap: var(--ccm-space-3); margin-top: var(--ccm-space-5); }
+    .ck-msg { min-height: 1.5em; margin: var(--ccm-space-3) 0 0; font-size: var(--ccm-text-sm); font-weight: 600; color: var(--ccm-green-d1); }
+
+    @media print {
+      body { background: #fff; }
+      .ck-bar, .ck-actions, .ck-msg, .ck-how-panel, .ck-auto summary::marker { display: none !important; }
+      .ck-head { padding-block: 16px; background: none; color: #000; border-bottom: 2px solid #000; }
+      .ck-head h1, .ck-head .ccm-eyebrow, .ck-head__lead { color: #000; }
+      .ck-main { padding-block: 16px; }
+      .ck-group, .ck-panel { break-inside: avoid-page; border-color: #999; }
+      .ck-item { break-inside: avoid; }
+      .ck-ans { background: none; }
+      .ck-ans label:not(:has(input:checked)) { display: none; }
+      .ck-item:not(:has(input:checked)) .ck-ans::after { content: "Not answered"; font-size: 12px; color: #900; font-weight: 600; }
+    }
+  </style>
+</head>
+<body>
+<div class="ccm-scope ck">
+
+  <div class="ck-bar">
+    <div class="ccm-container ck-bar__in">
+      <a class="ck-bar__brand" href="index.html">CCM Web Design System</a>
+      <span class="ck-bar__count" id="bar-count" aria-live="polite"></span>
+      <a class="ccm-btn ccm-btn--outline ccm-btn--sm" href="page-types.html">Page types</a>
+      <a class="ccm-btn ccm-btn--outline ccm-btn--sm" href="index.html">Design system guide</a>
+    </div>
+    <div class="ck-progress" aria-hidden="true"><i id="bar-progress"></i></div>
+  </div>
+
+  <header class="ck-head">
+    <div class="ccm-container"><div class="ck-col">
+      <p class="ccm-eyebrow">CCM Web Design System · v0.2</p>
+      <h1>Page Checklist</h1>
+      <p class="ck-head__lead">Go through this list after building each page and before uploading it. It keeps every page on all five websites consistent with the <a href="index.html">design system</a> and the KFUPM brand.</p>
+    </div></div>
+  </header>
+
+  <main class="ccm-container ck-main"><div class="ck-col">
+
+    <section class="ck-panel ck-how-panel" aria-labelledby="h-how">
+      <h2 id="h-how">How it works</h2>
+      <ol class="ck-steps">
+        <li><b>Run the automatic check</b>It checks the rules a computer can check, and lists errors and warnings.</li>
+        <li><b>Answer every item below</b>Yes, No, or N/A when it doesn't apply to this page (for example, a page with no photos).</li>
+        <li><b>Fix every No</b>Then copy the result and keep it with the page, or send it with the page for review.</li>
+      </ol>
+    </section>
+
+    <section class="ck-panel" aria-labelledby="h-page">
+      <h2 id="h-page">Page</h2>
+      <div class="ck-fields">
+        <div class="ck-field"><label for="f-page">Page name</label><input id="f-page" type="text" placeholder="e.g. Dean &amp; Chairmen, option 2" autocomplete="off"></div>
+        <div class="ck-field"><label for="f-site">Website</label>
+          <select id="f-site"><option>CCM</option><option>ICS</option><option>COE</option><option>MATH</option><option>ISE</option></select></div>
+        <div class="ck-field"><label for="f-date">Date checked</label><input id="f-date" type="date"></div>
+      </div>
+    </section>
+
+    <div id="groups"></div>
+
+    <section class="ck-panel" aria-labelledby="h-result">
+      <h2 id="h-result">Result</h2>
+      <div class="ck-result">
+        <span class="ck-status ck-status--wait" id="status">Not finished</span>
+        <p class="ck-result__nums" id="nums"></p>
+      </div>
+      <div class="ck-field" style="margin-top:var(--ccm-space-5)"><label for="f-notes">Notes (warnings you accepted, things to follow up)</label><textarea id="f-notes"></textarea></div>
+      <div class="ck-actions">
+        <button class="ccm-btn ccm-btn--primary" type="button" id="copy">Copy result</button>
+        <button class="ccm-btn ccm-btn--outline" type="button" id="print">Print or save as PDF</button>
+        <button class="ccm-btn ccm-btn--outline" type="button" id="reset">Start a new page</button>
+      </div>
+      <p class="ck-msg" id="msg" role="status"></p>
+    </section>
+
+  </div></main>
+</div>
+
+<script>
+// The checklist. Edit the items here; answers are saved in this browser only.
+// [id, item, how to check (HTML allowed)]. Keep ids stable: saved answers use them.
+var GROUPS = [
+  { title: 'Automatic check', link: 'index.html#use',
+    intro: 'Covers the rules in the list below, so you don\'t check those by hand.',
+    items: [
+      ['auto-1', 'The automatic check shows 0 errors, and you have read every warning.',
+        'Run it in the project folder:<code class="ck-cmd">node tools/check-page.mjs CCM/pages/page-name</code>Fix every ERROR. For each WARN, fix it, or write in the notes why it\'s fine.']
+    ],
+    auto: [
+      'Only design-system classes (<code>ccm-</code>), and every class exists in the CSS',
+      'No inline styles, <code>&lt;style&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;svg&gt;</code>, <code>&lt;font&gt;</code> or old attributes',
+      'No empty tags (the Sitefinity editor deletes them)',
+      'No H1 in the content (the page template has it), and no skipped heading levels',
+      'Every image has alt text, width and height',
+      'Images and document links come from a KFUPM Sitefinity library, not a computer, a shared drive or another website',
+      'Every link has an address and text, no vague "Read more", and new-tab links are safe',
+      'Every button has a name and <code>type="button"</code>',
+      'IDs are unique, and pop-ups and labels point to IDs that exist',
+      'Phone <code>+966 13 860 0000</code>, office <code>Building 22, Room 305</code>, "Dr." with a full stop, valid email links',
+      'No placeholder text (Lorem ipsum, TODO, TBD) and no text typed in UPPERCASE',
+      'Tables have header cells',
+      'Shared CSS: no hard-coded colours, fonts, font sizes, corner radius or motion, and spacing on the 4px scale'
+    ] },
+  { title: 'KFUPM brand', link: 'index.html#colour', intro: 'Does the page look like KFUPM?', items: [
+      ['brand-1', 'Most of the page is White, Beige and Turquoise. Green and the secondary colours appear only in small amounts.', 'Look at the whole page at desktop size. About 60% White and Beige, 30% Turquoise, 10% everything else.'],
+      ['brand-2', 'The CCM college colour is used only for decoration: bands, bars, rings and lines. Never for text or large backgrounds.', 'No other college colour and no department colour appears. <a href="index.html#college">College colour rules</a>'],
+      ['brand-3', 'Every text colour sits on an allowed background.', 'Body text is Turquoise d3 on White or Beige. Check any coloured box against <a href="index.html#colour">Text on backgrounds</a>.'],
+      ['brand-4', 'If there is a FAST Matrix: only one on the page, in an allowed colour, not covering faces or text.', '<a href="index.html#imagery">FAST Matrix rules</a>'],
+      ['brand-5', 'Logos are the official files: not recoloured, stretched or redrawn, with clear space around them.', 'Turquoise-and-Green logo on light backgrounds, white logo on dark ones.']
+    ] },
+  { title: 'Typography', link: 'index.html#type', intro: 'Two fonts, one type scale.', items: [
+      ['type-1', 'Headings use KFUPM Display Bold; all other text uses IBM Plex Sans Arabic. No other fonts appear.', 'Check in Sitefinity Preview too: the site\'s own theme can replace fonts.'],
+      ['type-2', 'Headings are used for structure, not to make text big, and the same level looks the same as on other pages.', 'A section title is always H2, a sub-section H3.'],
+      ['type-3', 'Title Case for page and section titles; Sentence case for buttons, labels and normal text.', 'Title: "Academic Programs". Button: "View profile".'],
+      ['type-4', 'Paragraphs are easy to read: lines no wider than about 70 characters, and no long passages in bold.', ''],
+      ['type-5', 'If the page has Arabic text: it reads right to left and uses IBM Plex Sans Arabic.', 'The Arabic text has <code>lang="ar" dir="rtl"</code>.']
+    ] },
+  { title: 'Layout and screen sizes', link: 'index.html#layout', intro: 'Check at each breakpoint.', items: [
+      ['layout-1', 'Phone (360–390px): one column, nothing cut off, no sideways scrolling, text readable without zooming.', 'In Edge or Chrome: F12, then the phone icon. Or run <code>node tools/screenshot.mjs</code>.'],
+      ['layout-2', 'Tablet (768–820px): the layout uses the space well; nothing looks stretched or squeezed.', ''],
+      ['layout-3', 'Laptop and desktop (1280px and 1440px+): content is no wider than 1200px and stays centred.', ''],
+      ['layout-4', 'Inside the live site it fits the content column next to the sidebar, and doesn\'t clash with the header, menu or footer.', 'Open <code>00-check-in-live-site.html</code> from the upload folder.'],
+      ['layout-5', 'Spacing is even: the same gap between the same kinds of things (title to content, card to card, section to section).', '<a href="index.html#spacing">Spacing scale</a>'],
+      ['layout-6', 'Corners match other pages: cards 16px, buttons and tags pill-shaped, photos round.', '<a href="index.html#shape">Shape rules</a>']
+    ] },
+  { title: 'Consistent with other pages', link: 'index.html#components', intro: 'The same thing should look and read the same everywhere.', items: [
+      ['same-1', 'Uses the existing components (cards, contact list, buttons) instead of new look-alikes.', 'A new component goes into the design system and the guide first, then onto the page.'],
+      ['same-2', 'Names, job titles and department names are written the same way as on the other pages.', 'For example: "Dr." before names, and the same title for the same role.'],
+      ['same-3', 'Photos follow the photo standard: same shape, crop and plain light background as other people photos.', '<a href="index.html#imagery">Photo standard</a>'],
+      ['same-4', 'Icons are the design-system line icons in Turquoise, each with a text label. No Font Awesome icons.', '<a href="index.html#icons">Icons</a>'],
+      ['same-5', 'At most one primary button per area, with a short verb label ("Apply now", "View profile").', '']
+    ] },
+  { title: 'Content', link: '', intro: 'Correct, current and clear.', items: [
+      ['content-1', 'The page title matches its name in the site menu.', ''],
+      ['content-2', 'Every fact is correct and current: names, roles, phone numbers, offices, dates.', 'Check against the live site or with the department.'],
+      ['content-3', 'Every link was clicked once and goes to the right place.', ''],
+      ['content-4', 'No spelling mistakes. Sentences are short and use plain words.', ''],
+      ['content-5', 'New photos and documents were uploaded to this site\'s own library (Images, Documents & Files), in a clear folder with clear file names.', 'The automatic check makes sure the links are KFUPM links; this checks they\'re in the right site and folder.']
+    ] },
+  { title: 'Accessibility', link: 'index.html#a11y', intro: 'Target: WCAG 2.2 level AA.', items: [
+      ['a11y-1', 'Keyboard only: you can reach and use everything with Tab, Enter and Esc, and you can always see where you are.', 'Put the mouse away and press Tab through the whole page. The Turquoise focus ring must always be visible.'],
+      ['a11y-2', 'Pop-ups and menus open with Enter, close with Esc, and return you to where you were.', ''],
+      ['a11y-3', 'At 200% zoom nothing overlaps, disappears or needs sideways scrolling.', 'Press Ctrl and + until the browser shows 200%.'],
+      ['a11y-4', 'Nothing depends on colour alone: a status or a difference also has a word or an icon.', ''],
+      ['a11y-5', 'On a phone, buttons and links are big enough (44px) and not too close together.', ''],
+      ['a11y-6', 'Alt text is useful: photos say who the person is (or are empty when the name is right next to them).', 'The automatic check only knows alt text exists, not whether it\'s good.']
+    ] },
+  { title: 'Sitefinity and approval', link: 'index.html#use', intro: 'Upload safely.', items: [
+      ['cms-0', 'The shared files are in this site\'s library: the fonts and graphics (the build says "6 of 6 linked") and <code>ccm-styles.css</code>, replaced with the latest build.', 'Once per site, then again whenever the build says <code>ccm-styles.css … CHANGED</code>. Steps: <code>SITE/upload/sitefinity-test/HOW-TO-TEST.md</code>. Links go in <code>SITE/cms-links.json</code>.'],
+      ['cms-1', 'Built with the build tool: a CSS widget that links <code>ccm-styles.css</code> ("Link to a file"), and <code>01-content.html</code> in a Content block.', 'Run <code>node tools/build-sitefinity.mjs SITE/pages/page-name</code>. See <code>HOW-TO-UPLOAD.md</code>.'],
+      ['cms-2', 'After saving in Sitefinity, the editor removed nothing, and Preview looks like the prototype.', 'Copy the Content block\'s HTML view into <code>content-after-save.html</code> and run <code>node tools/compare-saved.mjs SITE/upload/page/option</code>. Then compare Preview with the prototype side by side.'],
+      ['cms-3', 'Checked with Preview and saved as a draft only. Not published before approval.', ''],
+      ['cms-4', 'If there were design options: the options page and its screenshots are up to date.', '']
+    ] }
+];
+
+(function () {
+  var KEY = 'ccm-page-checklist-v1';
+  var $ = function (id) { return document.getElementById(id); };
+  var today = new Date().toISOString().slice(0, 10);
+  var state = { page: '', site: 'CCM', date: today, notes: '', answers: {} };
+  try { var saved = JSON.parse(localStorage.getItem(KEY)); if (saved && saved.answers) state = saved; } catch (e) {}
+  function save() { try { localStorage.setItem(KEY, JSON.stringify(state)); } catch (e) {} }
+
+  // ---- build the groups ----
+  var all = [];
+  var html = GROUPS.map(function (g, gi) {
+    var items = g.items.map(function (it) {
+      all.push({ id: it[0], text: it[1], group: g.title });
+      var name = 'q-' + it[0];
+      return '<li class="ck-item" id="' + it[0] + '">' +
+        '<div><p class="ck-item__text" id="' + name + '-t">' + it[1] + '</p>' + (it[2] ? '<p class="ck-item__how">' + it[2] + '</p>' : '') + '</div>' +
+        '<fieldset class="ck-ans"><legend>' + it[1].replace(/<[^>]+>/g, '') + '</legend>' +
+        [['yes', 'Yes'], ['no', 'No'], ['na', 'N/A']].map(function (a) {
+          return '<label' + (a[0] === 'na' ? ' title="Not needed on this page"' : '') + '><input type="radio" name="' + name + '" value="' + a[0] + '" data-q="' + it[0] + '">' + a[1] + '</label>';
+        }).join('') + '</fieldset></li>';
+    }).join('');
+    var auto = g.auto ? '<details class="ck-auto"><summary>What the automatic check covers (' + g.auto.length + ' rules)</summary><ul>' +
+      g.auto.map(function (a) { return '<li>' + a + '</li>'; }).join('') + '</ul></details>' : '';
+    return '<section class="ck-group" aria-labelledby="g' + gi + '"><div class="ck-group__head">' +
+      '<h2 id="g' + gi + '"><span>' + (gi + 1) + '.</span> ' + g.title + '</h2><p>' + g.intro + '</p>' +
+      (g.link ? '<a href="' + g.link + '">See the rules</a>' : '') + '</div><ul class="ck-items">' + items + '</ul>' + auto + '</section>';
+  }).join('');
+  $('groups').innerHTML = html;
+
+  // ---- restore and listen ----
+  $('f-page').value = state.page; $('f-site').value = state.site; $('f-date').value = state.date || today; $('f-notes').value = state.notes || '';
+  Object.keys(state.answers).forEach(function (id) {
+    var r = document.querySelector('input[data-q="' + id + '"][value="' + state.answers[id] + '"]');
+    if (r) r.checked = true;
+  });
+  document.addEventListener('change', function (e) {
+    var t = e.target;
+    if (t.matches('input[data-q]')) state.answers[t.getAttribute('data-q')] = t.value;
+    else if (t.id === 'f-site') state.site = t.value;
+    else if (t.id === 'f-date') state.date = t.value;
+    update(); save();
+  });
+  document.addEventListener('input', function (e) {
+    if (e.target.id === 'f-page') state.page = e.target.value;
+    else if (e.target.id === 'f-notes') state.notes = e.target.value;
+    else return;
+    save();
+  });
+
+  // ---- counts and status ----
+  function counts() {
+    var c = { yes: 0, no: 0, na: 0, open: 0 };
+    all.forEach(function (q) { c[state.answers[q.id] || 'open']++; });
+    return c;
+  }
+  function update() {
+    var c = counts(), done = all.length - c.open;
+    all.forEach(function (q) { var li = $(q.id); if (state.answers[q.id]) li.setAttribute('data-answer', state.answers[q.id]); else li.removeAttribute('data-answer'); });
+    $('bar-count').textContent = done + ' of ' + all.length + ' answered' + (c.no ? ' · ' + c.no + ' No' : '');
+    $('bar-progress').style.width = (done / all.length * 100) + '%';
+    $('nums').textContent = c.yes + ' Yes · ' + c.no + ' No · ' + c.na + ' N/A · ' + c.open + ' not answered';
+    var s = $('status');
+    if (c.no) { s.className = 'ck-status ck-status--no'; s.textContent = 'Not ready: fix the No items'; }
+    else if (c.open) { s.className = 'ck-status ck-status--wait'; s.textContent = 'Not finished'; }
+    else { s.className = 'ck-status ck-status--ok'; s.textContent = 'Ready to upload'; }
+  }
+  update();
+
+  // ---- copy result as plain text ----
+  function resultText() {
+    var c = counts(), plain = function (s) { return s.replace(/<[^>]+>/g, '').replace(/&amp;/g, '&'); };
+    var lines = ['CCM page checklist (design system v0.2)', 'Page: ' + (state.page || '(no name)') + ' · Website: ' + state.site + ' · Date: ' + (state.date || today),
+      'Result: ' + $('status').textContent + ' (' + c.yes + ' Yes, ' + c.no + ' No, ' + c.na + ' N/A, ' + c.open + ' not answered)'];
+    [['no', 'No: needs fixing'], ['open', 'Not answered'], ['na', 'N/A']].forEach(function (k) {
+      var list = all.filter(function (q) { return (state.answers[q.id] || 'open') === k[0]; });
+      if (list.length) lines.push('', k[1] + ':'); list.forEach(function (q) { lines.push('- [' + q.group + '] ' + plain(q.text)); });
+    });
+    if (state.notes) lines.push('', 'Notes:', state.notes);
+    return lines.join('\n');
+  }
+  function flash(t) { $('msg').textContent = t; setTimeout(function () { $('msg').textContent = ''; }, 4000); }
+  $('copy').addEventListener('click', function () {
+    var text = resultText();
+    function fallback() {
+      var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0';
+      document.body.appendChild(ta); ta.select();
+      try { document.execCommand('copy'); flash('Copied. Paste it into an email or the page notes.'); } catch (e) { flash('Copy did not work in this browser.'); }
+      ta.remove();
+    }
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(text).then(function () { flash('Copied. Paste it into an email or the page notes.'); }, fallback);
+    else fallback();
+  });
+  $('print').addEventListener('click', function () { window.print(); });
+  $('reset').addEventListener('click', function () {
+    if (!confirm('Clear all answers and start a new page?')) return;
+    state = { page: '', site: state.site, date: today, notes: '', answers: {} };
+    document.querySelectorAll('input[data-q]').forEach(function (r) { r.checked = false; });
+    $('f-page').value = ''; $('f-notes').value = ''; $('f-date').value = today;
+    update(); save(); window.scrollTo(0, 0); $('f-page').focus();
+  });
+})();
+</script>
+</body>
+</html>

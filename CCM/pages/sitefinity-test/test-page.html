@@ -1,0 +1,158 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="ccm-live-url" content="https://ccm.kfupm.edu.sa/peoples/dean-chairmen">
+  <title>Sitefinity test page (CCM preview)</title>
+
+  <!-- Live site theme first, so the preview shows our components on top of the real CSS. -->
+  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/main.min.css?package=CCM">
+  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/custom-ccm.css?package=CCM">
+
+  <!-- Shared design system: one stylesheet for all five sites. -->
+  <link rel="stylesheet" href="../../../design-system/ccm.css">
+
+  <!-- Preview only. Never uploaded. -->
+  <link rel="stylesheet" href="../../../design-system/preview.css">
+  <script src="../../../design-system/preview.js" defer></script>
+</head>
+<body>
+  <nav class="preview-bar" aria-label="Test page">
+    <span><strong>Sitefinity test page.</strong> This is the reference: the same page in Sitefinity Preview should look like this.</span>
+  </nav>
+
+  <div class="ccm-scope">
+
+    <!-- Title band: drawn by the Sitefinity page template on the real site (not uploaded). -->
+    <header class="ccm-page-head">
+      <div class="ccm-container">
+        <nav aria-label="Breadcrumb">
+          <ol class="ccm-page-head__crumbs">
+            <li><a href="https://ccm.kfupm.edu.sa/">Home</a></li>
+            <li><a href="https://ccm.kfupm.edu.sa/peoples">People</a></li>
+            <li aria-current="page">Sitefinity Test</li>
+          </ol>
+        </nav>
+        <h1 class="ccm-page-head__title">Sitefinity Test</h1>
+      </div>
+    </header>
+
+    <main class="ccm-container ccm-page-main">
+
+      <!-- SITEFINITY:START (everything down to SITEFINITY:END is what gets uploaded) -->
+      <!-- One small sample of each risky feature: the linked CSS file, the fonts, the FAST Matrix
+           graphic, a pop-up (popover), an expanding row (details), icons and buttons. -->
+
+      <section class="ccm-section" aria-labelledby="test-1">
+        <h2 class="ccm-section__title" id="test-1">Test 1: Design and fonts</h2>
+        <div class="ccm-prose">
+          <p class="ccm-sr-only"><strong>Test 1 failed: the design CSS did not load.</strong> If you can read this sentence, check the CSS widget link.</p>
+          <p class="ccm-lead">This hidden page tests the new design inside Sitefinity. Never publish it.</p>
+          <p>The heading above should be in KFUPM Display: bold, dark and slightly slanted. This text and the Arabic line below should be in IBM Plex Sans Arabic. Compare them with the reference picture.</p>
+          <p lang="ar" dir="rtl">كلية الحوسبة والرياضيات</p>
+          <p class="ccm-build">Design build:</p>
+        </div>
+      </section>
+
+      <section class="ccm-section" aria-labelledby="test-2">
+        <h2 class="ccm-section__title" id="test-2">Test 2: Banner, pattern, icons and buttons</h2>
+        <div class="ccm-prose">
+          <p>The banner should be turquoise with the KFUPM pattern in its corner. Each contact line should have a small icon, and the two buttons should be rounded.</p>
+        </div>
+        <div class="ccm-leader">
+          <div class="ccm-leader__media">
+            <img class="ccm-leader__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/ccm-dean---aug'2024---dr-abdullah-sultan.jpg?sfvrsn=2dd3f18e_1" alt="Dr. Abdullah Sultan" width="232" height="232">
+          </div>
+          <div class="ccm-leader__body">
+            <p class="ccm-eyebrow">Dean</p>
+            <h3 class="ccm-leader__name">Dr. Abdullah Sultan</h3>
+            <p class="ccm-leader__unit">College of Computing and Mathematics</p>
+            <ul class="ccm-contact ccm-contact--inverse">
+              <li class="ccm-c-mail"><a href="mailto:sultanas@kfupm.edu.sa">sultanas@kfupm.edu.sa</a></li>
+              <li class="ccm-c-phone"><a href="tel:+966138602100">+966 13 860 2100</a></li>
+              <li class="ccm-c-office">Building 22, Room 354</li>
+            </ul>
+            <div class="ccm-actions">
+              <a class="ccm-btn ccm-btn--light" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-abdullah-sultan">View profile</a>
+              <a class="ccm-btn ccm-btn--ghost" href="https://cpg.kfupm.edu.sa/bio/dr-abdullah-sultan/" target="_blank" rel="noopener">Personal website</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ccm-section" aria-labelledby="test-3">
+        <h2 class="ccm-section__title" id="test-3">Test 3: Pop-up</h2>
+        <div class="ccm-prose">
+          <p>Click the name in the card. A box with contact details should open over the page. Close it with the X button or the Esc key.</p>
+          <p popover><strong>Test 3 failed: the editor removed the pop-up code.</strong> If you can read this sentence, use the Embed code widget instead of the Content block.</p>
+        </div>
+        <ul class="ccm-cards">
+          <li>
+            <article class="ccm-card">
+              <img class="ccm-card__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/malak-baslyman.tmb-people.jpg?Culture=en&amp;sfvrsn=2babc57f_1" alt="" width="128" height="128">
+              <div class="ccm-card__body">
+                <h3 class="ccm-card__name"><button class="ccm-card__open" type="button" popovertarget="test-profile">Dr. Malak Baslyman</button></h3>
+                <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of Information &amp; Computer Science</span></p>
+                <span class="ccm-card__hint" aria-hidden="true">View details</span>
+              </div>
+            </article>
+          </li>
+        </ul>
+        <div class="ccm-profile" id="test-profile" popover role="dialog" aria-labelledby="test-profile-name">
+          <div class="ccm-profile__head">
+            <img class="ccm-profile__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/malak-baslyman.tmb-people.jpg?Culture=en&amp;sfvrsn=2babc57f_1" alt="" width="112" height="112" loading="lazy">
+            <div>
+              <p class="ccm-eyebrow">Chairman</p>
+              <h3 class="ccm-profile__name" id="test-profile-name">Dr. Malak Baslyman</h3>
+              <p class="ccm-profile__unit">Department of Information &amp; Computer Science</p>
+            </div>
+            <button class="ccm-profile__close" type="button" popovertarget="test-profile" popovertargetaction="hide"><span class="ccm-sr-only">Close</span></button>
+          </div>
+          <div class="ccm-profile__body">
+            <ul class="ccm-contact">
+              <li class="ccm-c-mail"><a href="mailto:malak.baslyman@kfupm.edu.sa">malak.baslyman@kfupm.edu.sa</a></li>
+              <li class="ccm-c-phone"><a href="tel:+966138607055">+966 13 860 7055</a></li>
+              <li class="ccm-c-office">Building 22, Room 305</li>
+            </ul>
+            <div class="ccm-actions">
+              <a class="ccm-btn ccm-btn--primary" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-motaz-alfarraj">View full profile</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="ccm-section" aria-labelledby="test-4">
+        <h2 class="ccm-section__title" id="test-4">Test 4: Expanding row</h2>
+        <div class="ccm-prose">
+          <p>Click the row. The contact details should open under it, and close again on a second click.</p>
+        </div>
+        <ul class="ccm-dir">
+          <li>
+            <details class="ccm-dir__item" id="test-row" name="ccm-dir">
+              <summary class="ccm-dir__row">
+                <img class="ccm-dir__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/dr-waleed-shinwari.png?sfvrsn=4e154b34_1" alt="" width="64" height="64">
+                <span class="ccm-dir__who">
+                  <span class="ccm-dir__name">Dr. Mohammad Waleed Shinwari</span>
+                  <span class="ccm-dir__role"><strong>Chairman</strong> · Department of Computer Engineering</span>
+                </span>
+                <span class="ccm-dir__tag">COE</span>
+              </summary>
+              <div class="ccm-dir__panel">
+                <ul class="ccm-contact">
+                  <li class="ccm-c-mail"><a href="mailto:mohammad.shinwari@kfupm.edu.sa">mohammad.shinwari@kfupm.edu.sa</a></li>
+                  <li class="ccm-c-phone"><a href="tel:+966138602110">+966 13 860 2110</a></li>
+                  <li class="ccm-c-office">Building 22, Room 400-2</li>
+                </ul>
+                <a class="ccm-more" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-mohammad-waleed-shinwari">View full profile</a>
+              </div>
+            </details>
+          </li>
+        </ul>
+      </section>
+
+      <!-- SITEFINITY:END -->
+    </main>
+  </div>
+</body>
+</html>

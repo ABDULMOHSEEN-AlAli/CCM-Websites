@@ -1,0 +1,10 @@
+{
+  "_how": "Upload each file below ONCE to the ICS Sitefinity library (fonts and ccm-styles.css: Content > Documents & Files; graphics: Content > Images). Open the uploaded item, copy its link (it starts with https://ics.kfupm.edu.sa/), paste it between the quotes, save, and run the build again. Leave a link empty until the file is uploaded. ccm-styles.css is in ICS/upload/ (made by the build); the other files are in design-system/.",
+  "fonts/KFUPM-Bold.woff2": "",
+  "fonts/IBMPlexSansArabic-Regular.woff2": "",
+  "fonts/IBMPlexSansArabic-Medium.woff2": "",
+  "fonts/IBMPlexSansArabic-SemiBold.woff2": "",
+  "fonts/IBMPlexSansArabic-Bold.woff2": "",
+  "graphics/fast-matrix-four-green.svg": "",
+  "ccm-styles.css": ""
+}

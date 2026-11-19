@@ -17,7 +17,7 @@
 .ccm-cards {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: .875rem;
+  gap: var(--ccm-space-4);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -26,7 +26,7 @@
   display: flex;
   margin: 0;
 }
-@container (min-width: 600px) {
+@container (min-width: 540px) {
   .ccm-cards {
     gap: 1.25rem;
   }
@@ -48,12 +48,12 @@
   text-align: center;
   background: var(--ccm-white);
   border: 1px solid var(--ccm-line);
-  border-radius: var(--ccm-radius);
-  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+  border-radius: var(--ccm-radius-lg);
+  transition: border-color var(--ccm-duration) var(--ccm-ease), box-shadow var(--ccm-duration) var(--ccm-ease), transform var(--ccm-duration) var(--ccm-ease);
 }
 .ccm-card:hover {
-  border-color: var(--ccm-college);
-  box-shadow: var(--ccm-shadow);
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
   transform: translateY(-3px);
 }
 .ccm-card:has(.ccm-card__open:focus-visible) {
@@ -65,10 +65,10 @@
   flex: none;
   width: 128px;
   height: 128px;
-  margin: 0 0 1.1rem;
+  margin: 0 0 var(--ccm-space-4);
   padding: 4px;
-  border: 3px solid var(--ccm-college);
-  border-radius: 50%;
+  border: 3px solid var(--ccm-accent);
+  border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
   object-position: center 20%;
@@ -81,10 +81,10 @@
   min-width: 0;
 }
 .ccm-card__name {
-  margin: 0 0 .4rem;
+  margin: 0 0 var(--ccm-space-2);
   font-family: var(--ccm-font-display);
   font-weight: 700;
-  font-size: 1.2rem;
+  font-size: var(--ccm-text-h5);
   line-height: 1.25;
   color: var(--ccm-turquoise);
 }
@@ -106,7 +106,7 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  border-radius: var(--ccm-radius);
+  border-radius: var(--ccm-radius-lg);
 }
 .ccm-card__open:focus-visible {
   outline: none; /* the card shows the focus ring instead */
@@ -115,23 +115,23 @@
   margin: 0;
   font-weight: 600;
   line-height: 1.4;
-  color: var(--ccm-ink);
+  color: var(--ccm-text);
 }
 .ccm-card__unit {
   display: block;
   margin-top: .15rem;
-  font-size: .9rem;
+  font-size: var(--ccm-text-sm);
   font-weight: 400;
-  color: var(--ccm-ink-muted);
+  color: var(--ccm-text-muted);
 }
 .ccm-card__hint {
   display: inline-flex;
   align-items: center;
   align-self: center;
-  gap: .35rem;
+  gap: var(--ccm-space-1);
   margin-top: auto;
-  padding-top: 1.1rem;
-  font-size: .85rem;
+  padding-top: var(--ccm-space-4);
+  font-size: var(--ccm-text-sm);
   font-weight: 600;
   color: var(--ccm-turquoise);
 }
@@ -154,7 +154,7 @@
   gap: 2rem;
   padding: 2rem 2.25rem;
   text-align: left;
-  background: var(--ccm-beige-light);
+  background: var(--ccm-surface-soft);
   border-color: transparent;
 }
 .ccm-card--featured .ccm-card__photo {
@@ -163,13 +163,13 @@
   margin: 0;
 }
 .ccm-card--featured .ccm-card__name {
-  font-size: clamp(1.5rem, 1.2rem + 1vw, 1.9rem);
+  font-size: var(--ccm-text-h3);
 }
 .ccm-card--featured .ccm-card__role {
-  font-size: 1.05rem;
+  font-size: var(--ccm-text-body);
 }
 .ccm-card--featured .ccm-card__unit {
-  font-size: 1rem;
+  font-size: var(--ccm-text-body);
 }
 .ccm-card--featured .ccm-card__hint {
   align-self: flex-start;
@@ -184,14 +184,14 @@
   color: var(--ccm-white);
 }
 .ccm-card--dark:hover {
-  border-color: var(--ccm-college);
+  border-color: var(--ccm-accent);
 }
 .ccm-card--dark .ccm-card__name,
 .ccm-card--dark .ccm-card__role {
   color: var(--ccm-white);
 }
 .ccm-card--dark .ccm-card__unit {
-  color: rgba(255, 255, 255, .85);
+  color: var(--ccm-text-inverse-muted);
 }
 .ccm-card--dark .ccm-eyebrow,
 .ccm-card--dark .ccm-card__hint {
@@ -199,28 +199,28 @@
 }
 
 /* ---- Narrow column (phones): two small cards per row -------------------- */
-@container (max-width: 540px) {
+@container (max-width: 539.98px) {
   .ccm-card {
     padding: 1.25rem .75rem 1rem;
   }
   .ccm-card__photo {
     width: 88px;
     height: 88px;
-    margin-bottom: .85rem;
+    margin-bottom: var(--ccm-space-3);
     padding: 3px;
   }
   .ccm-card__name {
-    font-size: 1.02rem;
+    font-size: var(--ccm-text-h5); /* Display font: 18px minimum */
   }
   .ccm-card__role {
-    font-size: .9rem;
+    font-size: var(--ccm-text-sm);
   }
   .ccm-card__unit {
-    font-size: .8rem;
+    font-size: var(--ccm-text-sm);
   }
   .ccm-card__hint {
-    padding-top: .8rem;
-    font-size: .8rem;
+    padding-top: var(--ccm-space-3);
+    font-size: var(--ccm-text-sm);
   }
   .ccm-card--featured {
     flex-direction: column;

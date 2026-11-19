@@ -1,0 +1,459 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CCM Page Types</title>
+  <meta name="description" content="Every page of the CCM, ICS, COE, MATH and ISE websites, grouped into page types, with the order of work and how a design gets agreed.">
+  <link rel="stylesheet" href="ccm.css">
+
+  <!-- Styles for this page only (prefix pt-). -->
+  <style>
+    html { scroll-padding-top: 80px; }
+    body { margin: 0; background: var(--ccm-surface-soft); }
+    .pt code { padding: .1em .4em; border-radius: 6px; background: var(--ccm-beige-l3); color: var(--ccm-turquoise-d1); font: .875em Consolas, "Cascadia Mono", monospace; overflow-wrap: anywhere; }
+    .pt-col { max-width: 1080px; margin-inline: auto; padding-inline: var(--ccm-page-margin); }
+    .pt-muted { color: var(--ccm-text-muted); }
+    .pt-pages__note { grid-column: 1 / -1; margin: 0; font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+
+    /* Top bar */
+    .pt-bar { position: sticky; top: 0; z-index: 20; background: rgb(255 255 255 / .97); border-bottom: 1px solid var(--ccm-line); }
+    .pt-bar__in { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ccm-space-2) var(--ccm-space-5); padding-block: var(--ccm-space-3); }
+    .pt-bar__brand { margin-right: auto; font: 700 var(--ccm-text-h5)/1.2 var(--ccm-font-display); color: var(--ccm-turquoise); text-decoration: none; }
+    .pt-bar a:not(.pt-bar__brand) { font-size: var(--ccm-text-sm); font-weight: 600; }
+
+    /* Header */
+    .pt-head { padding-block: var(--ccm-space-10) var(--ccm-space-9); background: var(--ccm-turquoise); color: var(--ccm-white); border-bottom: var(--ccm-border-band) solid var(--ccm-accent); }
+    .pt-head .ccm-eyebrow { color: var(--ccm-beige); }
+    .pt-head h1 { margin: 0 0 var(--ccm-space-4); font: 700 var(--ccm-text-h1)/var(--ccm-leading-tight) var(--ccm-font-display); color: var(--ccm-white); }
+    .pt-head__lead { max-width: 64ch; margin: 0; font-size: var(--ccm-text-lead); line-height: var(--ccm-leading-body); color: var(--ccm-text-inverse-muted); }
+    .pt-stats { display: flex; flex-wrap: wrap; gap: var(--ccm-space-3) var(--ccm-space-8); margin: var(--ccm-space-6) 0 0; padding: 0; list-style: none; }
+    .pt-stats b { display: block; font: 700 var(--ccm-text-h2)/1 var(--ccm-font-display); color: var(--ccm-white); }
+    .pt-stats span { font-size: var(--ccm-text-sm); color: var(--ccm-text-inverse-muted); }
+
+    .pt-main { padding-block: var(--ccm-space-8) var(--ccm-space-12); }
+    .pt-panel { margin: 0 0 var(--ccm-space-6); padding: var(--ccm-space-6); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); }
+    .pt-panel > h2 { margin: 0 0 var(--ccm-space-2); font: 700 var(--ccm-text-h3)/var(--ccm-leading-snug) var(--ccm-font-display); color: var(--ccm-text); }
+    .pt-panel > .pt-sub { max-width: 70ch; margin: 0 0 var(--ccm-space-5); color: var(--ccm-text-muted); }
+    .pt-panel :where(p:not([class])) { margin: 0 0 var(--ccm-space-3); }
+    @media (max-width: 639.98px) { .pt-panel { padding: var(--ccm-space-5) var(--ccm-space-4); } }
+
+    /* How we agree: numbered steps with who does it */
+    .pt-steps { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 220px), 1fr)); gap: var(--ccm-space-3); margin: 0 0 var(--ccm-space-5); padding: 0; list-style: none; counter-reset: step; }
+    .pt-steps li { counter-increment: step; position: relative; padding: var(--ccm-space-4) var(--ccm-space-4) var(--ccm-space-4) calc(var(--ccm-space-4) + 44px); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-md); }
+    .pt-steps li::before { content: counter(step); position: absolute; left: var(--ccm-space-4); top: var(--ccm-space-4); display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; background: var(--ccm-turquoise); color: var(--ccm-white); font: 700 var(--ccm-text-body)/1 var(--ccm-font-display); }
+    .pt-steps b { display: block; color: var(--ccm-text); }
+    .pt-steps p { margin: var(--ccm-space-1) 0 0; font-size: var(--ccm-text-sm); color: var(--ccm-text-muted); }
+    .pt-who { display: inline-block; margin-top: var(--ccm-space-2); padding: 2px var(--ccm-space-2); border-radius: var(--ccm-radius-pill); background: var(--ccm-beige-l2); color: var(--ccm-sand-d2); font-size: var(--ccm-text-xs); font-weight: 700; letter-spacing: .04em; text-transform: uppercase; }
+    .pt-rules { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr)); gap: var(--ccm-space-4); }
+    .pt-rules > div { padding: var(--ccm-space-4) var(--ccm-space-5); border-radius: var(--ccm-radius-md); background: var(--ccm-surface-soft); }
+    .pt-rules h3 { margin: 0 0 var(--ccm-space-2); font: 700 var(--ccm-text-h5)/var(--ccm-leading-snug) var(--ccm-font-display); color: var(--ccm-text); }
+    .pt-rules ul { margin: 0; padding-left: 1.2em; font-size: var(--ccm-text-sm); }
+    .pt-rules li + li { margin-top: var(--ccm-space-1); }
+
+    /* Tables */
+    .pt-scroll { overflow-x: auto; margin: 0 calc(-1 * var(--ccm-space-2)); padding: 0 var(--ccm-space-2); }
+    .pt-table { width: 100%; border-collapse: collapse; font-size: var(--ccm-text-sm); }
+    .pt-table th, .pt-table td { padding: var(--ccm-space-3); border-bottom: 1px solid var(--ccm-line); text-align: left; vertical-align: top; }
+    .pt-table thead th { border-bottom: 2px solid var(--ccm-turquoise); color: var(--ccm-text); white-space: nowrap; }
+    .pt-table .pt-num { text-align: center; font-variant-numeric: tabular-nums; }
+    .pt-table tfoot td, .pt-table tfoot th { font-weight: 700; border-bottom: 0; }
+    .pt-table td.pt-zero { color: var(--ccm-gray-l1); }
+    .pt-table th[scope="row"] a { font-weight: 700; }
+    .pt-later { color: var(--ccm-text-muted); font-weight: 400; }
+
+    /* Status and build chips */
+    .pt-chip { display: inline-block; padding: 2px var(--ccm-space-2); border-radius: var(--ccm-radius-pill); font-size: var(--ccm-text-xs); font-weight: 700; white-space: nowrap; }
+    .pt-chip--todo { background: var(--ccm-gray-l3); color: var(--ccm-gray-d3); }
+    .pt-chip--options { background: var(--ccm-yellow-l2); color: var(--ccm-yellow-d3); }
+    .pt-chip--review { background: var(--ccm-blue-l3); color: var(--ccm-blue-d3); }
+    .pt-chip--approved { background: var(--ccm-green-l3); color: var(--ccm-green-d3); }
+    .pt-chip--live { background: var(--ccm-turquoise); color: var(--ccm-white); }
+    .pt-chip--block { background: var(--ccm-turquoise-l3); color: var(--ccm-turquoise-d2); }
+    .pt-chip--widget, .pt-chip--template { background: var(--ccm-sand-l3); color: var(--ccm-sand-d3); }
+
+    /* One card per type */
+    .pt-type { margin: 0 0 var(--ccm-space-5); border: 1px solid var(--ccm-line); border-radius: var(--ccm-radius-lg); background: var(--ccm-white); overflow: hidden; }
+    .pt-type__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--ccm-space-2) var(--ccm-space-3); padding: var(--ccm-space-5) var(--ccm-space-6) var(--ccm-space-4); border-bottom: 1px solid var(--ccm-line); }
+    .pt-type__order { display: grid; place-items: center; width: 36px; height: 36px; border-radius: 50%; background: var(--ccm-beige); color: var(--ccm-turquoise-d1); font: 700 var(--ccm-text-body)/1 var(--ccm-font-display); }
+    .pt-type__head h3 { flex: 1 1 200px; margin: 0; font: 700 var(--ccm-text-h4)/var(--ccm-leading-snug) var(--ccm-font-display); color: var(--ccm-text); }
+    .pt-type__body { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr)); gap: var(--ccm-space-4) var(--ccm-space-6); padding: var(--ccm-space-5) var(--ccm-space-6); }
+    .pt-type__body p { margin: 0; }
+    .pt-type__what { grid-column: 1 / -1; color: var(--ccm-text); }
+    .pt-type dl { margin: 0; font-size: var(--ccm-text-sm); }
+    .pt-type dt { margin-top: var(--ccm-space-3); font-weight: 700; color: var(--ccm-text); }
+    .pt-type dt:first-child { margin-top: 0; }
+    .pt-type dd { margin: var(--ccm-space-1) 0 0; color: var(--ccm-text-muted); }
+    .pt-type dd ul { margin: 0; padding-left: 1.1em; }
+    .pt-type details { border-top: 1px solid var(--ccm-line); }
+    .pt-type summary { padding: var(--ccm-space-3) var(--ccm-space-6); cursor: pointer; font-size: var(--ccm-text-sm); font-weight: 600; color: var(--ccm-link); }
+    .pt-pages { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); gap: var(--ccm-space-4) var(--ccm-space-6); padding: 0 var(--ccm-space-6) var(--ccm-space-5); }
+    .pt-pages h4 { margin: 0 0 var(--ccm-space-1); font-size: var(--ccm-text-sm); color: var(--ccm-text); }
+    .pt-pages ul { margin: 0; padding-left: 1.1em; font-size: var(--ccm-text-sm); }
+    .pt-pages li + li { margin-top: 2px; }
+    @media (max-width: 639.98px) {
+      .pt-type__head, .pt-type__body { padding-inline: var(--ccm-space-4); }
+      .pt-type summary { padding-inline: var(--ccm-space-4); }
+      .pt-pages { padding-inline: var(--ccm-space-4); }
+    }
+    .pt-note { margin-top: var(--ccm-space-5); padding: var(--ccm-space-4) var(--ccm-space-5); border-left: var(--ccm-border-bar) solid var(--ccm-yellow); border-radius: var(--ccm-radius-sm); background: var(--ccm-yellow-l3); font-size: var(--ccm-text-sm); }
+    .pt-note p:last-child { margin-bottom: 0; }
+  </style>
+</head>
+<body>
+<div class="ccm-scope pt">
+
+  <div class="pt-bar">
+    <div class="pt-col pt-bar__in">
+      <a class="pt-bar__brand" href="#top">CCM Page Types</a>
+      <a href="index.html">Design guide</a>
+      <a href="checklist.html">Page checklist</a>
+    </div>
+  </div>
+
+  <header class="pt-head" id="top">
+    <div class="pt-col">
+      <p class="ccm-eyebrow">Plan · v0.1 · 19 November 2026</p>
+      <h1>Page types</h1>
+      <p class="pt-head__lead">Most pages on the five websites are one of a few kinds. We design each kind once, agree on it, and then use the same design on every page of that kind, on every site. That keeps the sites consistent and saves designing page by page.</p>
+      <ul class="pt-stats" id="stats"></ul>
+    </div>
+  </header>
+
+  <main class="pt-main">
+    <div class="pt-col">
+
+      <section class="pt-panel" id="agree" aria-labelledby="agree-h">
+        <h2 id="agree-h">How we agree on a design</h2>
+        <p class="pt-sub">The same seven steps for every page type. A design is only used on real pages after step 5.</p>
+        <ol class="pt-steps">
+          <li><b>Pick a sample page</b><p>Claude takes one real page of the type from the department we're working on, with its real content.</p><span class="pt-who">Claude</span></li>
+          <li><b>Two or three options</b><p>Built with the same content, colours and fonts; only the layout changes. A compare page shows each one on desktop and phone, with "Good for" and "Watch out".</p><span class="pt-who">Claude</span></li>
+          <li><b>Review</b><p>On the compare page, mark each option <em>First choice</em>, <em>Could work</em> or <em>No</em>, and write what you like or want changed. Mixing is fine. Click <em>Copy feedback</em> and send it to Claude. Teammates can do the same and send you the file.</p><span class="pt-who">You and your team</span></li>
+          <li><b>One combined design</b><p>Claude turns the feedback into one design. Steps 3 and 4 repeat until you're happy; we aim for two rounds at most.</p><span class="pt-who">Claude</span></li>
+          <li><b>Approve</b><p>You say "approved". It goes into the decisions list below with the date. The design becomes the standard: its parts move into the design system, and the options that weren't chosen are deleted.</p><span class="pt-who">You</span></li>
+          <li><b>Test in Sitefinity</b><p>One page of the type on a hidden draft page: Preview and Save as draft only.</p><span class="pt-who">You</span></li>
+          <li><b>Use it everywhere</b><p>Every page of the type on the current department's site. Each one passes <code>check-page.mjs</code> and the page checklist before upload.</p><span class="pt-who">Both</span></li>
+        </ol>
+        <div class="pt-rules">
+          <div>
+            <h3>How to judge an option</h3>
+            <ul>
+              <li>Does it follow the KFUPM brand rules?</li>
+              <li>Can a visitor find what they came for quickly?</li>
+              <li>Does it work on a phone?</li>
+              <li>Can an editor keep it up to date in the CMS?</li>
+              <li>Does it work for little content and for a lot?</li>
+            </ul>
+          </div>
+          <div>
+            <h3>What doesn't get re-opened</h3>
+            <ul>
+              <li>Colours, fonts, type sizes and spacing: they're set in the design guide.</li>
+              <li>The header, footer and side menu: they stay as they are for now.</li>
+              <li>An approved design. To change it, we change it in the design system, so every page changes together, and we note why in the decisions list.</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section class="pt-panel" id="order" aria-labelledby="order-h">
+        <h2 id="order-h">All types, in the order we work on them</h2>
+        <p class="pt-sub">Page counts come from each site's menu (18 November 2026). Pages like "News article" stand for many pages built from one design. The types were chosen from page titles; a page can move to another type once we open it.</p>
+        <div class="pt-scroll">
+          <table class="pt-table" id="summary">
+            <thead></thead><tbody></tbody><tfoot></tfoot>
+          </table>
+        </div>
+        <div class="pt-note">
+          <p><b>Why this order.</b> People list is already under way. The text page comes next because it is the biggest group and it builds the parts every other type reuses: text, notice boxes, link cards, download lists and questions that open and close. Types that read from Sitefinity's own lists (profiles, news, events) and the home pages wait for template access, though we can design them earlier.</p>
+          <p><b>Built with.</b> <span class="pt-chip pt-chip--block">Content block</span> We can build and upload these now, as HTML + CSS. <span class="pt-chip pt-chip--widget">Widget template</span> These show items from Sitefinity's own lists (People, News, Events), so they go live once we have template access. <span class="pt-chip pt-chip--template">Page template</span> Needs page-layout access.</p>
+        </div>
+      </section>
+
+      <section id="types" aria-labelledby="types-h">
+        <h2 id="types-h" class="ccm-sr-only">Each page type</h2>
+      </section>
+
+      <section class="pt-panel" id="decisions" aria-labelledby="decisions-h">
+        <h2 id="decisions-h">Decisions</h2>
+        <p class="pt-sub">Everything agreed so far, newest first. An approved page type is added here at step 5.</p>
+        <div class="pt-scroll">
+          <table class="pt-table">
+            <thead><tr><th scope="col">Date</th><th scope="col">Decision</th><th scope="col">Decided by</th></tr></thead>
+            <tbody>
+              <tr><td>2026-11-19</td><td>We design by <b>page type</b>, using the steps on this page.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-19</td><td>The <b>header, footer and side menu</b> stay as they are for now. New designs must look right inside them.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-19</td><td>Pages link <b>one CSS file</b> (<code>ccm-styles.css</code>) from the site's library, once the Sitefinity test confirms it works.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-19</td><td>We work on <b>one department at a time</b>. ISE is on hold.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-19</td><td><b>Everything comes from the CMS</b>: images, documents, fonts and graphics are uploaded to the site's library and used by link.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-19</td><td>The CCM college colour is <b>#4EABB1</b> (the value the team uses) until the branding team confirms it.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-19</td><td>All five sites use <b>CCM colouring only</b>. Departments have no colours of their own.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-18</td><td>Pages are built as <b>HTML + CSS</b> until template access arrives.</td><td>Project owner</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<script>
+// ---------------------------------------------------------------------------
+// The data. To change a status: edit "status" below.
+//   todo = Not started · options = Options ready · review = In review
+//   approved = Approved · live = In use
+// built: block = Content block · widget = Widget template · template = Page template
+// pages: [title, address]. An address with <name> stands for many pages.
+// ---------------------------------------------------------------------------
+const SITES = ['CCM', 'ICS', 'COE', 'MATH', 'ISE'];
+const DOMAIN = { CCM: 'ccm.kfupm.edu.sa', ICS: 'ics.kfupm.edu.sa', COE: 'coe.kfupm.edu.sa', MATH: 'math.kfupm.edu.sa', ISE: 'ise.kfupm.edu.sa' };
+const LATER = new Set(['ISE']); // on hold
+const STATUS = { todo: 'Not started', options: 'Options ready', review: 'In review', approved: 'Approved', live: 'In use' };
+const BUILT = { block: 'Content block', widget: 'Widget template', template: 'Page template' };
+
+const TYPES = [
+  {
+    id: 'people', name: 'People list', status: 'options', built: 'widget',
+    what: 'A group of people with photo, title and contact details: leaders, faculty, staff, committees.',
+    builtNote: 'Short lists such as Dean & Chairmen can go in a Content block. Long lists (faculty, staff) must read from Content → People, so they go live with widget templates.',
+    have: ['Six Dean & Chairmen options: contact list, name cards + pop-up, org chart, departments first, portraits, directory'],
+    need: ['Your choice of option', 'For long lists: A to Z or search (later)'],
+    sample: ['CCM', 'Dean & Chairmen', '/peoples/dean-chairmen'],
+    work: { label: 'Open the six options', href: '../CCM/pages/dean-chairmen/index.html' },
+    pages: {
+      CCM: [['Dean & Chairmen', '/peoples/dean-chairmen'], ['College Administration', '/peoples/college-administration']],
+      ICS: [['Faculty', '/people/faculty'], ['Staff', '/people/ICSStaff'], ['Adjunct Professors', '/people/adjunct-professors'], ['ICS Affiliates', '/people/ics-affiliates'], ['Previous Chairmen', '/people/previouschairmen'], ['Industrial Advisory Committee', '/research/industrial-advisory-committee']],
+      COE: [['Faculty', '/people/faculty'], ['Staff', '/people/staff']],
+      MATH: [['Faculty', '/people/math-faculty-directory'], ['Staff', '/people/staff'], ['Committees & Coordinators', '/miscellaneous/committees-coordinators']],
+      ISE: [['Faculty', '/people/faculty'], ['Staff', '/people/staff'], ['Graduate Students', '/people/graduate-students'], ['Industrial Advisory Committee', '/research/industrial-advisory-committee'], ['Industry Liaison Committee', '/research/industry-liaison-committee']],
+    },
+  },
+  {
+    id: 'text', name: 'Text page', status: 'todo', built: 'block',
+    what: 'Information written as headings, paragraphs and lists, sometimes with a table, a photo or links: IT services, accreditation, admission, awards, student clubs.',
+    have: ['Rich text (ccm-prose), section titles, buttons'],
+    need: ['Notice box (info, warning)', 'Questions that open and close (FAQ)', 'Table style', 'Image with text', 'Link cards', 'Download list', 'Space between blocks in a section'],
+    sample: ['CCM', 'Remote Login and VPN', '/it-services/remote-login-and-vpn'],
+    pages: {
+      CCM: [['Academic Initiative', '/it-services/academic-initiative'], ['CCM Network Accounts', '/it-services/ccm-network-accounts'], ['Email Aliases', '/it-services/email-aliases'], ['FAQs', '/it-services/faqs'], ['Home Directory Access', '/it-services/home-directory-access'], ['Personal Website', '/it-services/personal-website'], ['Printing', '/it-services/printing'], ['Remote Login and VPN', '/it-services/remote-login-and-vpn'], ['Security', '/it-services/security'], ['Software', '/it-services/software'], ['Student Project Support', '/it-services/student-project-support'], ['Featured this month', '/featured-detail/featured-this-month'], ['Prospective students', '/featured-detail/prospective-students'], ['Featured: Research', '/featured-detail/research']],
+      ICS: [['Careers', '/about/ICSemployment'], ['Accreditation', '/academics/accreditation']],
+      COE: [['Accreditation', '/academics/accreditation'], ['PASS Method to Extinguish Fire', '/lab-facilities/pass-method-to-put-fire']],
+      MATH: [['Certificate of Appreciation', '/about/certificate-of-appreciation'], ['Undergraduate Admission', '/undergraduateprogram/admission'], ['Graduate Admission', '/graduate-program/admission'], ['Accreditation', '/academics/Accreditation'], ['NCAAA Accreditation', '/academics/Accreditation/ncaaa-accreditation'], ['Calculus Awards', '/miscellaneous/calculus-awards'], ['Office Hours Posting', '/miscellaneous/office-hours-posting'], ['Math in 5 Minutes contests', '/miscellaneous/math-in-5-minutes-(m5m)---the-art-of-solving-differential-equations-contests'], ['Weekly Seminar Slot Booking', '/miscellaneous/weekly-seminar-slot-booking']],
+      ISE: [['Program Intro & History', '/academics/undergraduate-program/program-intro-history'], ['Concentration Mapping', '/academics/undergraduate-program/concentration-mapping-industrial-systems-engineering'], ['PhD Comprehensive Exam', '/academics/graduate-program/phd-comprehensive-exam'], ['About ABET Accreditation', '/academics/accreditation/about-abet'], ['ABET: ISE Program', '/academics/accreditation/ise-program'], ['ABET: ISE Degree Plan', '/academics/accreditation/abet-ise-degree-plan'], ['ISE Club', '/students/ise-club'], ['IEOM Student Chapter', '/students/ieom-kfupm-student-chapter']],
+    },
+  },
+  {
+    id: 'about', name: 'About page', status: 'todo', built: 'block',
+    what: 'Who we are: vision and mission, the dean\'s or chairman\'s message, history, overview. Every site has these, and they are among the most visited.',
+    have: ['Leader banner (for a message with a photo)', 'Rich text'],
+    need: ['Vision / mission / values blocks', 'Message with photo and signature', 'Timeline (history)'],
+    sample: ['CCM', 'Vision & Mission', '/about-us/vision-mission-and-goals'],
+    pages: {
+      CCM: [['Overview', '/about-us/overview'], ['Vision & Mission', '/about-us/vision-mission-and-goals']],
+      ICS: [['Vision and Mission', '/about/our-vision-and-mission']],
+      COE: [['Vision and Mission', '/about/our-vision-and-mission']],
+      MATH: [['Brief History', '/about/brief-history'], ['Vision and Mission', '/about/our-vision-and-mission'], ['Chairman\'s Message', '/chairmn\'s-message']],
+      ISE: [['Chairman Message', '/about/chairman-message'], ['Vision & Mission', '/about/vision-mission']],
+    },
+  },
+  {
+    id: 'program', name: 'Program page', status: 'todo', built: 'block',
+    what: 'One degree program: B.S., M.S., Ph.D., concentration (CX) or minor. Usually an overview, objectives, outcomes, degree plan, courses and admission.',
+    have: ['Rich text'],
+    need: ['Program facts (degree, credit hours, length)', 'Links to jump within the page', 'Degree plan table', 'Outcomes list', 'Download list', 'Contact box'],
+    sample: ['ICS', 'B.S. in Computer Science', '/academics/undergraduate-programs/b.s.-in-computer-science'],
+    pages: {
+      CCM: [],
+      ICS: [['B.S. in Computer Science', '/academics/undergraduate-programs/b.s.-in-computer-science'], ['B.S. in Software Engineering', '/academics/undergraduate-programs/b.s.-in-software-engineering'], ['B.S. in AI and Cybersecurity', '/academics/undergraduate-programs/b.s.-in-artificial-intelligence-and-cybersecurity'], ['CX in AI and Machine Learning', '/academics/undergraduate-programs/concentration-programs-(cx)/cx-in-artificial-intelligence-and-machine-learning'], ['CX in Cybersecurity and Blockchain', '/academics/undergraduate-programs/concentration-programs-(cx)/cx-in-cybersecurity-and-blockchain'], ['Ph.D. in Computer Science', '/academics/graduate-programs/ph.d.-in-computer-science'], ['Direct Ph.D. in Computer Science', '/academics/graduate-programs/direct-ph.d.-in-computer-science'], ['M.S. in Computer Science', '/academics/graduate-programs/thesis-based/m.s.-in-computer-science'], ['M.S. in Software Engineering', '/academics/graduate-programs/thesis-based/m.s.-in-software-engineering'], ['M.S. in Security & Info Assurance', '/academics/graduate-programs/thesis-based/m.s.-in-security-info-assurance'], ['M.S. in Artificial Intelligence', '/academics/graduate-programs/project-based/m.s.-in-artificial-intelligence'], ['M.S. in Cybersecurity', '/academics/graduate-programs/project-based/m.s.-in-cybersecurity'], ['M.S. in Visual and Spatial Computing', '/academics/graduate-programs/project-based/m.s.-in-visual-and-spatial-computing']],
+      COE: [['Undergraduate Programs', '/academics/undergraduate-programs'], ['Graduate Programs', '/academics/graduate-programs']],
+      MATH: [['BS in Mathematics', '/bsinmathematics'], ['BS in Applied Mathematics and AI', '/undergraduateprogram/bs-in-applied-mathematics-and-ai'], ['BS in Data Science and Engineering', '/undergraduateprogram/bs-in-data-science-and-engineering'], ['BS in Actuarial Science & Financial Mathematics', '/ProgramMissionandObjectives'], ['Minor in Mathematics', '/undergraduateprogram/minor-in-mathematics'], ['CX: Data Science & Analytics', '/math.kfupm.edu.sa/cx-programs-hosted-by-mathematics-department/data-science-analytics'], ['CX: Business Analytics (STAT 310)', '/cx-programs-hosted-by-other-dept.-(math-stat-courses)/cx-business-analytics-(stat-310-regression-analysis)'], ['CX: Decision Analytics (MATH 407)', '/decision-analytics-(math-407-applied-game-theory)'], ['M.S. in Mathematics', '/msinmathematics'], ['M.S. in Applied Statistics', '/ms-in-applied-statistics'], ['M.S. (Project-Based)', '/msprojectbased'], ['Ph.D. in Mathematics', '/phd-in-mathematics'], ['MSc Data Science & Analytics', '/academics/masterofscience-programs/msc-dsa'], ['Modeling and Simulation', '/academics/masterofscience--programs/modeling-and-simulation'], ['M.S. (Project-Based), other departments', '/graduate-program/master-of-science-(project-based)-hosted-by-other-dept.-(mathstat-courses)']],
+      ISE: [['BS in ISE', '/academics/undergraduate-program/bs-in-industrial-systems-engineering'], ['Degree Plan', '/academics/undergraduate-program/degree-plan-new'], ['CX: Decision Analytics', '/academics/undergraduate-program/concentration-cx-program-decision-analytics'], ['M.S. (Thesis-based) in ISE', '/academics/graduate-program/ms-program-in-ise'], ['M.S. in Maintenance and Reliability', '/academics/graduate-program/professional-master-mx-in-ise'], ['Ph.D. in ISE', '/academics/graduate-program/phd-program-in-ise']],
+    },
+  },
+  {
+    id: 'landing', name: 'Section page', status: 'todo', built: 'block',
+    what: 'The first page of a menu section: a short introduction and links to the pages under it, such as "Undergraduate Programs" or "Departments".',
+    have: ['Department cards (from Dean & Chairmen option 4)'],
+    need: ['Link cards: title, one line and a link', 'Short introduction'],
+    sample: ['CCM', 'Departments', '/academics/departments'],
+    pages: {
+      CCM: [['Departments', '/academics/departments'], ['Programs', '/academics/programs'], ['Undergraduate Programs', '/academics/programs/undergraduate-programs'], ['Graduate Programs', '/academics/programs/graduate-programs']],
+      ICS: [['Undergraduate Programs', '/academics/undergraduate-programs'], ['Graduate Programs', '/academics/graduate-programs']],
+      COE: [],
+      MATH: [['Undergraduate Program', '/undergraduateprogram'], ['Graduate Program', '/graduate-program']],
+      ISE: [['About', '/about'], ['Academics', '/academics'], ['ISE Graduate Programs', '/academics/graduate-program/ise-graduate-programs'], ['People', '/people'], ['Research', '/research'], ['News & Events', '/news-and-events'], ['Students', '/students']],
+    },
+  },
+  {
+    id: 'contact', name: 'Contact page', status: 'todo', built: 'block',
+    what: 'How to reach the college or department: address, map, phone, email, office hours, and who to contact for what.',
+    have: ['Contact list with icons'],
+    need: ['Contact cards (office, phone, email)', 'Map', 'Office hours', '"Who to contact for…" table'],
+    sample: ['CCM', 'Contact Us', '/about-us/contact-us'],
+    pages: {
+      CCM: [['Contact Us', '/about-us/contact-us'], ['Contacts for Services', '/it-services/contacts-for-services']],
+      ICS: [['Contact Us', '/about/contact-us']],
+      COE: [['Contact Us', '/about/contact-us']],
+      MATH: [['Contact Us', '/aboutus']],
+      ISE: [['Contact Us', '/contact-us']],
+    },
+  },
+  {
+    id: 'lab', name: 'Lab & facility page', status: 'todo', built: 'block',
+    what: 'A lab, a computer room or a research facility: photos, what it\'s for, equipment, location and who runs it.',
+    builtNote: 'ICS keeps its facilities in a Sitefinity list (facilities-detail pages). Those go live with widget templates; the rest are Content blocks.',
+    have: ['Rich text', 'Contact list'],
+    need: ['Photo gallery or image with text', 'Facts (location, seats, equipment)', 'Lab cards for the list page'],
+    sample: ['CCM', 'PC Labs in CCM', '/it-services/pc-labs-in-ccm'],
+    pages: {
+      CCM: [['PC Labs in CCM', '/it-services/pc-labs-in-ccm']],
+      ICS: [['All facilities', '/facilities'], ['Facility (one per lab)', '/facilities/facilities-detail/<name>'], ['Labs and Facilities', '/facilities/labs-and-facilities'], ['Teaching and Research Labs', '/facilities/teaching-and-research-labs']],
+      COE: [['Teaching Labs', '/academics/teaching-labs'], ['Computer Network Lab', '/lab-facilities/computer-network-lab'], ['Computer Organization and Assembly Language Lab', '/lab-facilities/computer-organization-and-assembly-language-lab'], ['Digital Logic Design Lab', '/lab-facilities/digital-logic-design-lab'], ['Embedded Systems Lab', '/lab-facilities/embedded-systems-lab'], ['Research Facilities', '/research/research-facilities']],
+      MATH: [],
+      ISE: [],
+    },
+  },
+  {
+    id: 'research', name: 'Research page', status: 'todo', built: 'block',
+    what: 'Research groups, research areas, faculty interests, publications and statistics.',
+    have: ['Rich text', 'Tags'],
+    need: ['Research group cards (name, lead, members, link)', 'Area tags', 'Publication list', 'Number highlights'],
+    sample: ['CCM', 'Research Groups', '/research/research-groups'],
+    pages: {
+      CCM: [['Research Groups', '/research/research-groups']],
+      ICS: [['Research Areas', '/research/research-areas']],
+      COE: [['Research Groups', '/research/research-groups']],
+      MATH: [['Faculty Research Interests', '/research/faculty-research-interests'], ['Mathematics Research Groups', '/research/mathematics-research-groups'], ['Publications', '/research/publications']],
+      ISE: [['Research Areas', '/research/research-areas'], ['Research Statistics', '/research/research-statistics']],
+    },
+  },
+  {
+    id: 'docs', name: 'Documents & forms page', status: 'todo', built: 'block',
+    what: 'A list of files to download: forms, old exams, schedules. The files are uploaded to the site\'s Documents library.',
+    have: [],
+    need: ['Download list (name, file type, size, date)', 'Groups with headings'],
+    sample: ['MATH', 'Department Forms', '/miscellaneous/forms'],
+    pages: {
+      CCM: [], ICS: [], COE: [],
+      MATH: [['Department Forms', '/miscellaneous/forms'], ['Exams', '/miscellaneous/exam'], ['Sample of Mid-Term Exams', '/miscellaneous/sample-of-mid-term-exams']],
+      ISE: [],
+    },
+  },
+  {
+    id: 'courses', name: 'Course list', status: 'todo', built: 'block',
+    what: 'Course descriptions and syllabi: code, title, credit hours and a description. These pages are long.',
+    have: ['Expanding rows (directory)'],
+    need: ['Course rows that open (code, title, credits, description)', 'Jump links by level or subject'],
+    sample: ['MATH', 'MATH graduate courses', '/graduate-program/ms-ph.d-in-mathematics-(all-courses-descriptions)'],
+    pages: {
+      CCM: [], ICS: [], COE: [],
+      MATH: [['MATH graduate courses', '/graduate-program/ms-ph.d-in-mathematics-(all-courses-descriptions)'], ['ASTA graduate courses', '/asta-graduate-courses-description'], ['Syllabus', '/miscellaneous/syllabus']],
+      ISE: [['ISE Graduate Courses', '/academics/graduate-program/ise-graduate-courses-description']],
+    },
+  },
+  {
+    id: 'news', name: 'News, events & seminars', status: 'todo', built: 'widget',
+    what: 'Lists and detail pages for news, events, seminars and the photo gallery. They read from Sitefinity\'s News and Events lists.',
+    have: [],
+    need: ['News cards', 'Event cards with a date badge', 'Article layout', 'Seminar list'],
+    sample: ['CCM', 'News', '/news'],
+    pages: {
+      CCM: [['News', '/news'], ['News article', '/news/news-detail/<name>'], ['Events', '/events'], ['Event', '/events/events-details/<name>']],
+      ICS: [['Events', '/events']],
+      COE: [['Event', '/events/<name>']],
+      MATH: [['News', '/news'], ['News article', '/news/<name>'], ['Seminars', '/miscellaneous/seminars'], ['Gallery', '/gallery/<name>']],
+      ISE: [['Faculty Seminar Series', '/news-and-events/faculty-seminar-series'], ['Graduate Seminar Series', '/news-and-events/graduate-seminar-series'], ['Guest Seminar Series', '/news-and-events/guest-seminar-series'], ['ISE Industry Talks', '/news-and-events/ise-industry-talks']],
+    },
+  },
+  {
+    id: 'profile', name: 'Person profile', status: 'todo', built: 'widget',
+    what: 'One person\'s page: photo, title, contact details, biography, research and publications. Read from Content → People.',
+    have: ['Profile pop-up (a short version)'],
+    need: ['Profile header', 'Sections: biography, research, teaching, publications'],
+    sample: ['CCM', 'The Dean\'s profile', '/peoples/dean-chairmen/people-detail/dr.-abdullah-sultan'],
+    pages: {
+      CCM: [['Person profile', '/peoples/dean-chairmen/people-detail/<name>']],
+      ICS: [], COE: [], MATH: [], ISE: [],
+    },
+    pagesNote: 'The department sites may have profile pages too. We check when we start each one.',
+  },
+  {
+    id: 'home', name: 'Home page', status: 'todo', built: 'template',
+    what: 'The front page of each site: the biggest and most visible page, and the one most tied to the header and template.',
+    have: ['Most parts from the types above'],
+    need: ['Hero', 'Quick links', 'News and events strips', 'Number highlights'],
+    sample: ['CCM', 'Home', '/'],
+    pages: { CCM: [['Home', '/']], ICS: [['Home', '/']], COE: [['Home', '/']], MATH: [['Home', '/']], ISE: [['Home', '/']] },
+  },
+];
+
+// ---------------------------------------------------------------------------
+const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const count = (t, s) => (t.pages[s] ?? []).length;
+const total = (t, sites = SITES) => sites.reduce((n, s) => n + count(t, s), 0);
+const active = SITES.filter((s) => !LATER.has(s));
+const chip = (kind, label) => `<span class="pt-chip pt-chip--${kind}">${esc(label)}</span>`;
+const link = (site, title, addr) => addr.includes('<')
+  ? `${esc(title)} <code>${esc(addr)}</code>`
+  : `<a href="https://${DOMAIN[site]}${encodeURI(addr)}">${esc(title)}</a>`;
+
+// Header numbers
+const allPages = TYPES.reduce((n, t) => n + total(t), 0);
+document.getElementById('stats').innerHTML = [
+  [TYPES.length, 'page types'],
+  [TYPES.reduce((n, t) => n + total(t, active), 0), 'pages on CCM, ICS, COE and MATH'],
+  [allPages, 'pages with ISE (on hold)'],
+  [TYPES.filter((t) => t.built === 'block').length, 'types we can build now'],
+].map(([n, l]) => `<li><b>${n}</b><span>${l}</span></li>`).join('');
+
+// Summary table
+const tbl = document.getElementById('summary');
+tbl.tHead.innerHTML = `<tr><th scope="col">#</th><th scope="col">Page type</th>${SITES.map((s) =>
+  `<th scope="col" class="pt-num${LATER.has(s) ? ' pt-later' : ''}">${s}${LATER.has(s) ? '<br><small>later</small>' : ''}</th>`).join('')}<th scope="col" class="pt-num">Total</th><th scope="col">Built with</th><th scope="col">Status</th></tr>`;
+tbl.tBodies[0].innerHTML = TYPES.map((t, i) => `<tr>
+  <td class="pt-num">${i + 1}</td>
+  <th scope="row"><a href="#type-${t.id}">${esc(t.name)}</a></th>
+  ${SITES.map((s) => `<td class="pt-num${count(t, s) ? '' : ' pt-zero'}">${count(t, s) || '–'}</td>`).join('')}
+  <td class="pt-num"><b>${total(t)}</b></td>
+  <td>${chip(t.built, BUILT[t.built])}</td>
+  <td>${chip(t.status, STATUS[t.status])}</td></tr>`).join('');
+tbl.tFoot.innerHTML = `<tr><td></td><th scope="row">All pages</th>${SITES.map((s) =>
+  `<td class="pt-num">${TYPES.reduce((n, t) => n + count(t, s), 0)}</td>`).join('')}<td class="pt-num">${allPages}</td><td></td><td></td></tr>`;
+
+// One card per type
+const list = (items) => items.length ? `<ul>${items.map((x) => `<li>${esc(x)}</li>`).join('')}</ul>` : 'Nothing yet';
+document.getElementById('types').insertAdjacentHTML('beforeend', TYPES.map((t, i) => `
+  <article class="pt-type" id="type-${t.id}" aria-labelledby="type-${t.id}-h">
+    <div class="pt-type__head">
+      <span class="pt-type__order" aria-hidden="true">${i + 1}</span>
+      <h3 id="type-${t.id}-h">${esc(t.name)}</h3>
+      ${chip(t.built, BUILT[t.built])} ${chip(t.status, STATUS[t.status])}
+    </div>
+    <div class="pt-type__body">
+      <p class="pt-type__what">${esc(t.what)}${t.builtNote ? ` <span class="pt-muted">${esc(t.builtNote)}</span>` : ''}</p>
+      <dl>
+        <dt>Design from this sample page</dt>
+        <dd>${t.sample[0]}: ${link(t.sample[0], t.sample[1], t.sample[2])}</dd>
+        ${t.work ? `<dt>Work so far</dt><dd><a href="${t.work.href}">${esc(t.work.label)}</a></dd>` : ''}
+        <dt>Pages</dt>
+        <dd>${SITES.filter((s) => count(t, s)).map((s) => `${s} ${count(t, s)}`).join(' · ') || 'None found yet'}</dd>
+      </dl>
+      <dl>
+        <dt>Parts we already have</dt><dd>${list(t.have)}</dd>
+        <dt>Parts to design</dt><dd>${list(t.need)}</dd>
+      </dl>
+    </div>
+    <details>
+      <summary>See all ${total(t)} page${total(t) === 1 ? '' : 's'}</summary>
+      <div class="pt-pages">
+        ${SITES.filter((s) => count(t, s)).map((s) => `<div><h4>${s}${LATER.has(s) ? ' <span class="pt-later">(later)</span>' : ''}</h4><ul>${
+          t.pages[s].map(([title, addr]) => `<li>${link(s, title, addr)}</li>`).join('')}</ul></div>`).join('')}
+        ${t.pagesNote ? `<p class="pt-pages__note">${esc(t.pagesNote)}</p>` : ''}
+      </div>
+    </details>
+  </article>`).join(''));
+</script>
+</body>
+</html>
