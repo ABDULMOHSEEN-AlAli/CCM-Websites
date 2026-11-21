@@ -209,6 +209,8 @@ function checkPage(file, src) {
     add('warn', 'Content', `"${p[1]}" without a full stop. Write "${p[1]}." before a name.`, p.index);
   }
   for (const p of text.matchAll(/\b[A-Z][A-Z'’.-]+(?:\s+(?:&amp;\s+)?[A-Z][A-Z'’.-]+){3,}/g)) {
+    // A row of short acronyms (COE ICS ISE MATH, for example chips) is fine.
+    if (p[0].split(/\s+/).every((w) => w.replace(/[^A-Z]/g, '').length <= 4)) continue;
     add('warn', 'Typography', `"${short(p[0], 40)}" is typed in UPPERCASE. Type it normally; CSS makes labels uppercase.`, p.index);
   }
 

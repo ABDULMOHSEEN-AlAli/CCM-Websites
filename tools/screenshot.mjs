@@ -25,9 +25,14 @@ if (!EDGE) {
   process.exit(1);
 }
 
-const [target, hash = '', suffix = ''] = process.argv.slice(2);
+// Options: --height=N and --phone-height=N set the screenshot heights. Use them
+// for designs low on a long page (home page bands): the page opens scrolled to
+// the design (<meta name="ccm-preview-focus">), and a shorter shot keeps it at the top.
+const argv = process.argv.slice(2);
+const flag = (name) => Number(argv.find((a) => a.startsWith(`--${name}=`))?.split('=')[1]) || 0;
+const [target, hash = '', suffix = ''] = argv.filter((a) => !a.startsWith('--'));
 if (!target) {
-  console.error('Usage: node tools/screenshot.mjs <page folder | page.html> ["#show=id"] [suffix]');
+  console.error('Usage: node tools/screenshot.mjs <page folder | page.html> ["#show=id"] [suffix] [--height=N] [--phone-height=N]');
   process.exit(1);
 }
 const abs = path.resolve(ROOT, target);
@@ -49,9 +54,21 @@ function shoot(url, out, width, height) {
 }
 
 // A state shot (pop-up open) is about what's on screen, so use screen-sized
-// shots; a normal shot shows the whole page.
-const desktopH = hash ? 900 : 1900;
-const phoneH = hash ? 844 : 2800;
+// shots; a normal shot shows the whole page, including the live header and
+// footer that preview.js adds around the design.
+const desktopH = flag('height') || (hash ? 900 : 2400);
+const phoneH = flag('phone-height') || (hash ? 844 : 4000);
+
+// The page loads inside an iframe for both shots: headless Edge won't lay a
+// window out narrower than about 500px, and it doesn't capture a page that
+// scrolled itself (a page that opens scrolled to its design).
+function shootFramed(url, out, width, height) {
+  const harness = path.join(tmp, `frame-${width}.html`);
+  writeFileSync(harness,
+    `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#fff;overflow:hidden}` +
+    `iframe{display:block;width:${width}px;height:${height}px;border:0}</style><iframe src="${url}"></iframe>`);
+  shoot(pathToFileURL(harness).href, out, width, height);
+}
 
 for (const file of files) {
   const dir = path.join(path.dirname(file), 'previews');
@@ -59,13 +76,8 @@ for (const file of files) {
   const name = path.basename(file, '.html') + (suffix ? `-${suffix}` : '');
   const url = pathToFileURL(file).href + hash;
 
-  shoot(url, path.join(dir, `${name}-desktop.png`), 1280, desktopH);
-
-  const harness = path.join(tmp, 'phone.html');
-  writeFileSync(harness,
-    `<!doctype html><meta charset="utf-8"><style>html,body{margin:0;background:#fff}` +
-    `iframe{display:block;width:390px;height:${phoneH}px;border:0}</style><iframe src="${url}"></iframe>`);
-  shoot(pathToFileURL(harness).href, path.join(dir, `${name}-phone.png`), 390, phoneH);
+  shootFramed(url, path.join(dir, `${name}-desktop.png`), 1280, desktopH);
+  shootFramed(url, path.join(dir, `${name}-phone.png`), 390, phoneH);
 
   console.log(`✓ ${path.relative(ROOT, dir)}/${name}-desktop.png, -phone.png`);
 }

@@ -1,0 +1,65 @@
+/* ==========================================================================
+   News & Events layout: HOME PAGE CONCEPTS (CCM/pages/home)
+   How the "Latest news" and "Events" lists sit in their home page band
+   (.ccm-band, home.css):
+
+   <div class="ccm-feed__cols">        news and events side by side from 992px
+     <section class="ccm-section" aria-labelledby="news-h">
+       <div class="ccm-feed__head">
+         <h2 class="ccm-section__title" id="news-h">Latest news</h2>
+         <a class="ccm-more" href="…/news">View all news</a>
+       </div>
+       …the list: page numbers (pages.css) or <ul class="ccm-feed__list">…</ul>
+     </section>
+   </div>
+
+   .ccm-feed__head (title on the left, "View all" on the right) is also the
+   head of every other home page band.
+   ========================================================================== */
+
+/* Columns: stacked on phones and tablets, side by side from 992px */
+.ccm-feed__cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-10);
+}
+@media (min-width: 992px) {
+  .ccm-feed__cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--ccm-space-7); /* keeps each column at 540px or more from 1200px */
+  }
+}
+.ccm-feed__cols > .ccm-section {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* A plain stack of items (news rows, events) without page numbers */
+.ccm-feed__list {
+  display: grid;
+  gap: var(--ccm-space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ccm-feed__list > li {
+  display: flex;
+  margin: 0;
+}
+
+/* Title on the left, "View all" link on the right */
+.ccm-feed__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ccm-space-2) var(--ccm-space-5);
+  margin: 0 0 var(--ccm-space-6);
+}
+.ccm-feed__head .ccm-section__title {
+  margin: 0;
+}
+.ccm-feed__head .ccm-more {
+  margin: 0;
+}

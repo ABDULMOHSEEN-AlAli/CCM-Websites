@@ -2,13 +2,16 @@
 // Adds the review tools to a compare page (any page with .cmp__card items):
 //   - on each option: First choice / Could work / No, and a comment box
 //   - at the bottom: your name, overall comments, Copy feedback, Download, Clear
-// Answers are saved in this browser only (localStorage), per compare page.
+// Answers are saved in this browser only (localStorage), per compare page and
+// per review round: <body data-review-round="2"> starts a new round with empty
+// answers, so marks for last round's options don't land on the new ones.
 // Step 3 of "How we agree on a design" in design-system/page-types.html.
 (function () {
   var cards = Array.prototype.slice.call(document.querySelectorAll('.cmp__card'));
   if (!cards.length) return;
 
-  var KEY = 'ccm-review:' + location.pathname;
+  var round = document.body.getAttribute('data-review-round') || '';
+  var KEY = 'ccm-review:' + location.pathname + (round ? ':round-' + round : '');
   var CHOICES = [['first', 'First choice'], ['maybe', 'Could work'], ['no', 'No']];
   var state = { reviewer: '', overall: '', options: {} };
   try { state = Object.assign(state, JSON.parse(localStorage.getItem(KEY) || '{}')); } catch (e) { /* private window */ }
@@ -103,6 +106,7 @@
 
   function report() {
     var lines = ['DESIGN FEEDBACK', 'Page: ' + pageTitle, 'File: ' + file];
+    if (round) lines.push('Round: ' + round);
     if (state.reviewer) lines.push('Reviewer: ' + state.reviewer);
     lines.push('Date: ' + new Date().toISOString().slice(0, 10), '');
     var first = options.filter(function (o) { return pickOf(o) === 'first'; })[0];

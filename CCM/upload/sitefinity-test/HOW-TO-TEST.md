@@ -4,7 +4,7 @@ Before we build many pages, we run **one test inside the real CMS**. It answers 
 
 1. Does Sitefinity accept our **CSS file** (`.css`) in the library?
 2. Can a page **link to that one CSS file** (CSS widget → "Link to a file")? If yes, one update to the file changes every page. This is the most important question.
-3. Does the **Content block** keep our HTML: the pop-up, the expanding row and the icons?
+3. Does the **Content block** keep our HTML: the pop-up and the icons?
 4. Does the **old site theme** change our fonts or colours?
 5. Does Sitefinity accept our **font files** (`.woff2`), and do they work from the library?
 6. When we **replace the CSS file** in the library, does the page update by itself?
@@ -22,7 +22,7 @@ Time: about 30 to 40 minutes. Menu names are from Sitefinity 14. If yours look a
 | [`test-page/01-content.html`](test-page/01-content.html) | The test content: four small tests, one per box. |
 | [`test-page/00-check-in-live-site.html`](test-page/00-check-in-live-site.html) | Open it in your browser: it shows the result you should get, inside the live page. |
 | [Reference picture: desktop](../../pages/sitefinity-test/previews/test-page-desktop.png), [phone](../../pages/sitefinity-test/previews/test-page-phone.png), [pop-up open](../../pages/sitefinity-test/previews/test-page-popup-desktop.png) | Compare the Sitefinity Preview with these. |
-| `design-system/fonts/*.woff2`, `design-system/graphics/fast-matrix-four-green.svg` | The shared files for Part F. |
+| `design-system/fonts/*.woff2`, `design-system/graphics/fast-matrix-four-beige.svg` | The shared files for Part F. |
 
 To rebuild after a design change: `node tools/build-sitefinity.mjs CCM/pages/sitefinity-test`
 
@@ -54,7 +54,7 @@ Write your results in the **Results** table at the end of this file as you go. �
 
 9. The widget panel is on the right. Open the **Scripts & Styles** group and **drag the "CSS" widget** into the main content area.
 10. Click **Edit** on the widget.
-    - **If Part A worked:** choose **Link to a file** and paste the link of `ccm-styles.css`. Click **Save**.
+    - **If Part A worked:** choose **Link to a file**, type `/docs/default-source/styles/ccm-styles.css` (the link without `http://ccm.kfupm.edu.sa`) into the text box, leave **Media** as `all` or empty, and click **Save**. (Sitefinity shows library links as `http://`, which the browser blocks on this https site. The short link starting with `/` always uses the page's own address.) **Don't click "Select"**: it browses the website's server folders (AdminApp, App_Data, bin …), not the Documents library, so your upload isn't listed there. If a picker is open, click **Cancel**.
     - **If the .css upload was refused:** choose **Write CSS**. In VS Code, open `CCM/upload/ccm-styles.css`, press **Ctrl+A** then **Ctrl+C**, paste it into the box and click **Save**.
 
 ## Part D: Add the content (Content block)
@@ -72,9 +72,10 @@ Write your results in the **Results** table at the end of this file as you go. �
 | Test | What you should see |
 |---|---|
 | **Test 1: Design and fonts** | The headings are in KFUPM Display (bold, slightly slanted). The text is in IBM Plex Sans Arabic. The Arabic line is in the same font as the reference. **No** sentence starting with "Test 1 failed". At the bottom of the box: **Design build:** followed by a code. Note that code. |
-| **Test 2: Banner** | A turquoise banner with the green KFUPM pattern behind the photo. Small icons before the email, phone and office lines. Two rounded buttons. |
+| **Test 2: Card** | A white Dean card with a light beige KFUPM pattern behind the photo. Small icons before the email, phone, office and website lines. One rounded button. |
 | **Test 3: Pop-up** | Clicking *Dr. Malak Baslyman* opens a box over the page. The X button and the Esc key close it. **No** sentence starting with "Test 3 failed". |
-| **Test 4: Expanding row** | Clicking the row opens the details under it; a second click closes it. |
+
+> Test 4 (expanding row) was removed on 2026-11-21 with the directory design. On CCM, `<details>` worked in a Content block ([TEST-RESULTS.md](TEST-RESULTS.md)). Add it back when a design uses it again.
 | **Phone** | Make the browser window narrow (or press **F12** and use the phone button). Compare with the phone reference picture. |
 | **Old theme** | Nothing from the old style inside our area: no green `#007D40` or gold colours, no Open Sans font, no extra underlines, bullets or borders. |
 
@@ -93,16 +94,16 @@ The Content block's editor may quietly delete code it doesn't know. This check f
     ```
     It lists anything Sitefinity **REMOVED** or **CHANGED**, and what that breaks. "No changes" is the best result.
 
-**If Test 3 or Test 4 failed, or the report shows REMOVED items:** delete the Content block, drag an **Embed code** widget (in *Scripts & Styles*) to the same place, paste the same `01-content.html` into it, save, and repeat Parts E and F. Note which of the two works.
+**If Test 3 failed, or the report shows REMOVED items:** delete the Content block, drag an **Embed code** widget (in *Scripts & Styles*) to the same place, paste the same `01-content.html` into it, save, and repeat Parts E and F. Note which of the two works.
 
 ## Part G: Fonts from the library, and updating the CSS file
 
 This tests questions 5 and 6. Until now the fonts came from a backup (Google Fonts, or inside the CSS file). Now they come from the CCM library.
 
-21. Go to **Content → Documents & Files → Web design system** and upload the five font files from `design-system/fonts/`:
+21. Go to **Content → Documents & Files** and open the folder that holds `ccm-styles.css` (on CCM: **Default library → styles**). Upload the five font files from `design-system/fonts/`:
     `KFUPM-Bold.woff2`, `IBMPlexSansArabic-Regular.woff2`, `IBMPlexSansArabic-Medium.woff2`, `IBMPlexSansArabic-SemiBold.woff2` and `IBMPlexSansArabic-Bold.woff2`.
     - Refused ("file type not allowed")? Note it in the results (question 5) and stop here. The site administrator can allow `.woff2` in the Documents library settings. The fonts keep working from the backup until then.
-22. Go to **Content → Images**, and upload `design-system/graphics/fast-matrix-four-green.svg`.
+22. Go to **Content → Images**, and upload `design-system/graphics/fast-matrix-four-beige.svg`.
 23. Copy the link of each of the six files into `CCM/cms-links.json`, next to its name, and save.
 24. Run the build: `node tools/build-sitefinity.mjs CCM/pages/sitefinity-test`
     It should say **"6 of 6 linked"** and **"CHANGED"** next to `ccm-styles.css`, with a new build code.
@@ -124,18 +125,20 @@ Send:
 
 ## Results
 
+> **CCM test done on 2026-11-21.** Full write-up with issues, solutions and observations: [TEST-RESULTS.md](TEST-RESULTS.md).
+
 | # | Question | ✅ / ❌ | Notes |
 |---|---|---|---|
-| 1 | Library accepts `ccm-styles.css` | | |
-| 2 | CSS widget **Link to a file** works (Test 1 passes) | | |
-| 3a | Test 3 pop-up works in the Content block | | |
-| 3b | Test 4 expanding row works in the Content block | | |
-| 3c | `compare-saved.mjs` says "No changes" | | |
-| 3d | Embed code widget works (only if 3a to 3c failed) | | |
-| 4 | No old-theme styles inside our area | | |
-| 4b | Phone layout matches the reference | | |
-| 5 | Library accepts `.woff2` fonts, and they show in Preview | | |
-| 6 | After replacing `ccm-styles.css`, Preview shows the new build code | | |
+| 1 | Library accepts `ccm-styles.css` | ✅ | In Default library → styles. Sitefinity shows the link as `http://`; use `https://` or the short `/docs/…` link. |
+| 2 | CSS widget **Link to a file** works (Test 1 passes) | ✅ | Type the link; don't use Select. Media must be `all` (a stray `a` blocked it). |
+| 3a | Test 3 pop-up works in the Content block | ❌ | Saved with `popover`, but removed when the page is shown: box stuck open. |
+| 3b | Test 4 expanding row works in the Content block | ✅ | |
+| 3c | `compare-saved.mjs` says "No changes" | ✅ | Nothing removed on save. Image links shortened to `/images/…` and Sitefinity markers added (harmless). |
+| 3d | Embed code widget works (only if 3a to 3c failed) | ✅ | Pop-up opens, X and Esc close it. Use Embed code for pages with pop-ups. |
+| 4 | No old-theme styles inside our area | ✅ | |
+| 4b | Phone layout matches the reference | ✅ | |
+| 5 | Library accepts `.woff2` fonts, and they show in Preview | ✅ | |
+| 6 | After replacing `ccm-styles.css`, Preview shows the new build code | ✅ | 0a10fc8a → d1c51b26 with Ctrl+F5. The library tells browsers to keep the file 90 days, so visitors may see the old one: needs a fix before rollout. |
 
 ## If something goes wrong
 

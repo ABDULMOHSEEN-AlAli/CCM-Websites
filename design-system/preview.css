@@ -37,6 +37,27 @@ body {
   display: flex;
   gap: 1rem;
 }
+.preview-bar__warn {
+  color: #8A1C1C;
+  font-weight: 600;
+}
+
+/* Live frame: the theme draws the side-menu arrows with Font Awesome, which
+   local files can't load (it shows as boxes). Draw a plain arrow instead. */
+.preview-framed .side-menu-dark .sub-menu li::before {
+  content: "\203A";
+  font-family: inherit;
+  font-size: 15px;
+  font-weight: 700;
+  top: 1px;
+}
+
+/* No live-frame.js yet: show the content in a plain centred column. */
+body.preview-unframed > .ccm-scope {
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 48px 24px;
+}
 
 /* ---- Compare page ------------------------------------------------------- */
 .cmp {
@@ -57,6 +78,10 @@ body {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+/* Four options: two per row (2 × 2), so none sits alone on a row */
+@media (min-width: 760px) {
+  .cmp__grid--2 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 .cmp__card {
   display: flex;
@@ -79,7 +104,7 @@ body {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: top center;
+  object-position: center var(--shot-y, 0%); /* a card can start lower: style="--shot-y: 18%" */
 }
 .cmp__phone {
   position: absolute;
@@ -88,7 +113,7 @@ body {
   width: 92px;
   height: 230px;
   object-fit: cover;
-  object-position: top center;
+  object-position: center var(--shot-y, 0%); /* a card can start lower: style="--shot-y: 18%" */
   border: 4px solid var(--ccm-text);
   border-radius: var(--ccm-radius-lg);
   background: #fff;
@@ -156,6 +181,10 @@ body {
 }
 .cmp__notes li {
   margin-bottom: .5rem;
+}
+/* "What changed after your feedback", above the options */
+.cmp__notes--first {
+  margin: 0 0 2.5rem;
 }
 
 /* ---- Review tools on compare pages (added by review.js) ------------------ */

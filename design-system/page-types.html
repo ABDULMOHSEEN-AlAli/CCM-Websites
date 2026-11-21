@@ -182,6 +182,15 @@
           <table class="pt-table">
             <thead><tr><th scope="col">Date</th><th scope="col">Decision</th><th scope="col">Decided by</th></tr></thead>
             <tbody>
+              <tr><td>2026-11-21</td><td>Home page, round 3: the photo-panel and centred variations are <b>rejected</b>. Round 4 tries other <b>minimal, simple variations</b> of concept 1 (text first, lines, compact).</td><td>Project owner</td></tr>
+              <tr><td>2026-11-21</td><td>Home page, round 2: <b>concept 1, "Classic, made clear"</b>, is the base. The other concepts become variations of it (same order and style).</td><td>Project owner</td></tr>
+              <tr><td>2026-11-21</td><td>Home page, round 1: keep it <b>simple and minimal</b>, with <b>no colour blocks at the top</b>; as easy to read as the old page; <b>numbers in boxes</b>; <b>no message from the Dean</b>.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-21</td><td>Home page: redesign <b>everything between the header and the footer</b>, not only News &amp; Events. In the sliding-rows option, news and events each get <b>their own full-width row</b>.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-21</td><td>People list, round 2: <b>no "View details" label</b> on cards (the card itself is the link); option 1 split into <b>1A with a pop-up</b> and <b>1B linking to the profile</b>; portraits get a "View full profile" button instead of email and phone icons.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-21</td><td><b>Design previews show the live page around the design</b>: its header, side menu and footer, at the real width beside the side menu (<code>tools/live-frame.mjs</code>).</td><td>Project owner</td></tr>
+              <tr><td>2026-11-21</td><td>People list, round 1: the <b>org chart is dropped</b>; the Dean leads the page and the four chairs are shown the same size. Round 2 has three options: profile cards, departments, portraits.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-21</td><td>The Sitefinity test on CCM passed: pages link <b>one CSS file</b> from the library; designs with <b>pop-ups go in the Embed code widget</b>, because the Content block removes them.</td><td>Sitefinity test</td></tr>
+              <tr><td>2026-11-21</td><td>Shared files live in <b>design-system folders</b> in each site's libraries: <code>styles</code>, <code>fonts</code> (Documents), <code>graphics</code>, <code>logos</code> (Images).</td><td>Project owner</td></tr>
               <tr><td>2026-11-19</td><td>We design by <b>page type</b>, using the steps on this page.</td><td>Project owner</td></tr>
               <tr><td>2026-11-19</td><td>The <b>header, footer and side menu</b> stay as they are for now. New designs must look right inside them.</td><td>Project owner</td></tr>
               <tr><td>2026-11-19</td><td>Pages link <b>one CSS file</b> (<code>ccm-styles.css</code>) from the site's library, once the Sitefinity test confirms it works.</td><td>Project owner</td></tr>
@@ -218,10 +227,10 @@ const TYPES = [
     id: 'people', name: 'People list', status: 'options', built: 'widget',
     what: 'A group of people with photo, title and contact details: leaders, faculty, staff, committees.',
     builtNote: 'Short lists such as Dean & Chairmen can go in a Content block. Long lists (faculty, staff) must read from Content → People, so they go live with widget templates.',
-    have: ['Six Dean & Chairmen options: contact list, name cards + pop-up, org chart, departments first, portraits, directory'],
-    need: ['Your choice of option', 'For long lists: A to Z or search (later)'],
+    have: ['Round 1 (six options) reviewed on 2026-11-21', 'Round 2 reviewed on 2026-11-21', 'Round 3: four Dean & Chairmen options, shown inside the live page: profile cards with a pop-up (1A) or a profile link (1B), departments, portraits'],
+    need: ['Your choice in round 3', 'For long lists: A to Z or search (later)'],
     sample: ['CCM', 'Dean & Chairmen', '/peoples/dean-chairmen'],
-    work: { label: 'Open the six options', href: '../CCM/pages/dean-chairmen/index.html' },
+    work: { label: 'Open the four options (round 3)', href: '../CCM/pages/dean-chairmen/index.html' },
     pages: {
       CCM: [['Dean & Chairmen', '/peoples/dean-chairmen'], ['College Administration', '/peoples/college-administration']],
       ICS: [['Faculty', '/people/faculty'], ['Staff', '/people/ICSStaff'], ['Adjunct Professors', '/people/adjunct-professors'], ['ICS Affiliates', '/people/ics-affiliates'], ['Previous Chairmen', '/people/previouschairmen'], ['Industrial Advisory Committee', '/research/industrial-advisory-committee']],
@@ -380,11 +389,12 @@ const TYPES = [
     pagesNote: 'The department sites may have profile pages too. We check when we start each one.',
   },
   {
-    id: 'home', name: 'Home page', status: 'todo', built: 'template',
+    id: 'home', name: 'Home page', status: 'options', built: 'template',
     what: 'The front page of each site: the biggest and most visible page, and the one most tied to the header and template.',
-    have: ['Most parts from the types above'],
-    need: ['Hero', 'Quick links', 'News and events strips', 'Number highlights'],
+    have: ['CCM, round 1 reviewed on 2026-11-21', 'CCM, round 2 reviewed: concept 1 "Classic, made clear" chosen as the base', 'CCM, round 3 reviewed: both variations rejected', 'CCM, round 4: concept 1 and three minimal variations of it (text first, lines, compact)'],
+    need: ['Your choice among the four, or a mix of their parts', 'Page template access for the layout; widget templates for news and events'],
     sample: ['CCM', 'Home', '/'],
+    work: { label: 'Open the home page concepts', href: '../CCM/pages/home/index.html' },
     pages: { CCM: [['Home', '/']], ICS: [['Home', '/']], COE: [['Home', '/']], MATH: [['Home', '/']], ISE: [['Home', '/']] },
   },
 ];

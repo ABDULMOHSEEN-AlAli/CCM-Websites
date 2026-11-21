@@ -217,7 +217,7 @@
     <div id="ContentPlaceholder_T55C41A86008_Col01" class="sf_colsIn col-lg-10" data-sf-element="Column 2" data-placeholder-label="Content">
 <style>
 @import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap");
-/* CCM design system for CCM, build 0a10fc8a (2026-11-19), made by tools/build-sitefinity.mjs.
+/* CCM design system for CCM, build d0881a93 (2026-11-21), made by tools/build-sitefinity.mjs.
    One stylesheet for every page of all five sites. Do not edit here: change design-system/ and rebuild. */
 @font-face {
   font-family: "KFUPM Display";
@@ -322,10 +322,13 @@
   --ccm-fill-inverse: rgb(255 255 255 / .14);   /* light fill on Turquoise: icon buttons, ghost-button hover */
   --ccm-fill-inverse-strong: rgb(255 255 255 / .26); /* hover of a filled control on Turquoise */
   --ccm-backdrop: rgb(6 32 34 / .6);            /* dims the page behind a pop-up (Turquoise d3) */
+  --ccm-scrim: rgb(17 95 102 / .92);           /* Turquoise over a photo, behind white text (hero): 6:1 even on white areas */
+  --ccm-scrim-fade: rgb(17 95 102 / .2);       /* the light end of that overlay, so the photo shows */
   --ccm-link: var(--ccm-turquoise);             /* 7.4:1 on white */
   --ccm-link-hover: var(--ccm-turquoise-d1);
   --ccm-surface: var(--ccm-white);              /* page background */
   --ccm-surface-soft: var(--ccm-beige-l2);      /* panels, highlighted cards */
+  --ccm-surface-alt: var(--ccm-gray-l3);        /* every other home page band, so sections are easy to tell apart */
   --ccm-surface-strong: var(--ccm-turquoise);   /* bands, banners, primary buttons */
   --ccm-line: var(--ccm-gray-l3);               /* hairlines and card borders (decorative) */
   --ccm-line-strong: var(--ccm-sand);           /* borders of controls, 3.1:1 on white */
@@ -514,8 +517,12 @@
 /* Which version of ccm-styles.css a page is using: <p class="ccm-build">Design build:</p>.
    tools/build-sitefinity.mjs replaces "local" with the build number. Used on the test page. */
 .ccm-build {
+  display: inline-block;
+  padding: var(--ccm-space-1) var(--ccm-space-3);
+  border-radius: var(--ccm-radius-pill);
+  background: var(--ccm-beige);
   font-size: var(--ccm-text-xs);
-  color: var(--ccm-text-muted);
+  color: var(--ccm-turquoise); /* 5.6:1 on Beige */
 }
 .ccm-build::after {
   content: " local";
@@ -618,7 +625,8 @@
   container-type: inline-size;
   margin: 0 0 var(--ccm-section-space);
 }
-.ccm-section:last-child {
+/* last-of-type, so a group of pop-ups after the last section doesn't leave a gap */
+.ccm-section:last-of-type {
   margin-bottom: 0;
 }
 .ccm-section__title {
@@ -946,6 +954,8 @@
 
    - Contact lines: add a class to the <li>: ccm-c-mail, ccm-c-phone,
      ccm-c-office, ccm-c-web. The ::before of `.ccm-contact li` draws it.
+   - Event details: ccm-c-clock, ccm-c-calendar, ccm-c-user (speaker) and
+     ccm-c-office (place) on the <li> of .ccm-event__meta.
    - Icon in front of text: <a class="ccm-has-ico ccm-c-mail" href="…">Email</a>
    - Icon alone: <span class="ccm-ico ccm-c-mail"><span class="ccm-sr-only">Email</span></span>
    Never leave the tag empty: the Sitefinity editor deletes empty tags.
@@ -963,6 +973,9 @@
   --ccm-i-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
   --ccm-i-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   --ccm-i-external: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5'/%3E%3C/svg%3E");
+  --ccm-i-clock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");
+  --ccm-i-calendar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15' rx='2'/%3E%3Cpath d='M3.5 10h17M8 3v4M16 3v4'/%3E%3C/svg%3E");
+  --ccm-i-user: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4.5 20a7.5 7.5 0 0 1 15 0'/%3E%3C/svg%3E");
 }
 
 .ccm-c-mail     { --ccm-icon: var(--ccm-i-mail); }
@@ -974,6 +987,9 @@
 .ccm-c-plus     { --ccm-icon: var(--ccm-i-plus); }
 .ccm-c-chevron  { --ccm-icon: var(--ccm-i-chevron); }
 .ccm-c-external { --ccm-icon: var(--ccm-i-external); }
+.ccm-c-clock    { --ccm-icon: var(--ccm-i-clock); }
+.ccm-c-calendar { --ccm-icon: var(--ccm-i-calendar); }
+.ccm-c-user     { --ccm-icon: var(--ccm-i-user); }
 
 /* Icon in front of any text */
 .ccm-has-ico {
@@ -1005,149 +1021,40 @@
 }
 
 
-/* People components. These are design options for the Dean & Chairmen
-   page. Colours, radius, shadows and motion use tokens; some spacing and
-   font sizes are still fixed values. Align the chosen ones to the scale
-   and delete the rest. */
+/* People components: the four Dean & Chairmen options of round 3
+   (CCM/pages/dean-chairmen). When one is approved, delete the others. */
 /* ==========================================================================
-   People list: OPTION 1 "Contact list"
-   Circular photo with a college-colour ring, name, role, every contact line
-   visible. `.ccm-person--featured` = the Dean (full row, beige panel).
-   ========================================================================== */
+   People cards: OPTIONS 1A and 1B "Profile cards"
+   Photo, name and role. The whole card is one click target: the name holds
+   the only link or button, and its ::after layer covers the card, so screen
+   readers hear one control. No "View details" label (owner, 2026-11-21).
+   - 1A: the name is a <button popovertarget="profile-x"> that opens the
+     contact pop-up (profile-popup.css). Needs the Embed code widget in
+     Sitefinity (TEST-RESULTS.md).
+   - 1B: the name is a link, <a class="ccm-card__open" href="…">, to the
+     person's full profile page. Works in a Content block.
 
-.ccm-people {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr);
-  gap: 2.5rem 3rem;
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-@container (min-width: 720px) {
-  .ccm-people {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-  }
-}
+   The chairs: all the same size, so no one looks more important.
+   <ul class="ccm-cards">
+     <li><article class="ccm-card">
+       <img class="ccm-card__photo" src="…" alt="" width="104" height="104">
+       <div class="ccm-card__body">
+         <h3 class="ccm-card__name"><a class="ccm-card__open" href="…">Name</a></h3>
+         <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of …</span></p>
+       </div>
+     </article></li>
+   </ul>
+   Section width → chairs per row: under 540px one (photo beside the text),
+   from 540px two, from 720px four.
 
-.ccm-person {
-  display: flex;
-  align-items: flex-start;
-  gap: 1.75rem;
-  margin: 0;
-}
-.ccm-person__photo {
-  flex: none;
-  width: 148px;
-  height: 148px;
-  padding: 4px;
-  border: 3px solid var(--ccm-accent);
-  border-radius: var(--ccm-radius-round);
-  background: var(--ccm-white);
-  object-fit: cover;
-  object-position: center 20%;
-}
-.ccm-person__body {
-  min-width: 0;
-  padding-top: var(--ccm-space-2);
-}
-.ccm-person__name {
-  font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: var(--ccm-text-h4);
-  line-height: 1.25;
-  margin: 0 0 var(--ccm-space-1);
-  color: var(--ccm-turquoise);
-}
-.ccm-person__name a,
-.ccm-person__name a:visited {
-  color: inherit;
-  text-decoration: none;
-}
-.ccm-person__name a:hover,
-.ccm-person__name a:focus-visible {
-  color: inherit;
-  text-decoration: underline;
-  text-decoration-color: var(--ccm-accent);
-  text-decoration-thickness: 2px;
-  text-underline-offset: 4px;
-}
-.ccm-person__role {
-  margin: 0 0 1rem;
-  font-weight: 500;
-  color: var(--ccm-text);
-}
-.ccm-person__unit {
-  display: block;
-  font-weight: 400;
-  color: var(--ccm-text-muted);
-}
-
-/* Featured: the Dean */
-.ccm-person--featured {
-  grid-column: 1 / -1;
-  gap: 2.25rem;
-  padding: 2rem;
-  border-radius: var(--ccm-radius-lg);
-  background: var(--ccm-surface-soft);
-}
-.ccm-person--featured .ccm-person__photo {
-  width: 200px;
-  height: 200px;
-}
-.ccm-person--featured .ccm-person__name {
-  font-size: var(--ccm-text-h3);
-}
-.ccm-person--featured .ccm-contact {
-  grid-template-columns: repeat(auto-fit, minmax(240px, max-content));
-  column-gap: 2rem;
-}
-
-/* Narrow column (phones) */
-@container (max-width: 539.98px) {
-  .ccm-person {
-    gap: var(--ccm-space-4);
-  }
-  .ccm-person__photo {
-    width: 104px;
-    height: 104px;
-    padding: 3px;
-  }
-  .ccm-person__body {
-    padding-top: var(--ccm-space-1);
-  }
-  .ccm-person__name {
-    font-size: var(--ccm-text-h5);
-  }
-  .ccm-person--featured {
-    flex-direction: column;
-    padding: 1.5rem;
-  }
-  .ccm-person--featured .ccm-person__photo {
-    width: 144px;
-    height: 144px;
-  }
-}
-
-/* ==========================================================================
-   People cards: OPTION 2 "Name cards" (also used by option 3)
-   Photo + name + role only. The whole card is one button that opens the
-   person's profile pop-up (profile-popup.css). No JavaScript: the button
-   uses the HTML `popovertarget` attribute.
-
-   <article class="ccm-card">
-     <img class="ccm-card__photo" …>
-     <h3 class="ccm-card__name">
-       <button class="ccm-card__open" type="button" popovertarget="profile-x">Name</button>
-     </h3>
-     <p class="ccm-card__role">Role<span class="ccm-card__unit">Unit</span></p>
-     <span class="ccm-card__hint" aria-hidden="true">View details</span>
-   </article>
+   The Dean: <article class="ccm-card ccm-card--featured">, with
+   <p class="ccm-eyebrow">Dean</p> before the name and the name in an <h2>.
    ========================================================================== */
 
 .ccm-cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--ccm-space-4);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-3);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1156,48 +1063,38 @@
   display: flex;
   margin: 0;
 }
-@container (min-width: 540px) {
-  .ccm-cards {
-    gap: 1.25rem;
-  }
-}
-@container (min-width: 860px) {
-  .ccm-cards {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
 
 .ccm-card {
   position: relative;
   display: flex;
   flex: 1;
-  flex-direction: column;
   align-items: center;
+  gap: var(--ccm-space-4);
   margin: 0;
-  padding: 1.75rem 1.25rem 1.5rem;
-  text-align: center;
-  background: var(--ccm-white);
-  border: 1px solid var(--ccm-line);
+  padding: var(--ccm-space-4);
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
   border-radius: var(--ccm-radius-lg);
-  transition: border-color var(--ccm-duration) var(--ccm-ease), box-shadow var(--ccm-duration) var(--ccm-ease), transform var(--ccm-duration) var(--ccm-ease);
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease),
+              transform var(--ccm-duration) var(--ccm-ease);
 }
 .ccm-card:hover {
   border-color: var(--ccm-accent);
   box-shadow: var(--ccm-shadow-md);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 .ccm-card:has(.ccm-card__open:focus-visible) {
-  outline: 3px solid var(--ccm-turquoise);
-  outline-offset: 3px;
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
 }
 
 .ccm-card__photo {
   flex: none;
-  width: 128px;
-  height: 128px;
-  margin: 0 0 var(--ccm-space-4);
-  padding: 4px;
-  border: 3px solid var(--ccm-accent);
+  width: 72px;
+  height: 72px;
+  padding: 3px;
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
   border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
@@ -1207,20 +1104,19 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  width: 100%;
   min-width: 0;
 }
 .ccm-card__name {
-  margin: 0 0 var(--ccm-space-2);
+  margin: 0 0 var(--ccm-space-1);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
+  font-weight: var(--ccm-weight-bold);
   font-size: var(--ccm-text-h5);
-  line-height: 1.25;
-  color: var(--ccm-turquoise);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
 }
-/* The button fills the whole card (the ::after layer), so the card is one
-   big click target but screen readers hear a single button: the name. */
-.ccm-card__open {
+/* The link or button fills the whole card (the ::after layer). */
+.ccm-card__open,
+.ccm-card__open:visited {
   appearance: none;
   margin: 0;
   padding: 0;
@@ -1229,7 +1125,14 @@
   font: inherit;
   color: inherit;
   text-align: inherit;
+  text-decoration: none;
   cursor: pointer;
+}
+.ccm-card:hover .ccm-card__open {
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 .ccm-card__open::after {
   content: "";
@@ -1243,127 +1146,81 @@
 }
 .ccm-card__role {
   margin: 0;
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.45;
   color: var(--ccm-text);
 }
 .ccm-card__unit {
   display: block;
-  margin-top: .15rem;
-  font-size: var(--ccm-text-sm);
-  font-weight: 400;
+  font-weight: var(--ccm-weight-regular);
   color: var(--ccm-text-muted);
 }
-.ccm-card__hint {
-  display: inline-flex;
-  align-items: center;
-  align-self: center;
-  gap: var(--ccm-space-1);
-  margin-top: auto;
-  padding-top: var(--ccm-space-4);
-  font-size: var(--ccm-text-sm);
-  font-weight: 600;
-  color: var(--ccm-turquoise);
+/* ---- Chairs: two per row, then four (photo above the text) -------------- */
+@container (min-width: 540px) {
+  .ccm-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ccm-space-4);
+  }
+  .ccm-cards .ccm-card {
+    flex-direction: column;
+    align-items: center;
+    padding: var(--ccm-space-6) var(--ccm-space-4) var(--ccm-space-5);
+    text-align: center;
+  }
+  .ccm-cards .ccm-card__photo {
+    width: 104px;
+    height: 104px;
+    padding: var(--ccm-space-1);
+  }
+  .ccm-cards .ccm-card__body {
+    width: 100%;
+  }
+  .ccm-cards .ccm-card__name {
+    margin-bottom: var(--ccm-space-2);
+  }
 }
-.ccm-card__hint::after {
-  content: "";
-  width: 14px;
-  height: 14px;
-  background-color: currentColor;
-  -webkit-mask: var(--ccm-i-plus) center / contain no-repeat;
-          mask: var(--ccm-i-plus) center / contain no-repeat;
-}
-.ccm-card:hover .ccm-card__hint {
-  text-decoration: underline;
+@container (min-width: 720px) {
+  .ccm-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
-/* ---- Featured: the Dean (horizontal, beige panel) ----------------------- */
+/* ---- The Dean: one wide card, larger photo ------------------------------ */
 .ccm-card--featured {
-  flex-direction: row;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem 2.25rem;
-  text-align: left;
-  background: var(--ccm-surface-soft);
-  border-color: transparent;
+  flex-direction: column;
+  gap: var(--ccm-space-4);
+  padding: var(--ccm-space-6) var(--ccm-space-5);
+  text-align: center;
 }
 .ccm-card--featured .ccm-card__photo {
-  width: 168px;
-  height: 168px;
-  margin: 0;
+  width: 128px;
+  height: 128px;
+  padding: var(--ccm-space-1);
+}
+.ccm-card--featured .ccm-eyebrow {
+  margin-bottom: var(--ccm-space-1);
 }
 .ccm-card--featured .ccm-card__name {
   font-size: var(--ccm-text-h3);
 }
 .ccm-card--featured .ccm-card__role {
   font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-regular);
+  color: var(--ccm-text-muted);
 }
-.ccm-card--featured .ccm-card__unit {
-  font-size: var(--ccm-text-body);
-}
-.ccm-card--featured .ccm-card__hint {
-  align-self: flex-start;
-  margin-top: 1rem;
-  padding-top: 0;
-}
-
-/* ---- Dark: turquoise card (org chart head) ------------------------------ */
-.ccm-card--dark {
-  background: var(--ccm-turquoise);
-  border-color: var(--ccm-turquoise);
-  color: var(--ccm-white);
-}
-.ccm-card--dark:hover {
-  border-color: var(--ccm-accent);
-}
-.ccm-card--dark .ccm-card__name,
-.ccm-card--dark .ccm-card__role {
-  color: var(--ccm-white);
-}
-.ccm-card--dark .ccm-card__unit {
-  color: var(--ccm-text-inverse-muted);
-}
-.ccm-card--dark .ccm-eyebrow,
-.ccm-card--dark .ccm-card__hint {
-  color: var(--ccm-beige);
-}
-
-/* ---- Narrow column (phones): two small cards per row -------------------- */
-@container (max-width: 539.98px) {
-  .ccm-card {
-    padding: 1.25rem .75rem 1rem;
-  }
-  .ccm-card__photo {
-    width: 88px;
-    height: 88px;
-    margin-bottom: var(--ccm-space-3);
-    padding: 3px;
-  }
-  .ccm-card__name {
-    font-size: var(--ccm-text-h5); /* Display font: 18px minimum */
-  }
-  .ccm-card__role {
-    font-size: var(--ccm-text-sm);
-  }
-  .ccm-card__unit {
-    font-size: var(--ccm-text-sm);
-  }
-  .ccm-card__hint {
-    padding-top: var(--ccm-space-3);
-    font-size: var(--ccm-text-sm);
-  }
+@container (min-width: 540px) {
   .ccm-card--featured {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.75rem 1.25rem;
-    text-align: center;
+    flex-direction: row;
+    gap: var(--ccm-space-6);
+    padding: var(--ccm-space-6) var(--ccm-space-7);
+    text-align: left;
   }
+}
+@container (min-width: 720px) {
   .ccm-card--featured .ccm-card__photo {
-    width: 128px;
-    height: 128px;
-  }
-  .ccm-card--featured .ccm-card__hint {
-    align-self: center;
+    width: 144px;
+    height: 144px;
   }
 }
 
@@ -1394,6 +1251,12 @@
 /* The group of pop-ups: takes no space on the page (they open on top). */
 .ccm-profiles {
   display: contents;
+}
+
+/* Safety net: if an editor strips the `popover` attribute (the Sitefinity
+   Content block does), keep the box hidden instead of stuck over the page. */
+.ccm-profile:not([popover]) {
+  display: none;
 }
 
 /* Note: never set `display` on .ccm-profile itself. The browser hides a
@@ -1547,185 +1410,22 @@
 }
 
 /* ==========================================================================
-   Org chart: OPTION 3
-   The Dean on top, joined by college-colour lines to the chairs below.
-   Uses .ccm-card (people-cards.css) for each person.
-   Narrow column: becomes a vertical tree with a line down the left.
-
-   <div class="ccm-org">
-     <div class="ccm-org__head"> <article class="ccm-card ccm-card--dark">…</article> </div>
-     <ul class="ccm-org__level"> <li class="ccm-org__item"><article class="ccm-card">…</article></li> … </ul>
-   </div>
-   ========================================================================== */
-
-.ccm-org {
-  --ccm-org-gap: 1.25rem;
-  --ccm-org-drop: 2.25rem;
-  --ccm-org-line: 3px;
-}
-
-.ccm-org__head {
-  position: relative;
-  display: flex;
-  justify-content: center;
-  padding-bottom: var(--ccm-org-drop);
-}
-.ccm-org__head > .ccm-card {
-  flex: 0 1 400px;
-}
-.ccm-org__head > .ccm-card .ccm-card__photo {
-  width: 148px;
-  height: 148px;
-}
-.ccm-org__head > .ccm-card .ccm-card__name {
-  font-size: var(--ccm-text-h3);
-}
-.ccm-org__head::after {
-  content: "";
-  position: absolute;
-  bottom: 0;
-  left: calc(50% - var(--ccm-org-line) / 2);
-  width: var(--ccm-org-line);
-  height: var(--ccm-org-drop);
-  background: var(--ccm-accent);
-}
-
-.ccm-org__level {
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: var(--ccm-org-gap);
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
-.ccm-org__item {
-  position: relative;
-  display: flex;
-  margin: 0;
-  padding-top: var(--ccm-org-drop);
-}
-/* short vertical line down to each card */
-.ccm-org__item::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: calc(50% - var(--ccm-org-line) / 2);
-  width: var(--ccm-org-line);
-  height: var(--ccm-org-drop);
-  background: var(--ccm-accent);
-}
-/* horizontal line joining the cards (each item draws its share) */
-.ccm-org__item::after {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: calc(var(--ccm-org-gap) / -2);
-  right: calc(var(--ccm-org-gap) / -2);
-  height: var(--ccm-org-line);
-  background: var(--ccm-accent);
-}
-.ccm-org__item:first-child::after {
-  left: calc(50% - var(--ccm-org-line) / 2);
-}
-.ccm-org__item:last-child::after {
-  right: calc(50% - var(--ccm-org-line) / 2);
-}
-.ccm-org__item .ccm-card {
-  padding-inline: 1rem;
-}
-.ccm-org__item .ccm-card__photo {
-  width: 112px;
-  height: 112px;
-}
-.ccm-org__item .ccm-card__name {
-  font-size: var(--ccm-text-h5);
-}
-
-/* ---- Narrow column: vertical tree --------------------------------------- */
-@container (max-width: 859.98px) {
-  .ccm-org {
-    --ccm-org-indent: 1.25rem; /* where the vertical line sits */
-    --ccm-org-arm: 1.1rem;     /* line from the spine to each card */
-  }
-  .ccm-org__head {
-    display: block;
-    padding-bottom: 1.25rem;
-  }
-  .ccm-org__head::after {
-    left: var(--ccm-org-indent);
-    height: 1.25rem;
-  }
-  .ccm-org__level {
-    --ccm-org-row-gap: .75rem;
-    grid-template-columns: minmax(0, 1fr);
-    gap: var(--ccm-org-row-gap);
-    margin-left: var(--ccm-org-indent);
-    padding-left: var(--ccm-org-arm);
-  }
-  .ccm-org__item {
-    padding-top: 0;
-  }
-  /* arm: from the spine to the card */
-  .ccm-org__item::before {
-    top: calc(50% - var(--ccm-org-line) / 2);
-    left: calc(var(--ccm-org-arm) * -1);
-    width: var(--ccm-org-arm);
-    height: var(--ccm-org-line);
-  }
-  /* spine: each item draws its own piece; the last one stops at its arm */
-  .ccm-org__item::after,
-  .ccm-org__item:first-child::after,
-  .ccm-org__item:last-child::after {
-    top: calc(var(--ccm-org-row-gap) * -1);
-    bottom: 0;
-    left: calc(var(--ccm-org-arm) * -1);
-    right: auto;
-    width: var(--ccm-org-line);
-    height: auto;
-  }
-  .ccm-org__item:last-child::after {
-    bottom: calc(50% - var(--ccm-org-line) / 2);
-  }
-  /* cards turn horizontal: photo left, text right */
-  .ccm-org .ccm-card {
-    flex-direction: row;
-    align-items: center;
-    gap: 1rem;
-    padding: var(--ccm-space-4);
-    text-align: left;
-  }
-  .ccm-org .ccm-card .ccm-card__photo,
-  .ccm-org__head > .ccm-card .ccm-card__photo {
-    width: 76px;
-    height: 76px;
-    margin: 0;
-    padding: 3px;
-  }
-  .ccm-org__head > .ccm-card .ccm-card__name,
-  .ccm-org .ccm-card__name {
-    font-size: var(--ccm-text-h5);
-  }
-  .ccm-org .ccm-card__hint {
-    display: none;
-  }
-}
-
-/* ==========================================================================
-   Leader hero: OPTION 4 (the Dean)
-   Turquoise banner (primary colour dominates) with the KFUPM FAST Matrix
-   pattern in Green behind the photo, and a college-colour ring as accent.
+   Leader card: OPTION 2 (the Dean)
+   A white card, not a coloured banner: the photo with the college-colour
+   ring sits on a light Beige FAST Matrix pattern, and the name, contact
+   details and button sit beside it. The colour stays in the details.
    Brand rules followed (guidelines p55–58): one matrix pattern per page,
-   allowed colour pair (Green on Turquoise), no rotation, flip or gradient,
-   and it never covers the face.
+   Beige on White is an allowed pair, no rotation, flip or gradient, and it
+   never covers the face.
 
-   <section class="ccm-section">
+   <section class="ccm-section" aria-label="Dean">
      <div class="ccm-leader">
        <div class="ccm-leader__media"><img class="ccm-leader__photo" …></div>
        <div class="ccm-leader__body">
          <p class="ccm-eyebrow">Dean</p>
-         <h2 class="ccm-leader__name">Name</h2>
+         <h2 class="ccm-leader__name"><a href="…">Name</a></h2>
          <p class="ccm-leader__unit">Unit</p>
-         <ul class="ccm-contact ccm-contact--inverse">…</ul>
+         <ul class="ccm-contact">…</ul>
          <div class="ccm-actions">…</div>
        </div>
      </div>
@@ -1736,35 +1436,32 @@
   display: grid;
   grid-template-columns: minmax(0, 1fr);
   overflow: hidden;
-  border-radius: var(--ccm-radius-xl);
-  background: var(--ccm-turquoise);
-  color: var(--ccm-white);
-}
-.ccm-leader :focus-visible {
-  outline-color: var(--ccm-beige);
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
 }
 
 .ccm-leader__media {
   position: relative;
   display: grid;
   place-items: center;
-  padding: 2.25rem 1.5rem 0;
+  padding: var(--ccm-space-7) var(--ccm-space-6) 0;
 }
 /* A background image, not a CSS mask: masks loaded from files are blocked
-   in local previews, and the build turns this into a data URI anyway. */
+   in local previews. The build links the uploaded copy from cms-links.json. */
 .ccm-leader__media::before {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLSBLRlVQTSBGQVNUIE1hdHJpeCAiRm91ciIsIGNvcGllZCBmcm9tIEJyYW5kaW5nLzAzIEZhc3QgTWF0cml4LiBPbmx5IHRoZSB2aWV3Qm94IGlzIGNyb3BwZWQgdG8gdGhlIHBhdHRlcm47IHRoZSBiYXJzIGFyZSB1bmNoYW5nZWQuIFJlY29sb3VyZWQgdG8gS0ZVUE0gR3JlZW4gKCMwMDk3NjcpLCBhbiBhbGxvd2VkIG1hdHJpeCBjb2xvdXIgb24gVHVycXVvaXNlIChndWlkZWxpbmVzIHA1NikuIC0tPgo8c3ZnIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIgdmlld0JveD0iMzQ4IDAgODYzIDEwODAiPgogIDxkZWZzPgogICAgPHN0eWxlPgogICAgICAuY2xzLTEgewogICAgICAgIGZpbGw6ICMwMDk3Njc7CiAgICAgIH0KICAgIDwvc3R5bGU+CiAgPC9kZWZzPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEyMDAuMTEsNjAwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTE2MC4xMSw2MDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02NzguMTEsMTA4MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExMjAuMTEsNjAwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTA2MS4xMSwzNjBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDIxLjExLDM2MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTk4MS4xMSwzNjBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02MzguMTEsMTA4MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwODAuMTEsNjAwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTk4LjExLDEwODBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03OTguMTEsMTA4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTgyOS42MSw3MjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDUwLjYxLDQ4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTc1OC4xMSwxMDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNzg5LjYxLDcyMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwMTAuNjEsNDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNzE4LjExLDEwODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8Zz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQzOC4xMSwxMDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zOTguMTEsMTA4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMzU4LjExLDEwODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8L2c+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNzQ5LjYxLDcyMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTk3MC42MSw0ODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03MDkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTIwLjExLDYwMGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkzMC42MSw0ODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02NjkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODgwLjExLDYwMGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTg5MC42MSw0ODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik02MjkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODQwLjExLDYwMGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTg1MC42MSw0ODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01NTguMTEsMTA4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTU2OC42MSw5NjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01NzkuMTEsODQwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTg5LjYxLDcyMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTgwMC4xMSw2MDBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01MTguMTEsMTA4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUyOC42MSw5NjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01MzkuMTEsODQwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTQ5LjYxLDcyMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTc2MC4xMSw2MDBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00NzguMTEsMTA4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ4OC42MSw5NjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00OTkuMTEsODQwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTA5LjYxLDcyMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTcyMC4xMSw2MDBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8Zz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExOTEuNiwyNDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExNTEuNiwyNDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExMTEuNiwyNDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8L2c+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00NjkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik00MjkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zODkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPC9nPgogIDxnPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9IjEwMjAuNjEgNDgwIDEwMTAuMTEgNjAwIDEwNDAuMTEgNjAwIDEwNTAuNjEgNDgwIDEwMjAuNjEgNDgwIi8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iOTgwLjYxIDQ4MCA5NzAuMTEgNjAwIDEwMDAuMTEgNjAwIDEwMTAuNjEgNDgwIDk4MC42MSA0ODAiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSI5NDAuNjEgNDgwIDkzMC4xMSA2MDAgOTYwLjExIDYwMCA5NzAuNjEgNDgwIDk0MC42MSA0ODAiLz4KICA8L2c+CiAgPGc+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjY5LjExIDg0MCA2NTguNjEgOTYwIDY4OC42MSA5NjAgNjk5LjExIDg0MCA2NjkuMTEgODQwIi8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNjI5LjExIDg0MCA2MTguNjEgOTYwIDY0OC42MSA5NjAgNjU5LjExIDg0MCA2MjkuMTEgODQwIi8+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iNTg5LjExIDg0MCA1NzguNjEgOTYwIDYwOC42MSA5NjAgNjE5LjExIDg0MCA1ODkuMTEgODQwIi8+CiAgPC9nPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwNzEuNiwyNDBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDMxLjYsMjQwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTkxLjYsMjQwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTE4MS4xMSwzNjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMTQxLjExLDM2MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExMDEuMTEsMzYwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPGc+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDgyLjEsMTIwaC0xMFMxMDgyLjYsMCwxMDgyLjYsMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDQyLjEsMTIwaC0xMFMxMDQyLjYsMCwxMDQyLjYsMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDAyLjEsMTIwaC0xMFMxMDAyLjYsMCwxMDAyLjYsMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik05NjIuMSwxMjBoLTEwUzk2Mi42LDAsOTYyLjYsMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik05MjIuMSwxMjBoLTEwUzkyMi42LDAsOTIyLjYsMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik04ODIuMSwxMjBoLTEwUzg4Mi42LDAsODgyLjYsMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPC9nPgo8L3N2Zz4=") center / contain no-repeat;
+  background: url("data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPCEtLSBLRlVQTSBGQVNUIE1hdHJpeCAiRm91ciIsIGNvcGllZCBmcm9tIEJyYW5kaW5nLzAzIEZhc3QgTWF0cml4LiBPbmx5IHRoZSB2aWV3Qm94IGlzIGNyb3BwZWQgdG8gdGhlIHBhdHRlcm47IHRoZSBiYXJzIGFyZSB1bmNoYW5nZWQuIFJlY29sb3VyZWQgdG8gS0ZVUE0gQmVpZ2UgKCNFQ0UwQzcpLCBhbiBhbGxvd2VkIG1hdHJpeCBjb2xvdXIgb24gV2hpdGUgKGd1aWRlbGluZXMgcDU2KS4gVXNlZCB3aGVyZSB0aGUgcGF0dGVybiBzaG91bGQgc3RheSBsaWdodC4gLS0+CjxzdmcgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2aWV3Qm94PSIzNDggMCA4NjMgMTA4MCI+CiAgPGRlZnM+CiAgICA8c3R5bGU+CiAgICAgIC5jbHMtMSB7CiAgICAgICAgZmlsbDogI0VDRTBDNzsKICAgICAgfQogICAgPC9zdHlsZT4KICA8L2RlZnM+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTIwMC4xMSw2MDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMTYwLjExLDYwMGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTY3OC4xMSwxMDgwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTEyMC4xMSw2MDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMDYxLjExLDM2MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwMjEuMTEsMzYwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTgxLjExLDM2MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTYzOC4xMSwxMDgwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTA4MC4xMSw2MDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01OTguMTEsMTA4MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTc5OC4xMSwxMDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODI5LjYxLDcyMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwNTAuNjEsNDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNzU4LjExLDEwODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03ODkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTAxMC42MSw0ODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03MTguMTEsMTA4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDM4LjExLDEwODBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM5OC4xMSwxMDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0zNTguMTEsMTA4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDwvZz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik03NDkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTcwLjYxLDQ4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTcwOS42MSw3MjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik05MjAuMTEsNjAwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNOTMwLjYxLDQ4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTY2OS42MSw3MjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik04ODAuMTEsNjAwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODkwLjYxLDQ4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTYyOS42MSw3MjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik04NDAuMTEsNjAwaC0yMHMxMC41LTEyMCwxMC41LTEyMGgyMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODUwLjYxLDQ4MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTU1OC4xMSwxMDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTY4LjYxLDk2MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTU3OS4xMSw4NDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01ODkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNODAwLjExLDYwMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUxOC4xMSwxMDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNTI4LjYxLDk2MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTUzOS4xMSw4NDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01NDkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNzYwLjExLDYwMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ3OC4xMSwxMDgwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNDg4LjYxLDk2MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ5OS4xMSw4NDBoLTIwczEwLjUtMTIwLDEwLjUtMTIwaDIwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik01MDkuNjEsNzIwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNNzIwLjExLDYwMGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxnPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTE5MS42LDI0MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTE1MS42LDI0MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogICAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTExMS42LDI0MGgtMjBzMTAuNS0xMjAsMTAuNS0xMjBoMjBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDwvZz4KICA8Zz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQ2OS42MSw3MjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTQyOS42MSw3MjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTM4OS42MSw3MjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8L2c+CiAgPGc+CiAgICA8cG9seWdvbiBjbGFzcz0iY2xzLTEiIHBvaW50cz0iMTAyMC42MSA0ODAgMTAxMC4xMSA2MDAgMTA0MC4xMSA2MDAgMTA1MC42MSA0ODAgMTAyMC42MSA0ODAiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSI5ODAuNjEgNDgwIDk3MC4xMSA2MDAgMTAwMC4xMSA2MDAgMTAxMC42MSA0ODAgOTgwLjYxIDQ4MCIvPgogICAgPHBvbHlnb24gY2xhc3M9ImNscy0xIiBwb2ludHM9Ijk0MC42MSA0ODAgOTMwLjExIDYwMCA5NjAuMTEgNjAwIDk3MC42MSA0ODAgOTQwLjYxIDQ4MCIvPgogIDwvZz4KICA8Zz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSI2NjkuMTEgODQwIDY1OC42MSA5NjAgNjg4LjYxIDk2MCA2OTkuMTEgODQwIDY2OS4xMSA4NDAiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSI2MjkuMTEgODQwIDYxOC42MSA5NjAgNjQ4LjYxIDk2MCA2NTkuMTEgODQwIDYyOS4xMSA4NDAiLz4KICAgIDxwb2x5Z29uIGNsYXNzPSJjbHMtMSIgcG9pbnRzPSI1ODkuMTEgODQwIDU3OC42MSA5NjAgNjA4LjYxIDk2MCA2MTkuMTEgODQwIDU4OS4xMSA4NDAiLz4KICA8L2c+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTA3MS42LDI0MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwMzEuNiwyNDBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik05OTEuNiwyNDBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8cGF0aCBjbGFzcz0iY2xzLTEiIGQ9Ik0xMTgxLjExLDM2MGgtMTBzMTAuNS0xMjAsMTAuNS0xMjBoMTBzLTEwLjUsMTIwLTEwLjUsMTIwWiIvPgogIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTExNDEuMTEsMzYwaC0xMHMxMC41LTEyMCwxMC41LTEyMGgxMHMtMTAuNSwxMjAtMTAuNSwxMjBaIi8+CiAgPHBhdGggY2xhc3M9ImNscy0xIiBkPSJNMTEwMS4xMSwzNjBoLTEwczEwLjUtMTIwLDEwLjUtMTIwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8Zz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwODIuMSwxMjBoLTEwUzEwODIuNiwwLDEwODIuNiwwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwNDIuMSwxMjBoLTEwUzEwNDIuNiwwLDEwNDIuNiwwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTEwMDIuMSwxMjBoLTEwUzEwMDIuNiwwLDEwMDIuNiwwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTk2Mi4xLDEyMGgtMTBTOTYyLjYsMCw5NjIuNiwwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTkyMi4xLDEyMGgtMTBTOTIyLjYsMCw5MjIuNiwwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICAgIDxwYXRoIGNsYXNzPSJjbHMtMSIgZD0iTTg4Mi4xLDEyMGgtMTBTODgyLjYsMCw4ODIuNiwwaDEwcy0xMC41LDEyMC0xMC41LDEyMFoiLz4KICA8L2c+Cjwvc3ZnPg==") center / contain no-repeat;
   pointer-events: none;
 }
 .ccm-leader__photo {
   position: relative; /* above the pattern */
-  width: 208px;
-  height: 208px;
+  width: 136px;
+  height: 136px;
   padding: var(--ccm-space-1);
-  border: 5px solid var(--ccm-accent);
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
   border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
@@ -1772,65 +1469,70 @@
 }
 
 .ccm-leader__body {
-  padding: 2rem 1.5rem 2.25rem;
-}
-.ccm-leader__body .ccm-eyebrow {
-  color: var(--ccm-beige);
+  padding: var(--ccm-space-6) var(--ccm-space-5);
 }
 .ccm-leader__name {
   margin: 0 0 var(--ccm-space-1);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: var(--ccm-text-h2);
-  line-height: 1.12;
-  color: var(--ccm-white);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h3);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
+}
+.ccm-leader__name a,
+.ccm-leader__name a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-leader__name a:hover,
+.ccm-leader__name a:focus-visible {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 .ccm-leader__unit {
-  margin: 0 0 1.5rem;
-  font-size: var(--ccm-text-body);
-  color: var(--ccm-text-inverse-muted);
+  margin: 0 0 var(--ccm-space-5);
+  color: var(--ccm-text-muted);
 }
 .ccm-leader .ccm-contact {
-  margin-bottom: 1.75rem;
-  font-size: var(--ccm-text-sm);
+  margin-bottom: var(--ccm-space-6);
 }
 
 @container (min-width: 720px) {
   .ccm-leader {
-    grid-template-columns: minmax(260px, 2fr) 3fr;
+    grid-template-columns: 248px minmax(0, 1fr);
     align-items: stretch;
   }
   .ccm-leader__media {
-    padding: 2.5rem 2rem;
-  }
-  .ccm-leader__media::before {
-    inset: -6% 0;
+    padding: var(--ccm-space-7);
   }
   .ccm-leader__photo {
-    width: 232px;
-    height: 232px;
+    width: 152px;
+    height: 152px;
   }
   .ccm-leader__body {
     align-self: center;
-    padding: 3rem 3rem 3rem .5rem;
+    padding: var(--ccm-space-7) var(--ccm-space-7) var(--ccm-space-7) 0;
   }
   .ccm-leader .ccm-contact {
     grid-template-columns: repeat(2, minmax(0, max-content));
-    column-gap: 2rem;
+    column-gap: var(--ccm-space-7);
   }
 }
 
 /* ==========================================================================
-   Department cards: OPTION 4
-   One card per department: short code, department name, a link to the
-   department's own website, then the chair with contact details.
+   Department cards: OPTION 2
+   One compact card per department: short code and name, a link to the
+   department's website, then the chair with contact details. All four cards
+   are the same size.
 
    <ul class="ccm-depts">
      <li class="ccm-dept">
        <div class="ccm-dept__head">
-         <span class="ccm-dept__code" aria-hidden="true">COE</span>
-         <h3 class="ccm-dept__name">Computer Engineering</h3>
-         <a class="ccm-dept__site" href="…">Website</a>
+         <h3 class="ccm-dept__name"><span class="ccm-dept__code">COE</span> Computer Engineering</h3>
+         <a class="ccm-dept__site" href="…" aria-label="Computer Engineering website">Website</a>
        </div>
        <div class="ccm-dept__chair">
          <img class="ccm-dept__photo" …>
@@ -1842,12 +1544,13 @@
        </div>
      </li>
    </ul>
+   Section width → cards per row: one, then two from 720px.
    ========================================================================== */
 
 .ccm-depts {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
+  gap: var(--ccm-space-4);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -1855,6 +1558,7 @@
 @container (min-width: 720px) {
   .ccm-depts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ccm-space-5);
   }
 }
 
@@ -1863,54 +1567,53 @@
   flex-direction: column;
   margin: 0;
   overflow: hidden;
-  background: var(--ccm-white);
-  border: 1px solid var(--ccm-line);
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
   border-radius: var(--ccm-radius-lg);
 }
 
 .ccm-dept__head {
-  position: relative;
-  padding: var(--ccm-space-6) 1.75rem var(--ccm-space-5);
-  background: var(--ccm-surface-soft);
-  border-bottom: 4px solid var(--ccm-accent);
+  display: flex;
+  align-items: center;
+  gap: var(--ccm-space-3);
+  padding: var(--ccm-space-4) var(--ccm-space-5);
+  border-bottom: var(--ccm-border-ring) solid var(--ccm-accent);
+}
+.ccm-dept__name {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--ccm-font-body);
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  color: var(--ccm-text);
 }
 .ccm-dept__code {
   display: block;
   margin-bottom: var(--ccm-space-1);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: var(--ccm-text-h1);
-  line-height: 1;
+  font-size: var(--ccm-text-h4);
+  font-weight: var(--ccm-weight-bold);
+  line-height: 1.1;
   color: var(--ccm-turquoise);
-}
-.ccm-dept__name {
-  margin: 0;
-  font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: var(--ccm-text-h5);
-  line-height: 1.3;
-  color: var(--ccm-text);
 }
 .ccm-dept__site,
 .ccm-dept__site:visited {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: var(--ccm-space-2);
-  min-height: 36px;
-  padding: var(--ccm-space-2) var(--ccm-space-4);
-  border: 2px solid var(--ccm-turquoise);
-  border-radius: var(--ccm-radius-pill);
+  min-height: var(--ccm-target);
+  padding: 0 var(--ccm-space-2);
   font-size: var(--ccm-text-sm);
-  font-weight: 600;
-  color: var(--ccm-turquoise);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--ccm-link);
   text-decoration: none;
-  transition: background-color var(--ccm-duration-fast) var(--ccm-ease), color var(--ccm-duration-fast) var(--ccm-ease);
 }
 .ccm-dept__site::after {
   content: "";
+  flex: none;
   width: 14px;
   height: 14px;
   background-color: currentColor;
@@ -1919,22 +1622,23 @@
 }
 .ccm-dept__site:hover,
 .ccm-dept__site:focus-visible {
-  background: var(--ccm-turquoise);
-  color: var(--ccm-white);
+  color: var(--ccm-link-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .ccm-dept__chair {
   display: flex;
   align-items: flex-start;
-  gap: 1.25rem;
-  padding: 1.5rem 1.75rem 1.75rem;
+  gap: var(--ccm-space-4);
+  padding: var(--ccm-space-5);
 }
 .ccm-dept__photo {
   flex: none;
-  width: 96px;
-  height: 96px;
-  padding: 3px;
-  border: 3px solid var(--ccm-accent);
+  width: 64px;
+  height: 64px;
+  padding: 2px;
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
   border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
@@ -1942,15 +1646,17 @@
 }
 .ccm-dept__chair > div {
   min-width: 0;
-  padding-top: .25rem;
+}
+.ccm-dept__chair .ccm-eyebrow {
+  margin-bottom: var(--ccm-space-1);
 }
 .ccm-dept__person {
   margin: 0 0 var(--ccm-space-3);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
+  font-weight: var(--ccm-weight-bold);
   font-size: var(--ccm-text-h5);
-  line-height: 1.25;
-  color: var(--ccm-turquoise);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
 }
 .ccm-dept__person a,
 .ccm-dept__person a:visited {
@@ -1966,15 +1672,36 @@
   text-underline-offset: 4px;
 }
 
+/* Narrow column (phones): photo beside the name, contact lines full width
+   below, so long email addresses don't break in the middle. */
 @container (max-width: 539.98px) {
-  .ccm-dept__head,
   .ccm-dept__chair {
-    padding-inline: 1.25rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--ccm-space-4);
   }
-  .ccm-dept__site {
-    top: 1.25rem;
-    right: 1.25rem;
+  .ccm-dept__chair > div {
+    display: contents;
   }
+  .ccm-dept__photo {
+    grid-row: 1 / span 2;
+  }
+  .ccm-dept__chair .ccm-eyebrow {
+    grid-column: 2;
+    align-self: end;
+  }
+  .ccm-dept__person {
+    grid-column: 2;
+    align-self: start;
+    margin-bottom: 0;
+  }
+  .ccm-dept__chair .ccm-contact {
+    grid-column: 1 / -1;
+    margin-top: var(--ccm-space-4);
+  }
+}
+@container (min-width: 540px) {
   .ccm-dept__photo {
     width: 72px;
     height: 72px;
@@ -1982,59 +1709,57 @@
 }
 
 /* ==========================================================================
-   Portraits: OPTION 5
+   Portraits: OPTION 3
    Arch-shaped portrait photos with a college-colour outline offset behind,
-   name and role, and round quick-action buttons (email, phone).
-   `.ccm-portrait--feature` = the Dean (photo left, details right).
-   Chairs sit on a beige band (`.ccm-band`).
+   name and role, and a "View full profile" button (owner, 2026-11-21: no
+   email, phone or arrow icons).
+   Photos are kept small: at most 152px wide for a chair and 176px for the
+   Dean, so today's small photos stay sharp.
 
-   Needs good photos: at least 600 × 750 px, same framing for everyone.
+   The Dean: <article class="ccm-portrait ccm-portrait--feature"> (photo left,
+   details right, from 540px).
+   The chairs: <ul class="ccm-portraits"><li class="ccm-portrait">…</li></ul>,
+   each ending with <a class="ccm-btn ccm-btn--outline ccm-btn--sm" href="…">View
+   full profile<span class="ccm-sr-only"> of Name</span></a>.
+   Section width → chairs per row: two, then four from 720px.
    ========================================================================== */
-
-.ccm-band {
-  padding: 2.5rem 1.5rem;
-  border-radius: var(--ccm-radius-xl);
-  background: var(--ccm-surface-soft);
-}
-@container (min-width: 720px) {
-  .ccm-band {
-    padding: 3rem 2.5rem;
-  }
-}
 
 .ccm-portraits {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.25rem 1rem;
+  gap: var(--ccm-space-8) var(--ccm-space-4);
   list-style: none;
   margin: 0;
   padding: 0;
 }
-@container (min-width: 860px) {
+@container (min-width: 720px) {
   .ccm-portraits {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2.5rem 1.75rem;
+    gap: var(--ccm-space-8) var(--ccm-space-6);
   }
 }
 
 .ccm-portrait {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 0;
+  text-align: center;
 }
 
 /* Arch photo with an outline offset up and to the left, so the arch shape
    shows even when a photo has a white background */
 .ccm-portrait__frame {
   position: relative;
-  margin: 0 0 1.25rem;
+  width: min(100%, 128px);
+  margin: 0 0 var(--ccm-space-4);
   padding: var(--ccm-space-2) 0 0 var(--ccm-space-2);
 }
 .ccm-portrait__frame::before {
   content: "";
   position: absolute;
   inset: 0 var(--ccm-space-2) var(--ccm-space-2) 0;
-  border: 3px solid var(--ccm-accent);
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
   border-radius: 50% 50% var(--ccm-radius-md) var(--ccm-radius-md) / 40% 40% var(--ccm-radius-md) var(--ccm-radius-md);
 }
 .ccm-portrait__photo {
@@ -2044,18 +1769,23 @@
   height: auto;
   aspect-ratio: 4 / 5;
   border-radius: 50% 50% var(--ccm-radius-md) var(--ccm-radius-md) / 40% 40% var(--ccm-radius-md) var(--ccm-radius-md);
-  background: var(--ccm-beige);
+  background: var(--ccm-beige-l3);
   object-fit: cover;
   object-position: center 20%;
+}
+@container (min-width: 540px) {
+  .ccm-portrait__frame {
+    width: min(100%, 152px);
+  }
 }
 
 .ccm-portrait__name {
   margin: 0 0 var(--ccm-space-1);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
+  font-weight: var(--ccm-weight-bold);
   font-size: var(--ccm-text-h5);
-  line-height: 1.25;
-  color: var(--ccm-turquoise);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
 }
 .ccm-portrait__name a,
 .ccm-portrait__name a:visited {
@@ -2071,256 +1801,1082 @@
   text-underline-offset: 4px;
 }
 .ccm-portrait__role {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--ccm-space-4);
   font-size: var(--ccm-text-sm);
   line-height: 1.45;
   color: var(--ccm-text-muted);
 }
 .ccm-portrait__role strong {
   display: block;
-  font-weight: 600;
+  font-weight: var(--ccm-weight-semibold);
   color: var(--ccm-text);
 }
 
-/* Round icon buttons */
-.ccm-icon-btns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  list-style: none;
-  margin: auto 0 0; /* sit at the bottom, so buttons line up across cards */
-  padding: 0;
-}
-.ccm-icon-btns li {
-  margin: 0;
-}
-.ccm-icon-btn,
-.ccm-icon-btn:visited {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--ccm-sand);
-  border-radius: var(--ccm-radius-round);
-  background: var(--ccm-white);
-  color: var(--ccm-turquoise);
-  text-decoration: none;
-  transition: background-color var(--ccm-duration-fast) var(--ccm-ease), color var(--ccm-duration-fast) var(--ccm-ease), border-color var(--ccm-duration-fast) var(--ccm-ease);
-}
-.ccm-icon-btn::before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  background-color: currentColor;
-  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
-          mask: var(--ccm-icon) center / contain no-repeat;
-}
-.ccm-icon-btn:hover,
-.ccm-icon-btn:focus-visible {
-  border-color: var(--ccm-turquoise);
-  background: var(--ccm-turquoise);
-  color: var(--ccm-white);
+/* The profile button sits at the bottom, so the buttons line up across the row */
+.ccm-portrait > .ccm-btn {
+  margin-top: auto;
 }
 
-/* ---- Feature: the Dean -------------------------------------------------- */
+/* ---- The Dean: photo left, details right -------------------------------- */
 .ccm-portrait--feature {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
+  gap: var(--ccm-space-5);
+  justify-items: start;
+  text-align: left;
 }
 .ccm-portrait--feature .ccm-portrait__frame {
-  width: min(100%, 260px);
+  width: min(100%, 176px);
   margin: 0;
+}
+.ccm-portrait--feature .ccm-eyebrow {
+  margin-bottom: var(--ccm-space-1);
 }
 .ccm-portrait--feature .ccm-portrait__name {
   font-size: var(--ccm-text-h3);
 }
 .ccm-portrait--feature .ccm-portrait__role {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--ccm-space-5);
   font-size: var(--ccm-text-body);
 }
 .ccm-portrait--feature .ccm-contact {
-  margin-bottom: 1.5rem;
-  font-size: var(--ccm-text-sm);
+  margin-bottom: var(--ccm-space-6);
+}
+@container (min-width: 540px) {
+  .ccm-portrait--feature {
+    grid-template-columns: 184px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--ccm-space-8);
+  }
 }
 @container (min-width: 720px) {
-  .ccm-portrait--feature {
-    grid-template-columns: 260px minmax(0, 1fr);
+  .ccm-portrait--feature .ccm-contact {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    column-gap: var(--ccm-space-7);
+  }
+}
+
+
+/* Home page: the three concepts of round 2 (CCM/pages/home).
+   When one is approved, delete the parts only the others use. */
+/* ==========================================================================
+   Home page: FULL-PAGE CONCEPTS, round 2 (CCM/pages/home)
+   Calm and simple on purpose (owner, 21 Nov 2026: round 1 had too many
+   colours at the top and was harder to read than the old page):
+   - white hero, colour only in the photo, the buttons and the links;
+   - one card style and one grid for every section;
+   - sections separated by a light grey band (--ccm-surface-alt);
+   - the numbers in boxes.
+   News and events use feed.css, news.css, events.css, pages.css and
+   slider.css; study and research cards reuse the news card (.ccm-news).
+
+   Every band:
+   <section class="ccm-band" aria-labelledby="…">           (or ccm-band ccm-band--alt)
+     <div class="ccm-band__inner">
+       <div class="ccm-section">  (the size container for the parts inside)
+         <div class="ccm-feed__head"><h2 class="ccm-section__title" id="…">…</h2> <a class="ccm-more" href="…">…</a></div>
+         <ul class="ccm-grid ccm-grid--3">…</ul>
+       </div>
+     </div>
+   </section>
+   The inner width matches the live theme's container (Bootstrap 540 / 720 /
+   960 / 1140 / 1320px), so the bands line up with the old header and footer.
+   ========================================================================== */
+
+.ccm-band {
+  position: relative;
+  padding-block: var(--ccm-section-space);
+  background: var(--ccm-surface);
+}
+/* Two white bands in a row: one gap between them, not two */
+.ccm-band:not(.ccm-band--alt) + .ccm-band:not(.ccm-band--alt) {
+  padding-top: 0;
+}
+.ccm-band--alt {
+  background: var(--ccm-surface-alt);
+}
+/* A band with one short row (the numbers): less space above and below */
+.ccm-band--tight {
+  padding-block: var(--ccm-space-9);
+}
+.ccm-band__inner {
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--ccm-space-3);
+}
+@media (min-width: 576px) {
+  .ccm-band__inner { max-width: 540px; }
+}
+@media (min-width: 768px) {
+  .ccm-band__inner { max-width: 720px; }
+}
+@media (min-width: 992px) {
+  .ccm-band__inner { max-width: 960px; }
+}
+@media (min-width: 1200px) {
+  .ccm-band__inner { max-width: 1140px; }
+}
+@media (min-width: 1400px) {
+  .ccm-band__inner { max-width: 1320px; }
+}
+.ccm-band .ccm-section {
+  margin: 0;
+}
+
+/* ---- Grid: the same columns for every kind of card -----------------------
+   <ul class="ccm-grid ccm-grid--3"><li>…card…</li>…</ul>
+   --2 / --3 / --4: columns on a wide section. Narrower: two from 540px,
+   one below. */
+.ccm-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ccm-grid > li {
+  display: flex;
+  margin: 0;
+}
+@container (min-width: 540px) {
+  .ccm-grid--2,
+  .ccm-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (min-width: 720px) {
+  .ccm-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@container (min-width: 860px) {
+  .ccm-grid { gap: var(--ccm-space-5); }
+  .ccm-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+/* Two wide cards: wider, shorter photos, so the cards don't get tall */
+@container (min-width: 540px) {
+  .ccm-grid--2 .ccm-news__img {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+/* ---- Hero -----------------------------------------------------------------
+   White in every version; the photo brings the colour.
+   - --split   text on the left, the photo on the right (stacked on phones)
+   - --panel   a full-width photo with the text in a white panel on it
+               (on phones the panel sits under the photo)
+   - --center  centred text, then a wide photo under it
+   <section class="ccm-band ccm-hero ccm-hero--split" aria-labelledby="hero-h">
+     <div class="ccm-band__inner ccm-hero__grid">
+       <div class="ccm-hero__text">
+         <p class="ccm-eyebrow">King Fahd University of Petroleum &amp; Minerals</p>
+         <h2 class="ccm-hero__title" id="hero-h">College of Computing and Mathematics</h2>
+         <p class="ccm-hero__lead">…</p>
+         <div class="ccm-actions">…</div>
+       </div>
+       <img class="ccm-hero__img" …>
+     </div>
+   </section>
+   On the real home page the hero title is the page's H1 (page template). */
+.ccm-hero {
+  overflow: hidden;
+}
+.ccm-hero__text {
+  min-width: 0;
+}
+.ccm-hero__title {
+  margin: 0 0 var(--ccm-space-4);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-display);
+  line-height: var(--ccm-leading-tight);
+  color: var(--ccm-text);
+}
+.ccm-hero__lead {
+  max-width: 54ch;
+  margin: 0 0 var(--ccm-space-7);
+  font-size: var(--ccm-text-lead);
+  line-height: var(--ccm-leading-body);
+  color: var(--ccm-text-muted);
+}
+.ccm-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--ccm-radius-xl);
+  background: var(--ccm-surface-alt);
+  object-fit: cover;
+}
+
+/* Split */
+.ccm-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: var(--ccm-space-8);
+}
+.ccm-hero--split .ccm-hero__img {
+  aspect-ratio: 4 / 3;
+}
+@media (min-width: 992px) {
+  .ccm-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--ccm-space-10);
+  }
+}
+
+/* Panel */
+.ccm-hero--panel {
+  padding: 0;
+}
+.ccm-hero--panel .ccm-hero__img {
+  aspect-ratio: 16 / 9;
+  border-radius: 0;
+}
+.ccm-hero__panel {
+  padding: var(--ccm-space-7) 0 var(--ccm-section-space);
+}
+@media (min-width: 992px) {
+  .ccm-hero--panel {
+    display: grid;
+    min-height: 32rem;
+  }
+  .ccm-hero--panel > .ccm-hero__img {
+    grid-area: 1 / 1;
+    height: 100%;
+    aspect-ratio: auto;
+  }
+  .ccm-hero--panel > .ccm-band__inner {
+    grid-area: 1 / 1;
+    align-self: center;
+  }
+  .ccm-hero--panel .ccm-hero__title {
+    font-size: var(--ccm-text-h1);
+  }
+  .ccm-hero__panel {
+    max-width: 34rem;
+    padding: var(--ccm-space-8);
+    border-radius: var(--ccm-radius-xl);
+    background: var(--ccm-surface);
+    box-shadow: var(--ccm-shadow-md);
+  }
+}
+
+/* Center */
+.ccm-hero--center .ccm-hero__text {
+  max-width: 48rem;
+  margin: 0 auto var(--ccm-space-8);
+  text-align: center;
+}
+.ccm-hero--center .ccm-hero__lead {
+  margin-inline: auto;
+}
+.ccm-hero--center .ccm-actions {
+  justify-content: center;
+}
+.ccm-hero--center .ccm-hero__img {
+  aspect-ratio: 21 / 9;
+}
+/* A photo whose subject is near the top (faces): crop from the top */
+.ccm-hero__img--top {
+  object-position: center 8%;
+}
+
+/* ---- Numbers, in boxes ----------------------------------------------------
+   <ul class="ccm-stats"><li class="ccm-stat"><span class="ccm-stat__num">167</span>
+   <span class="ccm-stat__label">Faculty members</span></li>…</ul>
+   Two per row on phones, three on tablets, six on wide screens. */
+.ccm-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ccm-space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .ccm-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ccm-space-4); }
+}
+@media (min-width: 1200px) {
+  .ccm-stats { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+.ccm-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* numbers line up even when a label wraps */
+  gap: var(--ccm-space-2);
+  margin: 0;
+  padding: var(--ccm-space-6) var(--ccm-space-3);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  text-align: center;
+}
+.ccm-stat__num {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h2);
+  line-height: 1;
+  color: var(--ccm-turquoise);
+}
+.ccm-stat__label {
+  font-size: var(--ccm-text-sm);
+  line-height: 1.35;
+  color: var(--ccm-text-muted);
+}
+
+/* ---- Department cards -----------------------------------------------------
+   <a class="ccm-tile" href="https://coe.kfupm.edu.sa/">
+     <span class="ccm-tile__code">COE</span> <span class="ccm-tile__name">Computer Engineering</span>
+     <span class="ccm-tile__text">…programs…</span> <span class="ccm-tile__go">Visit the COE website</span>
+   </a>  (inside .ccm-grid--4) */
+.ccm-tile,
+.ccm-tile:visited {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-2);
+  padding: var(--ccm-space-6);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  color: var(--ccm-text);
+  text-decoration: none;
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-tile:hover,
+.ccm-tile:focus-visible {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-tile__code {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h3);
+  line-height: 1;
+  color: var(--ccm-turquoise);
+}
+.ccm-tile__name {
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+}
+.ccm-tile__text {
+  font-size: var(--ccm-text-sm);
+  line-height: 1.55;
+  color: var(--ccm-text-muted);
+}
+.ccm-tile__go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ccm-space-2);
+  margin-top: auto;
+  padding-top: var(--ccm-space-3);
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--ccm-link);
+}
+.ccm-tile__go::after {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-i-external) center / contain no-repeat;
+          mask: var(--ccm-i-external) center / contain no-repeat;
+}
+.ccm-tile:hover .ccm-tile__go {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- Quick links: one box per kind of visitor ------------------------------
+   <a class="ccm-quick" href="…"><span class="ccm-quick__title">Future students</span>
+   <span class="ccm-quick__text">…</span></a>  (inside .ccm-grid--4) */
+.ccm-quick,
+.ccm-quick:visited {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-1);
+  padding: var(--ccm-space-5) calc(var(--ccm-space-6) + var(--ccm-space-6)) var(--ccm-space-5) var(--ccm-space-6);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  color: var(--ccm-text);
+  text-decoration: none;
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-quick::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 9px);
+  right: var(--ccm-space-5);
+  width: 18px;
+  height: 18px;
+  background-color: var(--ccm-turquoise);
+  -webkit-mask: var(--ccm-i-arrow) center / contain no-repeat;
+          mask: var(--ccm-i-arrow) center / contain no-repeat;
+  transition: transform var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-quick:hover,
+.ccm-quick:focus-visible {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-quick:hover::after {
+  transform: translateX(3px);
+}
+.ccm-quick__title {
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  color: var(--ccm-text);
+}
+.ccm-quick__text {
+  font-size: var(--ccm-text-sm);
+  line-height: 1.45;
+  color: var(--ccm-text-muted);
+}
+
+/* ==========================================================================
+   News & Events layout: HOME PAGE CONCEPTS (CCM/pages/home)
+   How the "Latest news" and "Events" lists sit in their home page band
+   (.ccm-band, home.css):
+
+   <div class="ccm-feed__cols">        news and events side by side from 992px (concept 1)
+   <div class="ccm-feed__rows">        each list across the full width, one under the other (concepts 2, 3)
+     <section class="ccm-section" aria-labelledby="news-h">
+       <div class="ccm-feed__head">
+         <h2 class="ccm-section__title" id="news-h">Latest news</h2>
+         <a class="ccm-more" href="…/news">View all news</a>
+       </div>
+       …the list…
+     </section>
+   </div>
+
+   .ccm-feed__head (title on the left, "View all" on the right) is also the
+   head of every other home page band.
+   ========================================================================== */
+
+/* Columns: stacked on phones and tablets, side by side from 992px */
+.ccm-feed__cols {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-10);
+}
+@media (min-width: 992px) {
+  .ccm-feed__cols {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    column-gap: var(--ccm-space-7); /* keeps each column at 540px or more from 1200px */
+  }
+}
+.ccm-feed__cols > .ccm-section {
+  display: flex;
+  flex-direction: column;
+  margin: 0;
+}
+
+/* Rows: each list across the full width, one under the other */
+.ccm-feed__rows {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-10);
+}
+.ccm-feed__rows > .ccm-section {
+  margin: 0;
+}
+
+/* Title on the left, "View all" link on the right */
+.ccm-feed__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ccm-space-2) var(--ccm-space-5);
+  margin: 0 0 var(--ccm-space-6);
+}
+.ccm-feed__head .ccm-section__title {
+  margin: 0;
+}
+.ccm-feed__head .ccm-more {
+  margin: 0;
+}
+
+/* ==========================================================================
+   News items and photo cards: HOME PAGE CONCEPTS (CCM/pages/home)
+   One item: photo, date and title. The title link covers the whole item, so
+   the item is one click target. The same card shows the study paths and
+   research on the home page (without a date, with a short text).
+
+   <article class="ccm-news">
+     <img class="ccm-news__img" src="…tmb-news…" alt="" width="443" height="263" loading="lazy">
+     <div class="ccm-news__body">
+       <time class="ccm-news__date" datetime="2026-05-06">6 May 2026</time>
+       <h3 class="ccm-news__title"><a class="ccm-news__link" href="…">Title</a></h3>
+       <p class="ccm-news__sum">Summary (optional)</p>
+     </div>
+   </article>
+
+   - .ccm-news                 card, photo on top (sliders, grids)
+   - .ccm-news--row            photo left, text right (lists, pages)
+   - .ccm-news__img--contain   a logo or a graphic with text: never cropped
+   In a .ccm-grid on a phone, cards become rows (photo left), so lists stay short.
+   News photos use Sitefinity's "news" thumbnail (443 × 263px), shown at 5:3.
+   ========================================================================== */
+
+.ccm-news {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-news:hover {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-news:has(.ccm-news__link:focus-visible) {
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
+}
+
+.ccm-news__img {
+  display: block;
+  flex: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 3;
+  background: var(--ccm-beige-l3);
+  object-fit: cover;
+}
+.ccm-news__img--contain {
+  padding: var(--ccm-space-4);
+  background: var(--ccm-white);
+  object-fit: contain;
+}
+.ccm-news__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-2);
+  min-width: 0;
+  padding: var(--ccm-space-4) var(--ccm-space-5) var(--ccm-space-5);
+}
+.ccm-news__date {
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ccm-text-muted);
+}
+/* Titles are often whole sentences, so they use IBM Plex SemiBold, which is
+   easier to read at this size than the slanted KFUPM Display. */
+.ccm-news__title {
+  margin: 0;
+  font-family: var(--ccm-font-body);
+  font-weight: var(--ccm-weight-semibold);
+  font-size: var(--ccm-text-lead);
+  line-height: 1.35;
+  color: var(--ccm-text);
+}
+.ccm-news__link,
+.ccm-news__link:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-news__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.ccm-news__link:focus-visible {
+  outline: none; /* the item shows the focus ring instead */
+}
+.ccm-news:hover .ccm-news__link {
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.ccm-news__sum {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--ccm-text-sm);
+  line-height: 1.55;
+  color: var(--ccm-text-muted);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* ---- Row: photo left, text right ---------------------------------------- */
+.ccm-news--row {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ccm-space-4);
+  padding: var(--ccm-space-3);
+}
+.ccm-news--row .ccm-news__img {
+  width: min(40%, 184px);
+  border-radius: var(--ccm-radius-md);
+}
+.ccm-news--row .ccm-news__body {
+  padding: 0 var(--ccm-space-2) 0 0;
+}
+
+/* ---- Narrow column (phones): cards in a grid become rows ---------------- */
+@container (max-width: 539.98px) {
+  .ccm-grid .ccm-news,
+  .ccm-news--row {
+    flex-direction: row;
     align-items: center;
-    gap: 3rem;
+    gap: var(--ccm-space-3);
+    padding: var(--ccm-space-3);
+  }
+  .ccm-grid .ccm-news__img,
+  .ccm-news--row .ccm-news__img {
+    width: 112px;
+    border-radius: var(--ccm-radius-md);
+  }
+  .ccm-grid .ccm-news__body,
+  .ccm-news--row .ccm-news__body {
+    gap: var(--ccm-space-1);
+    padding: 0;
   }
 }
 
 /* ==========================================================================
-   Directory: OPTION 6
-   One row per person (photo, name, role). Click a row to open the contact
-   details underneath. Uses the HTML <details> element: no JavaScript.
-   Scales to long lists (faculty, staff), so it can be reused on the
-   department sites.
+   Events: HOME PAGE CONCEPTS (CCM/pages/home)
+   One event: a date block, the department and type, the talk title, then
+   speaker, time and place. The title link covers the whole item.
 
-   <ul class="ccm-dir">
-     <li>
-       <details class="ccm-dir__item" name="ccm-dir">
-         <summary class="ccm-dir__row">
-           <img class="ccm-dir__photo" …>
-           <span class="ccm-dir__who">
-             <span class="ccm-dir__name">Name</span>
-             <span class="ccm-dir__role"><strong>Role</strong> · Unit</span>
-           </span>
-           <span class="ccm-dir__tag">COE</span>
-         </summary>
-   (The round arrow button is drawn by CSS, not an empty <span>, because
-   Sitefinity's editor can delete empty tags.)
-         <div class="ccm-dir__panel"> <ul class="ccm-contact">…</ul> <a class="ccm-more" …>View profile</a> </div>
-       </details>
-     </li>
-   </ul>
+   <article class="ccm-event">
+     <time class="ccm-event__date" datetime="2026-10-28">
+       <span class="ccm-event__day">28</span> <span class="ccm-event__month">Oct</span>
+     </time>
+     <div class="ccm-event__body">
+       <p class="ccm-event__kind">ISE · Graduate seminar</p>
+       <h3 class="ccm-event__title"><a class="ccm-event__link" href="…">Talk title</a></h3>
+       <ul class="ccm-event__meta">
+         <li class="ccm-c-user">Speaker</li>
+         <li class="ccm-c-clock">3:40 PM</li>
+         <li class="ccm-c-office">Building 22, Room 125</li>
+       </ul>
+     </div>
+   </article>
+
+   - .ccm-event          row, the date on the left (lists, pages, agendas)
+   - .ccm-event--card    the date on top (sliders, card rows)
+   Today's event titles ("ISE - Graduate Seminar - Name") hold the department,
+   type and speaker; the previews split them into these parts.
    ========================================================================== */
 
-.ccm-dir {
+.ccm-event {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  gap: var(--ccm-space-4);
+  margin: 0;
+  padding: var(--ccm-space-4);
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-event:hover {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-event:has(.ccm-event__link:focus-visible) {
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
+}
+
+/* Date: day over month, with a thin line beside it (calm, no colour block) */
+.ccm-event__date {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  min-height: 56px;
+  padding-right: var(--ccm-space-3);
+  border-right: var(--ccm-border-hairline) solid var(--ccm-line);
+  color: var(--ccm-turquoise);
+  text-align: center;
+}
+.ccm-event__day {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h4);
+  line-height: 1;
+}
+.ccm-event__month {
+  margin-top: var(--ccm-space-1);
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ccm-text-muted);
+}
+
+.ccm-event__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-1);
+  min-width: 0;
+}
+.ccm-event__kind {
+  margin: 0;
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ccm-link);
+}
+.ccm-event__title {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--ccm-font-body);
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.4;
+  color: var(--ccm-text);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.ccm-event__link,
+.ccm-event__link:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-event__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.ccm-event__link:focus-visible {
+  outline: none; /* the item shows the focus ring instead */
+}
+.ccm-event:hover .ccm-event__link {
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.ccm-event__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ccm-space-1) var(--ccm-space-4);
+  list-style: none;
+  margin: var(--ccm-space-1) 0 0;
+  padding: 0;
+  font-size: var(--ccm-text-sm);
+  line-height: 1.45;
+  color: var(--ccm-text-muted);
+}
+.ccm-event__meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ccm-space-1);
+  margin: 0;
+}
+.ccm-event__meta li::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background-color: var(--ccm-turquoise);
+  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
+          mask: var(--ccm-icon) center / contain no-repeat;
+}
+
+/* ---- Card: date block on top (sliders) ----------------------------------- */
+.ccm-event--card {
+  flex-direction: column;
+  gap: var(--ccm-space-3);
+  padding: var(--ccm-space-5);
+}
+.ccm-event--card .ccm-event__date {
+  flex-direction: row;
+  align-items: baseline;
+  gap: var(--ccm-space-2);
+  width: auto;
+  min-height: 0;
+  padding: 0;
+  border: 0;
+}
+.ccm-event--card .ccm-event__month {
+  margin: 0;
+}
+
+/* ==========================================================================
+   Pages: HOME PAGE CONCEPT 1 (news and events side by side)
+   A long list shown a few items at a time, with numbered page buttons under
+   it. No JavaScript: one radio button per page; the checked one shows its
+   page (up to five pages). The radios are hidden but keep the keyboard
+   working: Tab to the group, then the arrow keys change the page.
+
+   <div class="ccm-pages">
+     <input class="ccm-pages__radio" type="radio" name="news-pages" id="news-p1" checked aria-label="News, page 1">
+     <input class="ccm-pages__radio" type="radio" name="news-pages" id="news-p2" aria-label="News, page 2">
+     <div class="ccm-pages__panels">
+       <ul class="ccm-pages__panel">…items…</ul>
+       <ul class="ccm-pages__panel">…items…</ul>
+     </div>
+     <div class="ccm-pages__nav" aria-hidden="true">
+       <label class="ccm-pages__num" for="news-p1">1</label>
+       <label class="ccm-pages__num" for="news-p2">2</label>
+     </div>
+   </div>
+
+   In Sitefinity this belongs in the News or Events widget template. The
+   widget's own paging works without a template, but every page number
+   reloads the whole home page.
+   ========================================================================== */
+
+.ccm-pages {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-5);
+}
+.ccm-pages__radio {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+  opacity: 0;
+}
+
+.ccm-pages__panel {
+  display: none;
+  gap: var(--ccm-space-3);
   list-style: none;
   margin: 0;
   padding: 0;
-  border-top: 1px solid var(--ccm-line);
-  interpolate-size: allow-keywords; /* lets the panel animate open where supported */
 }
-.ccm-dir > li {
-  margin: 0;
-  padding: var(--ccm-space-1) 0;
-  border-bottom: 1px solid var(--ccm-line);
-}
-
-.ccm-dir__row {
+.ccm-pages__panel > li {
   display: flex;
-  align-items: center;
-  gap: 1.25rem;
-  padding: var(--ccm-space-3) var(--ccm-space-4);
-  border-radius: var(--ccm-radius-md);
-  list-style: none;
-  cursor: pointer;
-  transition: background-color var(--ccm-duration-fast) var(--ccm-ease);
+  margin: 0;
 }
-.ccm-dir__row::-webkit-details-marker {
-  display: none;
-}
-.ccm-dir__row:hover {
-  background: var(--ccm-surface-soft);
-}
-.ccm-dir__item[open] > .ccm-dir__row {
-  border-radius: var(--ccm-radius-md) var(--ccm-radius-md) 0 0;
-  background: var(--ccm-surface-soft);
+.ccm-pages__radio:nth-of-type(1):checked ~ .ccm-pages__panels > :nth-child(1),
+.ccm-pages__radio:nth-of-type(2):checked ~ .ccm-pages__panels > :nth-child(2),
+.ccm-pages__radio:nth-of-type(3):checked ~ .ccm-pages__panels > :nth-child(3),
+.ccm-pages__radio:nth-of-type(4):checked ~ .ccm-pages__panels > :nth-child(4),
+.ccm-pages__radio:nth-of-type(5):checked ~ .ccm-pages__panels > :nth-child(5) {
+  display: grid;
 }
 
-.ccm-dir__photo {
-  flex: none;
-  width: 64px;
-  height: 64px;
-  padding: 2px;
-  border: 2px solid var(--ccm-accent);
+/* Page buttons, at the bottom so both columns' buttons line up */
+.ccm-pages__nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ccm-space-2);
+  margin-top: auto;
+}
+.ccm-pages__num {
+  display: grid;
+  place-items: center;
+  width: var(--ccm-target);
+  height: var(--ccm-target);
+  margin: 0;
+  border: var(--ccm-border-hairline) solid var(--ccm-line-strong);
   border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
-  object-fit: cover;
-  object-position: center 20%;
-}
-.ccm-dir__who {
-  display: grid;
-  flex: 1;
-  gap: .1rem;
-  min-width: 0;
-}
-.ccm-dir__name {
-  font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: var(--ccm-text-h5);
-  line-height: 1.25;
-  color: var(--ccm-turquoise);
-}
-.ccm-dir__role {
   font-size: var(--ccm-text-sm);
-  line-height: 1.4;
-  color: var(--ccm-text-muted);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1;
+  color: var(--ccm-link);
+  cursor: pointer;
+  transition: background-color var(--ccm-duration-fast) var(--ccm-ease),
+              border-color var(--ccm-duration-fast) var(--ccm-ease),
+              color var(--ccm-duration-fast) var(--ccm-ease);
 }
-.ccm-dir__role strong {
-  font-weight: 600;
-  color: var(--ccm-text);
-}
-.ccm-dir__tag {
-  flex: none;
-  padding: var(--ccm-space-1) var(--ccm-space-3);
-  border-radius: var(--ccm-radius-pill);
-  background: var(--ccm-beige);
-  font-size: var(--ccm-text-xs);
-  font-weight: 600;
-  letter-spacing: .06em;
-  color: var(--ccm-turquoise);
-}
-/* Round arrow button. The chevron is a background image with the Turquoise
-   stroke (#115F66) built in, because a mask would also hide the border. */
-.ccm-dir__row::after {
-  content: "";
-  flex: none;
-  width: 38px;
-  height: 38px;
-  border: 1px solid var(--ccm-sand);
-  border-radius: var(--ccm-radius-round);
-  background: var(--ccm-white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23115F66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E") center / 16px no-repeat;
-  transition: transform var(--ccm-duration) var(--ccm-ease), border-color var(--ccm-duration-fast) var(--ccm-ease);
-}
-.ccm-dir__row:hover::after {
+.ccm-pages__num:hover {
   border-color: var(--ccm-turquoise);
 }
-.ccm-dir__item[open] > .ccm-dir__row::after {
-  transform: rotate(180deg);
+.ccm-pages__radio:nth-of-type(1):checked ~ .ccm-pages__nav > :nth-child(1),
+.ccm-pages__radio:nth-of-type(2):checked ~ .ccm-pages__nav > :nth-child(2),
+.ccm-pages__radio:nth-of-type(3):checked ~ .ccm-pages__nav > :nth-child(3),
+.ccm-pages__radio:nth-of-type(4):checked ~ .ccm-pages__nav > :nth-child(4),
+.ccm-pages__radio:nth-of-type(5):checked ~ .ccm-pages__nav > :nth-child(5) {
+  border-color: var(--ccm-surface-strong);
+  background: var(--ccm-surface-strong);
+  color: var(--ccm-text-inverse);
+}
+.ccm-pages__radio:nth-of-type(1):focus-visible ~ .ccm-pages__nav > :nth-child(1),
+.ccm-pages__radio:nth-of-type(2):focus-visible ~ .ccm-pages__nav > :nth-child(2),
+.ccm-pages__radio:nth-of-type(3):focus-visible ~ .ccm-pages__nav > :nth-child(3),
+.ccm-pages__radio:nth-of-type(4):focus-visible ~ .ccm-pages__nav > :nth-child(4),
+.ccm-pages__radio:nth-of-type(5):focus-visible ~ .ccm-pages__nav > :nth-child(5) {
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
 }
 
-.ccm-dir__panel {
-  padding: .25rem 1rem 1.5rem calc(1rem + 64px + 1.25rem);
-  border-radius: 0 0 var(--ccm-radius-md) var(--ccm-radius-md);
+/* ==========================================================================
+   Slider: HOME PAGE CONCEPT 2 (news, then events, each in its own row)
+   A row of cards that slides sideways, ending with a "See all" card. Swipe
+   on a phone, scroll sideways or use the arrow buttons on a computer.
+   No JavaScript:
+   - the row is a scroll area that snaps to each card;
+   - the arrow buttons are drawn by the browser (CSS ::scroll-button, in
+     Chrome, Edge and Brave). Other browsers show a scroll bar instead.
+
+   <div class="ccm-slider">
+     <ul class="ccm-slider__track" aria-label="Latest news">
+       <li>…card…</li>
+       <li><a class="ccm-slider__more" href="…/news">See all news</a></li>
+     </ul>
+   </div>
+   ========================================================================== */
+
+.ccm-slider {
+  position: relative;
+}
+.ccm-slider__track {
+  display: grid;
+  grid-auto-columns: 240px;
+  grid-auto-flow: column;
+  gap: var(--ccm-space-4);
+  list-style: none;
+  margin: 0;
+  padding: var(--ccm-space-1) var(--ccm-space-1) var(--ccm-space-4);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x mandatory;
+  scroll-padding-inline: var(--ccm-space-1);
+  scrollbar-color: var(--ccm-line-strong) transparent;
+  scrollbar-width: thin;
+}
+.ccm-slider__track > li {
+  display: flex;
+  margin: 0;
+  scroll-snap-align: start;
+}
+/* A full-width row has room for wider cards */
+@container (min-width: 860px) {
+  .ccm-slider__track {
+    grid-auto-columns: 272px;
+    gap: var(--ccm-space-5);
+  }
+}
+@media (prefers-reduced-motion: no-preference) {
+  .ccm-slider__track {
+    scroll-behavior: smooth;
+  }
+}
+
+/* The last card: a link to the full list */
+.ccm-slider__more,
+.ccm-slider__more:visited {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--ccm-space-3);
+  padding: var(--ccm-space-6);
+  border: var(--ccm-border-control) dashed var(--ccm-turquoise-l2);
+  border-radius: var(--ccm-radius-lg);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h5);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
+  text-align: center;
+  text-decoration: none;
+  transition: background-color var(--ccm-duration-fast) var(--ccm-ease),
+              border-color var(--ccm-duration-fast) var(--ccm-ease);
+}
+.ccm-slider__more::after {
+  content: "";
+  width: var(--ccm-target);
+  height: var(--ccm-target);
+  border-radius: var(--ccm-radius-round);
+  background: var(--ccm-surface-strong) var(--ccm-arrow-white) center / 18px no-repeat;
+}
+.ccm-slider__more:hover,
+.ccm-slider__more:focus-visible {
+  border-color: var(--ccm-turquoise);
   background: var(--ccm-surface-soft);
 }
-.ccm-dir__panel .ccm-contact {
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-  column-gap: 1.5rem;
-  font-size: var(--ccm-text-sm);
-  color: var(--ccm-text);
-}
-.ccm-dir__panel .ccm-more {
-  margin-top: var(--ccm-space-4);
+
+/* Arrow buttons, under the row on the right (browsers that support them) */
+@supports selector(::scroll-button(*)) {
+  .ccm-slider {
+    padding-bottom: calc(var(--ccm-target) + var(--ccm-space-2));
+  }
+  .ccm-slider__track::scroll-button(*) {
+    position: absolute;
+    bottom: 0;
+    width: var(--ccm-target);
+    height: var(--ccm-target);
+    border: var(--ccm-border-hairline) solid var(--ccm-line-strong);
+    border-radius: var(--ccm-radius-round);
+    background: var(--ccm-white) center / 18px no-repeat;
+    cursor: pointer;
+    transition: border-color var(--ccm-duration-fast) var(--ccm-ease),
+                opacity var(--ccm-duration-fast) var(--ccm-ease);
+  }
+  .ccm-slider__track::scroll-button(inline-start) {
+    content: "" / "Previous";
+    right: calc(var(--ccm-target) + var(--ccm-space-2));
+    background-image: var(--ccm-arrow-left);
+  }
+  .ccm-slider__track::scroll-button(inline-end) {
+    content: "" / "Next";
+    right: 0;
+    background-image: var(--ccm-arrow-right);
+  }
+  .ccm-slider__track::scroll-button(*):hover {
+    border-color: var(--ccm-turquoise);
+  }
+  .ccm-slider__track::scroll-button(*):focus-visible {
+    outline: var(--ccm-focus-width) solid var(--ccm-focus);
+    outline-offset: var(--ccm-focus-offset);
+  }
+  .ccm-slider__track::scroll-button(*):disabled {
+    opacity: .35;
+    cursor: default;
+  }
 }
 
-/* Smooth open/close in newer browsers; others simply open instantly. */
-.ccm-dir__item::details-content {
-  height: 0;
-  overflow: clip;
-  transition: height var(--ccm-duration-slow) var(--ccm-ease), content-visibility var(--ccm-duration-slow) allow-discrete;
+/* Arrows as images with the colour built in (a mask would hide the border):
+   Turquoise #115F66 for the buttons, White on the "See all" circle. */
+.ccm-slider {
+  --ccm-arrow-right: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23115F66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
+  --ccm-arrow-left: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23115F66' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M19 12H5M11 6l-6 6 6 6'/%3E%3C/svg%3E");
+  --ccm-arrow-white: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23FFFFFF' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M5 12h14M13 6l6 6-6 6'/%3E%3C/svg%3E");
 }
-.ccm-dir__item[open]::details-content {
-  height: auto;
-}
-
-@container (max-width: 539.98px) {
-  .ccm-dir__row {
-    gap: var(--ccm-space-4);
-    padding: var(--ccm-space-3) var(--ccm-space-2);
-  }
-  .ccm-dir__photo {
-    width: 52px;
-    height: 52px;
-  }
-  .ccm-dir__name {
-    font-size: var(--ccm-text-h5); /* Display font: 18px minimum */
-  }
-  .ccm-dir__role {
-    font-size: var(--ccm-text-sm);
-  }
-  .ccm-dir__tag {
-    display: none;
-  }
-  .ccm-dir__panel {
-    padding: var(--ccm-space-1) var(--ccm-space-4) var(--ccm-space-5);
-  }
-}
-.ccm-scope .ccm-build::after { content: " 0a10fc8a"; }
+.ccm-scope .ccm-build::after { content: " d0881a93"; }
 </style>
 <div class="ccm-scope">
   <section class="ccm-section" aria-labelledby="test-1">
@@ -2334,26 +2890,26 @@
     </div>
   </section>
   <section class="ccm-section" aria-labelledby="test-2">
-    <h2 class="ccm-section__title" id="test-2">Test 2: Banner, pattern, icons and buttons</h2>
+    <h2 class="ccm-section__title" id="test-2">Test 2: Card, pattern, icons and buttons</h2>
     <div class="ccm-prose">
-      <p>The banner should be turquoise with the KFUPM pattern in its corner. Each contact line should have a small icon, and the two buttons should be rounded.</p>
+      <p>The Dean card should be white with a light beige KFUPM pattern behind the photo. Each contact line should have a small icon, and the button should be rounded.</p>
     </div>
     <div class="ccm-leader">
       <div class="ccm-leader__media">
-        <img class="ccm-leader__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/ccm-dean---aug'2024---dr-abdullah-sultan.jpg?sfvrsn=2dd3f18e_1" alt="Dr. Abdullah Sultan" width="232" height="232">
+        <img class="ccm-leader__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/ccm-dean---aug'2024---dr-abdullah-sultan.jpg?sfvrsn=2dd3f18e_1" alt="Dr. Abdullah Sultan" width="152" height="152">
       </div>
       <div class="ccm-leader__body">
         <p class="ccm-eyebrow">Dean</p>
         <h3 class="ccm-leader__name">Dr. Abdullah Sultan</h3>
         <p class="ccm-leader__unit">College of Computing and Mathematics</p>
-        <ul class="ccm-contact ccm-contact--inverse">
+        <ul class="ccm-contact">
           <li class="ccm-c-mail"><a href="mailto:sultanas@kfupm.edu.sa">sultanas@kfupm.edu.sa</a></li>
           <li class="ccm-c-phone"><a href="tel:+966138602100">+966 13 860 2100</a></li>
           <li class="ccm-c-office">Building 22, Room 354</li>
+          <li class="ccm-c-web"><a href="https://cpg.kfupm.edu.sa/bio/dr-abdullah-sultan/" target="_blank" rel="noopener">Personal website</a></li>
         </ul>
         <div class="ccm-actions">
-          <a class="ccm-btn ccm-btn--light" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-abdullah-sultan">View profile</a>
-          <a class="ccm-btn ccm-btn--ghost" href="https://cpg.kfupm.edu.sa/bio/dr-abdullah-sultan/" target="_blank" rel="noopener">Personal website</a>
+          <a class="ccm-btn ccm-btn--primary" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-abdullah-sultan">View full profile</a>
         </div>
       </div>
     </div>
@@ -2371,7 +2927,6 @@
           <div class="ccm-card__body">
             <h3 class="ccm-card__name"><button class="ccm-card__open" type="button" popovertarget="test-profile">Dr. Malak Baslyman</button></h3>
             <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of Information &amp; Computer Science</span></p>
-            <span class="ccm-card__hint" aria-hidden="true">View details</span>
           </div>
         </article>
       </li>
@@ -2397,34 +2952,6 @@
         </div>
       </div>
     </div>
-  </section>
-  <section class="ccm-section" aria-labelledby="test-4">
-    <h2 class="ccm-section__title" id="test-4">Test 4: Expanding row</h2>
-    <div class="ccm-prose">
-      <p>Click the row. The contact details should open under it, and close again on a second click.</p>
-    </div>
-    <ul class="ccm-dir">
-      <li>
-        <details class="ccm-dir__item" id="test-row" name="ccm-dir">
-          <summary class="ccm-dir__row">
-            <img class="ccm-dir__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/dr-waleed-shinwari.png?sfvrsn=4e154b34_1" alt="" width="64" height="64">
-            <span class="ccm-dir__who">
-              <span class="ccm-dir__name">Dr. Mohammad Waleed Shinwari</span>
-              <span class="ccm-dir__role"><strong>Chairman</strong> · Department of Computer Engineering</span>
-            </span>
-            <span class="ccm-dir__tag">COE</span>
-          </summary>
-          <div class="ccm-dir__panel">
-            <ul class="ccm-contact">
-              <li class="ccm-c-mail"><a href="mailto:mohammad.shinwari@kfupm.edu.sa">mohammad.shinwari@kfupm.edu.sa</a></li>
-              <li class="ccm-c-phone"><a href="tel:+966138602110">+966 13 860 2110</a></li>
-              <li class="ccm-c-office">Building 22, Room 400-2</li>
-            </ul>
-            <a class="ccm-more" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-mohammad-waleed-shinwari">View full profile</a>
-          </div>
-        </details>
-      </li>
-    </ul>
   </section>
 </div>
 </div>

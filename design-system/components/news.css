@@ -1,0 +1,150 @@
+/* ==========================================================================
+   News items and photo cards: HOME PAGE CONCEPTS (CCM/pages/home)
+   One item: photo, date and title. The title link covers the whole item, so
+   the item is one click target. The same card shows the study paths and
+   research on the home page (without a date, with a short text).
+
+   <article class="ccm-news">
+     <img class="ccm-news__img" src="…tmb-news…" alt="" width="443" height="263" loading="lazy">
+     <div class="ccm-news__body">
+       <time class="ccm-news__date" datetime="2026-05-06">6 May 2026</time>
+       <h3 class="ccm-news__title"><a class="ccm-news__link" href="…">Title</a></h3>
+       <p class="ccm-news__sum">Summary (optional)</p>
+     </div>
+   </article>
+
+   - .ccm-news                 card, photo on top (in a .ccm-grid: study, research)
+   - .ccm-news--row            photo left, text right (lists, pages)
+   - .ccm-news__img--contain   a logo or a graphic with text: never cropped
+   In a .ccm-grid on a phone, cards become rows (photo left), so lists stay short.
+   News photos use Sitefinity's "news" thumbnail (443 × 263px), shown at 5:3.
+   ========================================================================== */
+
+.ccm-news {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  margin: 0;
+  overflow: hidden;
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-news:hover {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-news:has(.ccm-news__link:focus-visible) {
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
+}
+
+.ccm-news__img {
+  display: block;
+  flex: none;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 5 / 3;
+  background: var(--ccm-beige-l3);
+  object-fit: cover;
+}
+.ccm-news__img--contain {
+  padding: var(--ccm-space-4);
+  background: var(--ccm-white);
+  object-fit: contain;
+}
+.ccm-news__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-2);
+  min-width: 0;
+  padding: var(--ccm-space-4) var(--ccm-space-5) var(--ccm-space-5);
+}
+.ccm-news__date {
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ccm-text-muted);
+}
+/* Titles are often whole sentences, so they use IBM Plex SemiBold, which is
+   easier to read at this size than the slanted KFUPM Display. */
+.ccm-news__title {
+  margin: 0;
+  font-family: var(--ccm-font-body);
+  font-weight: var(--ccm-weight-semibold);
+  font-size: var(--ccm-text-lead);
+  line-height: 1.35;
+  color: var(--ccm-text);
+}
+.ccm-news__link,
+.ccm-news__link:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-news__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.ccm-news__link:focus-visible {
+  outline: none; /* the item shows the focus ring instead */
+}
+.ccm-news:hover .ccm-news__link {
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.ccm-news__sum {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-size: var(--ccm-text-sm);
+  line-height: 1.55;
+  color: var(--ccm-text-muted);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* ---- Row: photo left, text right ---------------------------------------- */
+.ccm-news--row {
+  flex-direction: row;
+  align-items: center;
+  gap: var(--ccm-space-4);
+  padding: var(--ccm-space-3);
+}
+.ccm-news--row .ccm-news__img {
+  width: min(40%, 184px);
+  border-radius: var(--ccm-radius-md);
+}
+.ccm-news--row .ccm-news__body {
+  padding: 0 var(--ccm-space-2) 0 0;
+}
+
+/* ---- Narrow column (phones): cards in a grid become rows ---------------- */
+@container (max-width: 539.98px) {
+  .ccm-grid .ccm-news,
+  .ccm-news--row {
+    flex-direction: row;
+    align-items: center;
+    gap: var(--ccm-space-3);
+    padding: var(--ccm-space-3);
+  }
+  .ccm-grid .ccm-news__img,
+  .ccm-news--row .ccm-news__img {
+    width: 112px;
+    border-radius: var(--ccm-radius-md);
+  }
+  .ccm-grid .ccm-news__body,
+  .ccm-news--row .ccm-news__body {
+    gap: var(--ccm-space-1);
+    padding: 0;
+  }
+}

@@ -1,0 +1,112 @@
+/* ==========================================================================
+   Leader card: OPTION 2 (the Dean)
+   A white card, not a coloured banner: the photo with the college-colour
+   ring sits on a light Beige FAST Matrix pattern, and the name, contact
+   details and button sit beside it. The colour stays in the details.
+   Brand rules followed (guidelines p55–58): one matrix pattern per page,
+   Beige on White is an allowed pair, no rotation, flip or gradient, and it
+   never covers the face.
+
+   <section class="ccm-section" aria-label="Dean">
+     <div class="ccm-leader">
+       <div class="ccm-leader__media"><img class="ccm-leader__photo" …></div>
+       <div class="ccm-leader__body">
+         <p class="ccm-eyebrow">Dean</p>
+         <h2 class="ccm-leader__name"><a href="…">Name</a></h2>
+         <p class="ccm-leader__unit">Unit</p>
+         <ul class="ccm-contact">…</ul>
+         <div class="ccm-actions">…</div>
+       </div>
+     </div>
+   </section>
+   ========================================================================== */
+
+.ccm-leader {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  overflow: hidden;
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+}
+
+.ccm-leader__media {
+  position: relative;
+  display: grid;
+  place-items: center;
+  padding: var(--ccm-space-7) var(--ccm-space-6) 0;
+}
+/* A background image, not a CSS mask: masks loaded from files are blocked
+   in local previews. The build links the uploaded copy from cms-links.json. */
+.ccm-leader__media::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("../graphics/fast-matrix-four-beige.svg") center / contain no-repeat;
+  pointer-events: none;
+}
+.ccm-leader__photo {
+  position: relative; /* above the pattern */
+  width: 136px;
+  height: 136px;
+  padding: var(--ccm-space-1);
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
+  border-radius: var(--ccm-radius-round);
+  background: var(--ccm-white);
+  object-fit: cover;
+  object-position: center 20%;
+}
+
+.ccm-leader__body {
+  padding: var(--ccm-space-6) var(--ccm-space-5);
+}
+.ccm-leader__name {
+  margin: 0 0 var(--ccm-space-1);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h3);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
+}
+.ccm-leader__name a,
+.ccm-leader__name a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-leader__name a:hover,
+.ccm-leader__name a:focus-visible {
+  color: inherit;
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.ccm-leader__unit {
+  margin: 0 0 var(--ccm-space-5);
+  color: var(--ccm-text-muted);
+}
+.ccm-leader .ccm-contact {
+  margin-bottom: var(--ccm-space-6);
+}
+
+@container (min-width: 720px) {
+  .ccm-leader {
+    grid-template-columns: 248px minmax(0, 1fr);
+    align-items: stretch;
+  }
+  .ccm-leader__media {
+    padding: var(--ccm-space-7);
+  }
+  .ccm-leader__photo {
+    width: 152px;
+    height: 152px;
+  }
+  .ccm-leader__body {
+    align-self: center;
+    padding: var(--ccm-space-7) var(--ccm-space-7) var(--ccm-space-7) 0;
+  }
+  .ccm-leader .ccm-contact {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    column-gap: var(--ccm-space-7);
+  }
+}

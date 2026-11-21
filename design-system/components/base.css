@@ -59,8 +59,12 @@
 /* Which version of ccm-styles.css a page is using: <p class="ccm-build">Design build:</p>.
    tools/build-sitefinity.mjs replaces "local" with the build number. Used on the test page. */
 .ccm-build {
+  display: inline-block;
+  padding: var(--ccm-space-1) var(--ccm-space-3);
+  border-radius: var(--ccm-radius-pill);
+  background: var(--ccm-beige);
   font-size: var(--ccm-text-xs);
-  color: var(--ccm-text-muted);
+  color: var(--ccm-turquoise); /* 5.6:1 on Beige */
 }
 .ccm-build::after {
   content: " local";
@@ -163,7 +167,8 @@
   container-type: inline-size;
   margin: 0 0 var(--ccm-section-space);
 }
-.ccm-section:last-child {
+/* last-of-type, so a group of pop-ups after the last section doesn't leave a gap */
+.ccm-section:last-of-type {
   margin-bottom: 0;
 }
 .ccm-section__title {

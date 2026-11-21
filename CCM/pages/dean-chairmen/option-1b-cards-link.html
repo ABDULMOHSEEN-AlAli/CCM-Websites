@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="ccm-live-url" content="https://ccm.kfupm.edu.sa/peoples/dean-chairmen">
+  <title>Option 1B: Profile cards, open the profile · Dean &amp; Chairmen (CCM preview)</title>
+
+  <!-- The live site's theme, as on the real page (its header, side menu and footer use it). -->
+  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/main.min.css?package=CCM">
+  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/all-style.min.css?package=CCM">
+  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/custom-ccm.css?package=CCM">
+
+  <!-- Shared design system: one stylesheet for all five sites. -->
+  <link rel="stylesheet" href="../../../design-system/ccm.css">
+
+  <!-- Preview only, never uploaded: the option bar, and the live header, side menu and footer around the design. -->
+  <link rel="stylesheet" href="../../../design-system/preview.css">
+  <script src="live-frame.js" defer></script>
+  <script src="../../../design-system/preview.js" defer></script>
+</head>
+<body>
+  <nav class="preview-bar" aria-label="Design options">
+    <a href="index.html">&larr; All options</a>
+    <span><strong>Option 1B of 4: Profile cards, no pop-up.</strong> Photo, name and role. Click a card to open that person's full profile page.</span>
+    <span class="preview-bar__nav"><a href="option-1a-cards-popup.html">&lsaquo; Previous</a><a href="option-2-departments.html">Next &rsaquo;</a></span>
+  </nav>
+
+  <div class="ccm-scope">
+    <!-- SITEFINITY:START (everything down to SITEFINITY:END is what gets uploaded; a Content block is fine: no pop-ups) -->
+    <!-- Note: Dr. Malak's and Dr. Yasser's profile links work, but their web addresses still use old
+         names (dr.-motaz-alfarraj, dr.-anas-alghazi). Fix them in Content > People > URL, then update here. -->
+
+    <section class="ccm-section" aria-label="Dean">
+      <article class="ccm-card ccm-card--featured">
+        <img class="ccm-card__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/ccm-dean---aug'2024---dr-abdullah-sultan.jpg?sfvrsn=2dd3f18e_1" alt="" width="144" height="144">
+        <div class="ccm-card__body">
+          <p class="ccm-eyebrow">Dean</p>
+          <h2 class="ccm-card__name"><a class="ccm-card__open" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-abdullah-sultan">Dr. Abdullah Sultan</a></h2>
+          <p class="ccm-card__role">College of Computing and Mathematics</p>
+        </div>
+      </article>
+    </section>
+
+    <section class="ccm-section" aria-labelledby="sec-chairs">
+      <h2 class="ccm-section__title" id="sec-chairs">Academic Chairmen</h2>
+      <ul class="ccm-cards">
+        <li>
+          <article class="ccm-card">
+            <img class="ccm-card__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/dr-waleed-shinwari.png?sfvrsn=4e154b34_1" alt="" width="104" height="104">
+            <div class="ccm-card__body">
+              <h3 class="ccm-card__name"><a class="ccm-card__open" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-mohammad-waleed-shinwari">Dr. Mohammad Waleed Shinwari</a></h3>
+              <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of Computer Engineering</span></p>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="ccm-card">
+            <img class="ccm-card__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/malak-baslyman.tmb-people.jpg?Culture=en&amp;sfvrsn=2babc57f_1" alt="" width="104" height="104">
+            <div class="ccm-card__body">
+              <h3 class="ccm-card__name"><a class="ccm-card__open" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-motaz-alfarraj">Dr. Malak Baslyman</a></h3>
+              <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of Information &amp; Computer Science</span></p>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="ccm-card">
+            <img class="ccm-card__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/dr-yasser-almoghathawi.jpg?sfvrsn=e5aa8986_1" alt="" width="104" height="104">
+            <div class="ccm-card__body">
+              <h3 class="ccm-card__name"><a class="ccm-card__open" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/dr.-anas-alghazi">Dr. Yasser Almoghathawi</a></h3>
+              <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of Industrial &amp; Systems Engineering</span></p>
+            </div>
+          </article>
+        </li>
+        <li>
+          <article class="ccm-card">
+            <img class="ccm-card__photo" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/math-chairman---dr-monther-al-furaidan.png?sfvrsn=81a057f5_1" alt="" width="104" height="104">
+            <div class="ccm-card__body">
+              <h3 class="ccm-card__name"><a class="ccm-card__open" href="https://ccm.kfupm.edu.sa/peoples/dean-chairmen/people-detail/prof.-alfuraidan--monther">Dr. Monther Alfuraidan</a></h3>
+              <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of Mathematics</span></p>
+            </div>
+          </article>
+        </li>
+      </ul>
+    </section>
+
+    <!-- SITEFINITY:END -->
+  </div>
+</body>
+</html>

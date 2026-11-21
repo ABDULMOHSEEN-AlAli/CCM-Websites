@@ -1,0 +1,153 @@
+/* ==========================================================================
+   Events: HOME PAGE CONCEPTS (CCM/pages/home)
+   One event: a date block, the department and type, the talk title, then
+   speaker, time and place. The title link covers the whole item.
+
+   <article class="ccm-event">
+     <time class="ccm-event__date" datetime="2026-10-28">
+       <span class="ccm-event__day">28</span> <span class="ccm-event__month">Oct</span>
+     </time>
+     <div class="ccm-event__body">
+       <p class="ccm-event__kind">ISE · Graduate seminar</p>
+       <h3 class="ccm-event__title"><a class="ccm-event__link" href="…">Talk title</a></h3>
+       <ul class="ccm-event__meta">
+         <li class="ccm-c-user">Speaker</li>
+         <li class="ccm-c-clock">3:40 PM</li>
+         <li class="ccm-c-office">Building 22, Room 125</li>
+       </ul>
+     </div>
+   </article>
+
+   The date sits on the left (lists and pages).
+   Today's event titles ("ISE - Graduate Seminar - Name") hold the department,
+   type and speaker; the previews split them into these parts.
+   ========================================================================== */
+
+.ccm-event {
+  position: relative;
+  display: flex;
+  flex: 1;
+  align-items: flex-start;
+  gap: var(--ccm-space-4);
+  margin: 0;
+  padding: var(--ccm-space-4);
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-event:hover {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-event:has(.ccm-event__link:focus-visible) {
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
+}
+
+/* Date: day over month, with a thin line beside it (calm, no colour block) */
+.ccm-event__date {
+  display: flex;
+  flex: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 64px;
+  min-height: 56px;
+  padding-right: var(--ccm-space-3);
+  border-right: var(--ccm-border-hairline) solid var(--ccm-line);
+  color: var(--ccm-turquoise);
+  text-align: center;
+}
+.ccm-event__day {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h4);
+  line-height: 1;
+}
+.ccm-event__month {
+  margin-top: var(--ccm-space-1);
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.2;
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ccm-text-muted);
+}
+
+.ccm-event__body {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-1);
+  min-width: 0;
+}
+.ccm-event__kind {
+  margin: 0;
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ccm-link);
+}
+.ccm-event__title {
+  display: -webkit-box;
+  margin: 0;
+  overflow: hidden;
+  font-family: var(--ccm-font-body);
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.4;
+  color: var(--ccm-text);
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+.ccm-event__link,
+.ccm-event__link:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.ccm-event__link::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+.ccm-event__link:focus-visible {
+  outline: none; /* the item shows the focus ring instead */
+}
+.ccm-event:hover .ccm-event__link {
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 3px;
+}
+
+.ccm-event__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ccm-space-1) var(--ccm-space-4);
+  list-style: none;
+  margin: var(--ccm-space-1) 0 0;
+  padding: 0;
+  font-size: var(--ccm-text-sm);
+  line-height: 1.45;
+  color: var(--ccm-text-muted);
+}
+.ccm-event__meta li {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ccm-space-1);
+  margin: 0;
+}
+.ccm-event__meta li::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background-color: var(--ccm-turquoise);
+  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
+          mask: var(--ccm-icon) center / contain no-repeat;
+}

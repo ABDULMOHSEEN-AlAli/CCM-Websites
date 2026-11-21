@@ -1,57 +1,55 @@
 /* ==========================================================================
-   Portraits: OPTION 5
+   Portraits: OPTION 3
    Arch-shaped portrait photos with a college-colour outline offset behind,
-   name and role, and round quick-action buttons (email, phone).
-   `.ccm-portrait--feature` = the Dean (photo left, details right).
-   Chairs sit on a beige band (`.ccm-band`).
+   name and role, and a "View full profile" button (owner, 2026-11-21: no
+   email, phone or arrow icons).
+   Photos are kept small: at most 152px wide for a chair and 176px for the
+   Dean, so today's small photos stay sharp.
 
-   Needs good photos: at least 600 × 750 px, same framing for everyone.
+   The Dean: <article class="ccm-portrait ccm-portrait--feature"> (photo left,
+   details right, from 540px).
+   The chairs: <ul class="ccm-portraits"><li class="ccm-portrait">…</li></ul>,
+   each ending with <a class="ccm-btn ccm-btn--outline ccm-btn--sm" href="…">View
+   full profile<span class="ccm-sr-only"> of Name</span></a>.
+   Section width → chairs per row: two, then four from 720px.
    ========================================================================== */
-
-.ccm-band {
-  padding: 2.5rem 1.5rem;
-  border-radius: var(--ccm-radius-xl);
-  background: var(--ccm-surface-soft);
-}
-@container (min-width: 720px) {
-  .ccm-band {
-    padding: 3rem 2.5rem;
-  }
-}
 
 .ccm-portraits {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 2.25rem 1rem;
+  gap: var(--ccm-space-8) var(--ccm-space-4);
   list-style: none;
   margin: 0;
   padding: 0;
 }
-@container (min-width: 860px) {
+@container (min-width: 720px) {
   .ccm-portraits {
     grid-template-columns: repeat(4, minmax(0, 1fr));
-    gap: 2.5rem 1.75rem;
+    gap: var(--ccm-space-8) var(--ccm-space-6);
   }
 }
 
 .ccm-portrait {
   display: flex;
   flex-direction: column;
+  align-items: center;
   margin: 0;
+  text-align: center;
 }
 
 /* Arch photo with an outline offset up and to the left, so the arch shape
    shows even when a photo has a white background */
 .ccm-portrait__frame {
   position: relative;
-  margin: 0 0 1.25rem;
+  width: min(100%, 128px);
+  margin: 0 0 var(--ccm-space-4);
   padding: var(--ccm-space-2) 0 0 var(--ccm-space-2);
 }
 .ccm-portrait__frame::before {
   content: "";
   position: absolute;
   inset: 0 var(--ccm-space-2) var(--ccm-space-2) 0;
-  border: 3px solid var(--ccm-accent);
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
   border-radius: 50% 50% var(--ccm-radius-md) var(--ccm-radius-md) / 40% 40% var(--ccm-radius-md) var(--ccm-radius-md);
 }
 .ccm-portrait__photo {
@@ -61,18 +59,23 @@
   height: auto;
   aspect-ratio: 4 / 5;
   border-radius: 50% 50% var(--ccm-radius-md) var(--ccm-radius-md) / 40% 40% var(--ccm-radius-md) var(--ccm-radius-md);
-  background: var(--ccm-beige);
+  background: var(--ccm-beige-l3);
   object-fit: cover;
   object-position: center 20%;
+}
+@container (min-width: 540px) {
+  .ccm-portrait__frame {
+    width: min(100%, 152px);
+  }
 }
 
 .ccm-portrait__name {
   margin: 0 0 var(--ccm-space-1);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
+  font-weight: var(--ccm-weight-bold);
   font-size: var(--ccm-text-h5);
-  line-height: 1.25;
-  color: var(--ccm-turquoise);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
 }
 .ccm-portrait__name a,
 .ccm-portrait__name a:visited {
@@ -88,82 +91,57 @@
   text-underline-offset: 4px;
 }
 .ccm-portrait__role {
-  margin: 0 0 1rem;
+  margin: 0 0 var(--ccm-space-4);
   font-size: var(--ccm-text-sm);
   line-height: 1.45;
   color: var(--ccm-text-muted);
 }
 .ccm-portrait__role strong {
   display: block;
-  font-weight: 600;
+  font-weight: var(--ccm-weight-semibold);
   color: var(--ccm-text);
 }
 
-/* Round icon buttons */
-.ccm-icon-btns {
-  display: flex;
-  flex-wrap: wrap;
-  gap: .5rem;
-  list-style: none;
-  margin: auto 0 0; /* sit at the bottom, so buttons line up across cards */
-  padding: 0;
-}
-.ccm-icon-btns li {
-  margin: 0;
-}
-.ccm-icon-btn,
-.ccm-icon-btn:visited {
-  display: grid;
-  place-items: center;
-  width: 42px;
-  height: 42px;
-  border: 1px solid var(--ccm-sand);
-  border-radius: var(--ccm-radius-round);
-  background: var(--ccm-white);
-  color: var(--ccm-turquoise);
-  text-decoration: none;
-  transition: background-color var(--ccm-duration-fast) var(--ccm-ease), color var(--ccm-duration-fast) var(--ccm-ease), border-color var(--ccm-duration-fast) var(--ccm-ease);
-}
-.ccm-icon-btn::before {
-  content: "";
-  width: 18px;
-  height: 18px;
-  background-color: currentColor;
-  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
-          mask: var(--ccm-icon) center / contain no-repeat;
-}
-.ccm-icon-btn:hover,
-.ccm-icon-btn:focus-visible {
-  border-color: var(--ccm-turquoise);
-  background: var(--ccm-turquoise);
-  color: var(--ccm-white);
+/* The profile button sits at the bottom, so the buttons line up across the row */
+.ccm-portrait > .ccm-btn {
+  margin-top: auto;
 }
 
-/* ---- Feature: the Dean -------------------------------------------------- */
+/* ---- The Dean: photo left, details right -------------------------------- */
 .ccm-portrait--feature {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
+  gap: var(--ccm-space-5);
+  justify-items: start;
+  text-align: left;
 }
 .ccm-portrait--feature .ccm-portrait__frame {
-  width: min(100%, 260px);
+  width: min(100%, 176px);
   margin: 0;
+}
+.ccm-portrait--feature .ccm-eyebrow {
+  margin-bottom: var(--ccm-space-1);
 }
 .ccm-portrait--feature .ccm-portrait__name {
   font-size: var(--ccm-text-h3);
 }
 .ccm-portrait--feature .ccm-portrait__role {
-  margin-bottom: 1.5rem;
+  margin-bottom: var(--ccm-space-5);
   font-size: var(--ccm-text-body);
 }
 .ccm-portrait--feature .ccm-contact {
-  margin-bottom: 1.5rem;
-  font-size: var(--ccm-text-sm);
+  margin-bottom: var(--ccm-space-6);
+}
+@container (min-width: 540px) {
+  .ccm-portrait--feature {
+    grid-template-columns: 184px minmax(0, 1fr);
+    align-items: center;
+    gap: var(--ccm-space-8);
+  }
 }
 @container (min-width: 720px) {
-  .ccm-portrait--feature {
-    grid-template-columns: 260px minmax(0, 1fr);
-    align-items: center;
-    gap: 3rem;
+  .ccm-portrait--feature .ccm-contact {
+    grid-template-columns: repeat(2, minmax(0, max-content));
+    column-gap: var(--ccm-space-7);
   }
 }

@@ -31,6 +31,7 @@ import { existsSync, readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { fetchLive, splitAtContent, splitAtSection, splitAtMain } from './lib/live-page.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DS = path.join(ROOT, 'design-system');
@@ -145,18 +146,6 @@ await mkdir(path.dirname(siteCssFile), { recursive: true });
 await writeFile(siteCssFile, css);
 
 // ---- 2. Per prototype: content + live-page check ---------------------------
-const liveCache = new Map();
-async function fetchLive(url) {
-  if (!liveCache.has(url)) {
-    liveCache.set(url, (async () => {
-      const res = await fetch(url, { headers: { 'User-Agent': 'Mozilla/5.0' } });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      return res.text();
-    })());
-  }
-  return liveCache.get(url);
-}
-
 const kb = (s) => (Buffer.byteLength(s) / 1024).toFixed(1) + ' KB';
 
 for (const file of files) {
@@ -171,14 +160,17 @@ for (const file of files) {
 
   const proto = await readFile(file, 'utf8');
   const liveUrl = proto.match(/<meta\s+name="ccm-live-url"\s+content="([^"]+)"/)?.[1];
+  const liveSection = proto.match(/<meta\s+name="ccm-live-section"\s+content="([^"]+)"/)?.[1];
   const m = proto.match(MARKERS);
   if (!m) throw new Error(`No SITEFINITY:START/END markers in ${rel.join('/')}`);
 
-  const inner = m[1]
+  const lines = m[1]
     .replace(/<!--[\s\S]*?-->/g, '')   // drop comments
     .replace(/\n\s*\n+/g, '\n')        // collapse blank lines
-    .replace(/^ {6}/gm, '  ')          // re-indent
-    .trim();
+    .split('\n');
+  // Re-indent: remove the prototype's own indentation, then indent by two.
+  const indent = Math.min(...lines.filter((l) => l.trim()).map((l) => l.match(/^ */)[0].length));
+  const inner = lines.map((l) => '  ' + l.slice(indent)).join('\n').trim();
   // All five sites look the same (CCM colouring), so the wrapper is identical everywhere.
   const html = `<div class="ccm-scope">\n  ${inner}\n</div>\n`;
   await writeFile(path.join(outDir, '01-content.html'), html);
@@ -188,20 +180,13 @@ for (const file of files) {
     checkNote = ' (no ccm-live-url meta: skipped live-page check)';
   } else {
     try {
-      let live = await fetchLive(liveUrl);
       const { origin } = new URL(liveUrl);
-      // Find the Sitefinity template's main content column and replace what's inside it.
-      const open = live.search(/<div[^>]*data-placeholder-label="Content"[^>]*>/);
-      if (open < 0) throw new Error('content placeholder not found (not a Sitefinity page?)');
-      const start = live.indexOf('>', open) + 1;
-      let depth = 1;
-      let t;
-      const tag = /<(\/?)div\b[^>]*>/gi;
-      tag.lastIndex = start;
-      while (depth > 0 && (t = tag.exec(live))) depth += t[1] ? -1 : 1;
-      if (depth !== 0) throw new Error('unbalanced divs');
-
-      live = live.slice(0, start) + `\n<style>\n${css}</style>\n${html}` + live.slice(t.index);
+      // Replace what's inside the Sitefinity template's main content column,
+      // or a whole band of the page when the option names one (home page).
+      const livePage = await fetchLive(liveUrl);
+      const { before, after } = liveSection === 'main' ? splitAtMain(livePage)
+        : liveSection ? splitAtSection(livePage, liveSection) : splitAtContent(livePage);
+      let live = before + `\n<style>\n${css}</style>\n${html}` + after;
       live = live
         .replace(/<head>/i, `<head>\n<base href="${origin}/">`)
         .replace(/<script\b[\s\S]*?<\/script>/gi, '') // no analytics / scripts in a local check

@@ -1,23 +1,35 @@
 /* ==========================================================================
-   People cards: OPTION 2 "Name cards" (also used by option 3)
-   Photo + name + role only. The whole card is one button that opens the
-   person's profile pop-up (profile-popup.css). No JavaScript: the button
-   uses the HTML `popovertarget` attribute.
+   People cards: OPTIONS 1A and 1B "Profile cards"
+   Photo, name and role. The whole card is one click target: the name holds
+   the only link or button, and its ::after layer covers the card, so screen
+   readers hear one control. No "View details" label (owner, 2026-11-21).
+   - 1A: the name is a <button popovertarget="profile-x"> that opens the
+     contact pop-up (profile-popup.css). Needs the Embed code widget in
+     Sitefinity (TEST-RESULTS.md).
+   - 1B: the name is a link, <a class="ccm-card__open" href="…">, to the
+     person's full profile page. Works in a Content block.
 
-   <article class="ccm-card">
-     <img class="ccm-card__photo" …>
-     <h3 class="ccm-card__name">
-       <button class="ccm-card__open" type="button" popovertarget="profile-x">Name</button>
-     </h3>
-     <p class="ccm-card__role">Role<span class="ccm-card__unit">Unit</span></p>
-     <span class="ccm-card__hint" aria-hidden="true">View details</span>
-   </article>
+   The chairs: all the same size, so no one looks more important.
+   <ul class="ccm-cards">
+     <li><article class="ccm-card">
+       <img class="ccm-card__photo" src="…" alt="" width="104" height="104">
+       <div class="ccm-card__body">
+         <h3 class="ccm-card__name"><a class="ccm-card__open" href="…">Name</a></h3>
+         <p class="ccm-card__role">Chairman<span class="ccm-card__unit">Department of …</span></p>
+       </div>
+     </article></li>
+   </ul>
+   Section width → chairs per row: under 540px one (photo beside the text),
+   from 540px two, from 720px four.
+
+   The Dean: <article class="ccm-card ccm-card--featured">, with
+   <p class="ccm-eyebrow">Dean</p> before the name and the name in an <h2>.
    ========================================================================== */
 
 .ccm-cards {
   display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: var(--ccm-space-4);
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-3);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -26,48 +38,38 @@
   display: flex;
   margin: 0;
 }
-@container (min-width: 540px) {
-  .ccm-cards {
-    gap: 1.25rem;
-  }
-}
-@container (min-width: 860px) {
-  .ccm-cards {
-    grid-template-columns: repeat(4, minmax(0, 1fr));
-  }
-}
 
 .ccm-card {
   position: relative;
   display: flex;
   flex: 1;
-  flex-direction: column;
   align-items: center;
+  gap: var(--ccm-space-4);
   margin: 0;
-  padding: 1.75rem 1.25rem 1.5rem;
-  text-align: center;
-  background: var(--ccm-white);
-  border: 1px solid var(--ccm-line);
+  padding: var(--ccm-space-4);
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
   border-radius: var(--ccm-radius-lg);
-  transition: border-color var(--ccm-duration) var(--ccm-ease), box-shadow var(--ccm-duration) var(--ccm-ease), transform var(--ccm-duration) var(--ccm-ease);
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease),
+              transform var(--ccm-duration) var(--ccm-ease);
 }
 .ccm-card:hover {
   border-color: var(--ccm-accent);
   box-shadow: var(--ccm-shadow-md);
-  transform: translateY(-3px);
+  transform: translateY(-2px);
 }
 .ccm-card:has(.ccm-card__open:focus-visible) {
-  outline: 3px solid var(--ccm-turquoise);
-  outline-offset: 3px;
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
 }
 
 .ccm-card__photo {
   flex: none;
-  width: 128px;
-  height: 128px;
-  margin: 0 0 var(--ccm-space-4);
-  padding: 4px;
-  border: 3px solid var(--ccm-accent);
+  width: 72px;
+  height: 72px;
+  padding: 3px;
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
   border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
@@ -77,20 +79,19 @@
   display: flex;
   flex: 1;
   flex-direction: column;
-  width: 100%;
   min-width: 0;
 }
 .ccm-card__name {
-  margin: 0 0 var(--ccm-space-2);
+  margin: 0 0 var(--ccm-space-1);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
+  font-weight: var(--ccm-weight-bold);
   font-size: var(--ccm-text-h5);
-  line-height: 1.25;
-  color: var(--ccm-turquoise);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
 }
-/* The button fills the whole card (the ::after layer), so the card is one
-   big click target but screen readers hear a single button: the name. */
-.ccm-card__open {
+/* The link or button fills the whole card (the ::after layer). */
+.ccm-card__open,
+.ccm-card__open:visited {
   appearance: none;
   margin: 0;
   padding: 0;
@@ -99,7 +100,14 @@
   font: inherit;
   color: inherit;
   text-align: inherit;
+  text-decoration: none;
   cursor: pointer;
+}
+.ccm-card:hover .ccm-card__open {
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
 }
 .ccm-card__open::after {
   content: "";
@@ -113,126 +121,80 @@
 }
 .ccm-card__role {
   margin: 0;
-  font-weight: 600;
-  line-height: 1.4;
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.45;
   color: var(--ccm-text);
 }
 .ccm-card__unit {
   display: block;
-  margin-top: .15rem;
-  font-size: var(--ccm-text-sm);
-  font-weight: 400;
+  font-weight: var(--ccm-weight-regular);
   color: var(--ccm-text-muted);
 }
-.ccm-card__hint {
-  display: inline-flex;
-  align-items: center;
-  align-self: center;
-  gap: var(--ccm-space-1);
-  margin-top: auto;
-  padding-top: var(--ccm-space-4);
-  font-size: var(--ccm-text-sm);
-  font-weight: 600;
-  color: var(--ccm-turquoise);
+/* ---- Chairs: two per row, then four (photo above the text) -------------- */
+@container (min-width: 540px) {
+  .ccm-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ccm-space-4);
+  }
+  .ccm-cards .ccm-card {
+    flex-direction: column;
+    align-items: center;
+    padding: var(--ccm-space-6) var(--ccm-space-4) var(--ccm-space-5);
+    text-align: center;
+  }
+  .ccm-cards .ccm-card__photo {
+    width: 104px;
+    height: 104px;
+    padding: var(--ccm-space-1);
+  }
+  .ccm-cards .ccm-card__body {
+    width: 100%;
+  }
+  .ccm-cards .ccm-card__name {
+    margin-bottom: var(--ccm-space-2);
+  }
 }
-.ccm-card__hint::after {
-  content: "";
-  width: 14px;
-  height: 14px;
-  background-color: currentColor;
-  -webkit-mask: var(--ccm-i-plus) center / contain no-repeat;
-          mask: var(--ccm-i-plus) center / contain no-repeat;
-}
-.ccm-card:hover .ccm-card__hint {
-  text-decoration: underline;
+@container (min-width: 720px) {
+  .ccm-cards {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
 }
 
-/* ---- Featured: the Dean (horizontal, beige panel) ----------------------- */
+/* ---- The Dean: one wide card, larger photo ------------------------------ */
 .ccm-card--featured {
-  flex-direction: row;
-  align-items: center;
-  gap: 2rem;
-  padding: 2rem 2.25rem;
-  text-align: left;
-  background: var(--ccm-surface-soft);
-  border-color: transparent;
+  flex-direction: column;
+  gap: var(--ccm-space-4);
+  padding: var(--ccm-space-6) var(--ccm-space-5);
+  text-align: center;
 }
 .ccm-card--featured .ccm-card__photo {
-  width: 168px;
-  height: 168px;
-  margin: 0;
+  width: 128px;
+  height: 128px;
+  padding: var(--ccm-space-1);
+}
+.ccm-card--featured .ccm-eyebrow {
+  margin-bottom: var(--ccm-space-1);
 }
 .ccm-card--featured .ccm-card__name {
   font-size: var(--ccm-text-h3);
 }
 .ccm-card--featured .ccm-card__role {
   font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-regular);
+  color: var(--ccm-text-muted);
 }
-.ccm-card--featured .ccm-card__unit {
-  font-size: var(--ccm-text-body);
-}
-.ccm-card--featured .ccm-card__hint {
-  align-self: flex-start;
-  margin-top: 1rem;
-  padding-top: 0;
-}
-
-/* ---- Dark: turquoise card (org chart head) ------------------------------ */
-.ccm-card--dark {
-  background: var(--ccm-turquoise);
-  border-color: var(--ccm-turquoise);
-  color: var(--ccm-white);
-}
-.ccm-card--dark:hover {
-  border-color: var(--ccm-accent);
-}
-.ccm-card--dark .ccm-card__name,
-.ccm-card--dark .ccm-card__role {
-  color: var(--ccm-white);
-}
-.ccm-card--dark .ccm-card__unit {
-  color: var(--ccm-text-inverse-muted);
-}
-.ccm-card--dark .ccm-eyebrow,
-.ccm-card--dark .ccm-card__hint {
-  color: var(--ccm-beige);
-}
-
-/* ---- Narrow column (phones): two small cards per row -------------------- */
-@container (max-width: 539.98px) {
-  .ccm-card {
-    padding: 1.25rem .75rem 1rem;
-  }
-  .ccm-card__photo {
-    width: 88px;
-    height: 88px;
-    margin-bottom: var(--ccm-space-3);
-    padding: 3px;
-  }
-  .ccm-card__name {
-    font-size: var(--ccm-text-h5); /* Display font: 18px minimum */
-  }
-  .ccm-card__role {
-    font-size: var(--ccm-text-sm);
-  }
-  .ccm-card__unit {
-    font-size: var(--ccm-text-sm);
-  }
-  .ccm-card__hint {
-    padding-top: var(--ccm-space-3);
-    font-size: var(--ccm-text-sm);
-  }
+@container (min-width: 540px) {
   .ccm-card--featured {
-    flex-direction: column;
-    gap: 1rem;
-    padding: 1.75rem 1.25rem;
-    text-align: center;
+    flex-direction: row;
+    gap: var(--ccm-space-6);
+    padding: var(--ccm-space-6) var(--ccm-space-7);
+    text-align: left;
   }
+}
+@container (min-width: 720px) {
   .ccm-card--featured .ccm-card__photo {
-    width: 128px;
-    height: 128px;
-  }
-  .ccm-card--featured .ccm-card__hint {
-    align-self: center;
+    width: 144px;
+    height: 144px;
   }
 }

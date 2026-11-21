@@ -19,15 +19,18 @@
 @import url("components/base.css");
 @import url("components/icons.css");
 
-/* People components. These are design options for the Dean & Chairmen
-   page. Colours, radius, shadows and motion use tokens; some spacing and
-   font sizes are still fixed values. Align the chosen ones to the scale
-   and delete the rest. */
-@import url("components/people-list.css");    /* option 1 */
-@import url("components/people-cards.css");   /* options 2 and 3 */
-@import url("components/profile-popup.css");  /* options 2 and 3 */
-@import url("components/org-chart.css");      /* option 3 */
-@import url("components/leader-hero.css");    /* option 4 */
-@import url("components/dept-cards.css");     /* option 4 */
-@import url("components/portraits.css");      /* option 5 */
-@import url("components/directory.css");      /* option 6 */
+/* People components: the four Dean & Chairmen options of round 3
+   (CCM/pages/dean-chairmen). When one is approved, delete the others. */
+@import url("components/people-cards.css");   /* options 1A and 1B */
+@import url("components/profile-popup.css");  /* option 1A (and the Sitefinity test page) */
+@import url("components/leader.css");         /* option 2 */
+@import url("components/dept-cards.css");     /* option 2 */
+@import url("components/portraits.css");      /* option 3 */
+
+/* Home page: concept 1 and its minimal variations, round 4 (CCM/pages/home).
+   When one is approved, delete the parts only the others use. */
+@import url("components/home.css");           /* bands, hero, numbers, card grid, departments, links, Lines look */
+@import url("components/feed.css");           /* news and events layout */
+@import url("components/news.css");           /* news items and photo cards */
+@import url("components/events.css");         /* events */
+@import url("components/pages.css");          /* page numbers (concept 1, Text first, Lines) */

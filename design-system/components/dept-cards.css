@@ -1,14 +1,14 @@
 /* ==========================================================================
-   Department cards: OPTION 4
-   One card per department: short code, department name, a link to the
-   department's own website, then the chair with contact details.
+   Department cards: OPTION 2
+   One compact card per department: short code and name, a link to the
+   department's website, then the chair with contact details. All four cards
+   are the same size.
 
    <ul class="ccm-depts">
      <li class="ccm-dept">
        <div class="ccm-dept__head">
-         <span class="ccm-dept__code" aria-hidden="true">COE</span>
-         <h3 class="ccm-dept__name">Computer Engineering</h3>
-         <a class="ccm-dept__site" href="…">Website</a>
+         <h3 class="ccm-dept__name"><span class="ccm-dept__code">COE</span> Computer Engineering</h3>
+         <a class="ccm-dept__site" href="…" aria-label="Computer Engineering website">Website</a>
        </div>
        <div class="ccm-dept__chair">
          <img class="ccm-dept__photo" …>
@@ -20,12 +20,13 @@
        </div>
      </li>
    </ul>
+   Section width → cards per row: one, then two from 720px.
    ========================================================================== */
 
 .ccm-depts {
   display: grid;
   grid-template-columns: minmax(0, 1fr);
-  gap: 1.5rem;
+  gap: var(--ccm-space-4);
   list-style: none;
   margin: 0;
   padding: 0;
@@ -33,6 +34,7 @@
 @container (min-width: 720px) {
   .ccm-depts {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--ccm-space-5);
   }
 }
 
@@ -41,54 +43,53 @@
   flex-direction: column;
   margin: 0;
   overflow: hidden;
-  background: var(--ccm-white);
-  border: 1px solid var(--ccm-line);
+  background: var(--ccm-surface);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
   border-radius: var(--ccm-radius-lg);
 }
 
 .ccm-dept__head {
-  position: relative;
-  padding: var(--ccm-space-6) 1.75rem var(--ccm-space-5);
-  background: var(--ccm-surface-soft);
-  border-bottom: 4px solid var(--ccm-accent);
+  display: flex;
+  align-items: center;
+  gap: var(--ccm-space-3);
+  padding: var(--ccm-space-4) var(--ccm-space-5);
+  border-bottom: var(--ccm-border-ring) solid var(--ccm-accent);
+}
+.ccm-dept__name {
+  flex: 1;
+  min-width: 0;
+  margin: 0;
+  font-family: var(--ccm-font-body);
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  color: var(--ccm-text);
 }
 .ccm-dept__code {
   display: block;
   margin-bottom: var(--ccm-space-1);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: var(--ccm-text-h1);
-  line-height: 1;
+  font-size: var(--ccm-text-h4);
+  font-weight: var(--ccm-weight-bold);
+  line-height: 1.1;
   color: var(--ccm-turquoise);
-}
-.ccm-dept__name {
-  margin: 0;
-  font-family: var(--ccm-font-display);
-  font-weight: 700;
-  font-size: var(--ccm-text-h5);
-  line-height: 1.3;
-  color: var(--ccm-text);
 }
 .ccm-dept__site,
 .ccm-dept__site:visited {
-  position: absolute;
-  top: 1.5rem;
-  right: 1.5rem;
+  flex: none;
   display: inline-flex;
   align-items: center;
   gap: var(--ccm-space-2);
-  min-height: 36px;
-  padding: var(--ccm-space-2) var(--ccm-space-4);
-  border: 2px solid var(--ccm-turquoise);
-  border-radius: var(--ccm-radius-pill);
+  min-height: var(--ccm-target);
+  padding: 0 var(--ccm-space-2);
   font-size: var(--ccm-text-sm);
-  font-weight: 600;
-  color: var(--ccm-turquoise);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--ccm-link);
   text-decoration: none;
-  transition: background-color var(--ccm-duration-fast) var(--ccm-ease), color var(--ccm-duration-fast) var(--ccm-ease);
 }
 .ccm-dept__site::after {
   content: "";
+  flex: none;
   width: 14px;
   height: 14px;
   background-color: currentColor;
@@ -97,22 +98,23 @@
 }
 .ccm-dept__site:hover,
 .ccm-dept__site:focus-visible {
-  background: var(--ccm-turquoise);
-  color: var(--ccm-white);
+  color: var(--ccm-link-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .ccm-dept__chair {
   display: flex;
   align-items: flex-start;
-  gap: 1.25rem;
-  padding: 1.5rem 1.75rem 1.75rem;
+  gap: var(--ccm-space-4);
+  padding: var(--ccm-space-5);
 }
 .ccm-dept__photo {
   flex: none;
-  width: 96px;
-  height: 96px;
-  padding: 3px;
-  border: 3px solid var(--ccm-accent);
+  width: 64px;
+  height: 64px;
+  padding: 2px;
+  border: var(--ccm-border-ring) solid var(--ccm-accent);
   border-radius: var(--ccm-radius-round);
   background: var(--ccm-white);
   object-fit: cover;
@@ -120,15 +122,17 @@
 }
 .ccm-dept__chair > div {
   min-width: 0;
-  padding-top: .25rem;
+}
+.ccm-dept__chair .ccm-eyebrow {
+  margin-bottom: var(--ccm-space-1);
 }
 .ccm-dept__person {
   margin: 0 0 var(--ccm-space-3);
   font-family: var(--ccm-font-display);
-  font-weight: 700;
+  font-weight: var(--ccm-weight-bold);
   font-size: var(--ccm-text-h5);
-  line-height: 1.25;
-  color: var(--ccm-turquoise);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
 }
 .ccm-dept__person a,
 .ccm-dept__person a:visited {
@@ -144,15 +148,36 @@
   text-underline-offset: 4px;
 }
 
+/* Narrow column (phones): photo beside the name, contact lines full width
+   below, so long email addresses don't break in the middle. */
 @container (max-width: 539.98px) {
-  .ccm-dept__head,
   .ccm-dept__chair {
-    padding-inline: 1.25rem;
+    display: grid;
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: center;
+    column-gap: var(--ccm-space-4);
   }
-  .ccm-dept__site {
-    top: 1.25rem;
-    right: 1.25rem;
+  .ccm-dept__chair > div {
+    display: contents;
   }
+  .ccm-dept__photo {
+    grid-row: 1 / span 2;
+  }
+  .ccm-dept__chair .ccm-eyebrow {
+    grid-column: 2;
+    align-self: end;
+  }
+  .ccm-dept__person {
+    grid-column: 2;
+    align-self: start;
+    margin-bottom: 0;
+  }
+  .ccm-dept__chair .ccm-contact {
+    grid-column: 1 / -1;
+    margin-top: var(--ccm-space-4);
+  }
+}
+@container (min-width: 540px) {
   .ccm-dept__photo {
     width: 72px;
     height: 72px;

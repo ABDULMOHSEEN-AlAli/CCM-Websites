@@ -5,6 +5,8 @@
 
    - Contact lines: add a class to the <li>: ccm-c-mail, ccm-c-phone,
      ccm-c-office, ccm-c-web. The ::before of `.ccm-contact li` draws it.
+   - Event details: ccm-c-clock, ccm-c-calendar, ccm-c-user (speaker) and
+     ccm-c-office (place) on the <li> of .ccm-event__meta.
    - Icon in front of text: <a class="ccm-has-ico ccm-c-mail" href="…">Email</a>
    - Icon alone: <span class="ccm-ico ccm-c-mail"><span class="ccm-sr-only">Email</span></span>
    Never leave the tag empty: the Sitefinity editor deletes empty tags.
@@ -22,6 +24,9 @@
   --ccm-i-plus: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M12 5v14M5 12h14'/%3E%3C/svg%3E");
   --ccm-i-chevron: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='m6 9 6 6 6-6'/%3E%3C/svg%3E");
   --ccm-i-external: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M14 4h6v6M20 4l-9 9M18 14v5a1 1 0 0 1-1 1H5a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h5'/%3E%3C/svg%3E");
+  --ccm-i-clock: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='12' r='9'/%3E%3Cpath d='M12 7v5l3 2'/%3E%3C/svg%3E");
+  --ccm-i-calendar: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Crect x='3.5' y='5' width='17' height='15' rx='2'/%3E%3Cpath d='M3.5 10h17M8 3v4M16 3v4'/%3E%3C/svg%3E");
+  --ccm-i-user: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'%3E%3Ccircle cx='12' cy='8' r='4'/%3E%3Cpath d='M4.5 20a7.5 7.5 0 0 1 15 0'/%3E%3C/svg%3E");
 }
 
 .ccm-c-mail     { --ccm-icon: var(--ccm-i-mail); }
@@ -33,6 +38,9 @@
 .ccm-c-plus     { --ccm-icon: var(--ccm-i-plus); }
 .ccm-c-chevron  { --ccm-icon: var(--ccm-i-chevron); }
 .ccm-c-external { --ccm-icon: var(--ccm-i-external); }
+.ccm-c-clock    { --ccm-icon: var(--ccm-i-clock); }
+.ccm-c-calendar { --ccm-icon: var(--ccm-i-calendar); }
+.ccm-c-user     { --ccm-icon: var(--ccm-i-user); }
 
 /* Icon in front of any text */
 .ccm-has-ico {

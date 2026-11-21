@@ -127,10 +127,13 @@
   --ccm-fill-inverse: rgb(255 255 255 / .14);   /* light fill on Turquoise: icon buttons, ghost-button hover */
   --ccm-fill-inverse-strong: rgb(255 255 255 / .26); /* hover of a filled control on Turquoise */
   --ccm-backdrop: rgb(6 32 34 / .6);            /* dims the page behind a pop-up (Turquoise d3) */
+  --ccm-scrim: rgb(17 95 102 / .92);           /* Turquoise over a photo, behind white text (hero): 6:1 even on white areas */
+  --ccm-scrim-fade: rgb(17 95 102 / .2);       /* the light end of that overlay, so the photo shows */
   --ccm-link: var(--ccm-turquoise);             /* 7.4:1 on white */
   --ccm-link-hover: var(--ccm-turquoise-d1);
   --ccm-surface: var(--ccm-white);              /* page background */
   --ccm-surface-soft: var(--ccm-beige-l2);      /* panels, highlighted cards */
+  --ccm-surface-alt: var(--ccm-gray-l3);        /* every other home page band, so sections are easy to tell apart */
   --ccm-surface-strong: var(--ccm-turquoise);   /* bands, banners, primary buttons */
   --ccm-line: var(--ccm-gray-l3);               /* hairlines and card borders (decorative) */
   --ccm-line-strong: var(--ccm-sand);           /* borders of controls, 3.1:1 on white */

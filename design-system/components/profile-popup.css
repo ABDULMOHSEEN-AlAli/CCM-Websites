@@ -27,6 +27,12 @@
   display: contents;
 }
 
+/* Safety net: if an editor strips the `popover` attribute (the Sitefinity
+   Content block does), keep the box hidden instead of stuck over the page. */
+.ccm-profile:not([popover]) {
+  display: none;
+}
+
 /* Note: never set `display` on .ccm-profile itself. The browser hides a
    closed popover with display:none, and our rule would override that. */
 .ccm-profile {

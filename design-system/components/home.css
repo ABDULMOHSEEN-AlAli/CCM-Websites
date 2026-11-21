@@ -1,0 +1,521 @@
+/* ==========================================================================
+   Home page: concept 1 "Classic, made clear" and its minimal variations,
+   round 4 (CCM/pages/home)
+   Calm and simple on purpose (owner, 21 Nov 2026):
+   - white hero, colour only in the photo, the buttons and the links;
+   - one card style and one grid for every section;
+   - sections separated by a light grey band (--ccm-surface-alt);
+   - the numbers in boxes; no message from the Dean.
+   News and events use feed.css, news.css, events.css and pages.css; study
+   and research cards reuse the news card (.ccm-news).
+
+   Every band:
+   <section class="ccm-band" aria-labelledby="…">           (or ccm-band ccm-band--alt)
+     <div class="ccm-band__inner">
+       <div class="ccm-section">  (the size container for the parts inside)
+         <div class="ccm-feed__head"><h2 class="ccm-section__title" id="…">…</h2> <a class="ccm-more" href="…">…</a></div>
+         <ul class="ccm-grid ccm-grid--3">…</ul>
+       </div>
+     </div>
+   </section>
+   The inner width matches the live theme's container (Bootstrap 540 / 720 /
+   960 / 1140 / 1320px), so the bands line up with the old header and footer.
+
+   Variations of concept 1:
+   - Text first: .ccm-hero--stats, the numbers beside the title instead of a photo
+   - Lines:      wrap the page in <div class="ccm-lines">: thin lines instead of boxes
+   - Compact:    .ccm-hero--compact and .ccm-rows (link lists instead of cards)
+   ========================================================================== */
+
+.ccm-band {
+  position: relative;
+  padding-block: var(--ccm-section-space);
+  background: var(--ccm-surface);
+}
+/* Two white bands in a row: one gap between them, not two.
+   :where() keeps this rule weak, so the Lines look can override it. */
+.ccm-band:where(:not(.ccm-band--alt)) + .ccm-band:where(:not(.ccm-band--alt)) {
+  padding-top: 0;
+}
+.ccm-band--alt {
+  background: var(--ccm-surface-alt);
+}
+/* A band with one short row (the numbers): less space above and below */
+.ccm-band--tight {
+  padding-block: var(--ccm-space-9);
+}
+.ccm-band__inner {
+  position: relative;
+  width: 100%;
+  margin-inline: auto;
+  padding-inline: var(--ccm-space-3);
+}
+@media (min-width: 576px) {
+  .ccm-band__inner { max-width: 540px; }
+}
+@media (min-width: 768px) {
+  .ccm-band__inner { max-width: 720px; }
+}
+@media (min-width: 992px) {
+  .ccm-band__inner { max-width: 960px; }
+}
+@media (min-width: 1200px) {
+  .ccm-band__inner { max-width: 1140px; }
+}
+@media (min-width: 1400px) {
+  .ccm-band__inner { max-width: 1320px; }
+}
+.ccm-band .ccm-section {
+  margin: 0;
+}
+
+/* ---- Grid: the same columns for every kind of card -----------------------
+   <ul class="ccm-grid ccm-grid--3"><li>…card…</li>…</ul>
+   --2 / --3 / --4: columns on a wide section. Narrower: two from 540px,
+   one below. */
+.ccm-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-4);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ccm-grid > li {
+  display: flex;
+  margin: 0;
+}
+@container (min-width: 540px) {
+  .ccm-grid--2,
+  .ccm-grid--4 { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (min-width: 720px) {
+  .ccm-grid--3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+@container (min-width: 860px) {
+  .ccm-grid { gap: var(--ccm-space-5); }
+  .ccm-grid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+/* Two wide cards: wider, shorter photos, so the cards don't get tall */
+@container (min-width: 540px) {
+  .ccm-grid--2 .ccm-news__img {
+    aspect-ratio: 2 / 1;
+  }
+}
+
+/* ---- Hero -----------------------------------------------------------------
+   White; text on the left, a photo (or the numbers) on the right.
+   <section class="ccm-band ccm-hero ccm-hero--split" aria-labelledby="hero-h">
+     <div class="ccm-band__inner ccm-hero__grid">
+       <div class="ccm-hero__text">
+         <p class="ccm-eyebrow">King Fahd University of Petroleum &amp; Minerals</p>
+         <h2 class="ccm-hero__title" id="hero-h">College of Computing and Mathematics</h2>
+         <p class="ccm-hero__lead">…</p>
+         <div class="ccm-actions">…</div>
+       </div>
+       <img class="ccm-hero__img" …>
+     </div>
+   </section>
+   - .ccm-hero--split    text and a 4:3 photo (concept 1)
+   - .ccm-hero--stats    the numbers (a .ccm-stats list) instead of the photo
+   - .ccm-hero--compact  less space, a smaller title and photo
+   On the real home page the hero title is the page's H1 (page template). */
+.ccm-hero {
+  overflow: hidden;
+}
+.ccm-hero__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  align-items: center;
+  gap: var(--ccm-space-8);
+}
+@media (min-width: 992px) {
+  .ccm-hero__grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: var(--ccm-space-10);
+  }
+}
+.ccm-hero__text {
+  min-width: 0;
+}
+.ccm-hero__title {
+  margin: 0 0 var(--ccm-space-4);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-display);
+  line-height: var(--ccm-leading-tight);
+  color: var(--ccm-text);
+}
+.ccm-hero__lead {
+  max-width: 54ch;
+  margin: 0 0 var(--ccm-space-7);
+  font-size: var(--ccm-text-lead);
+  line-height: var(--ccm-leading-body);
+  color: var(--ccm-text-muted);
+}
+.ccm-hero__img {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: var(--ccm-radius-xl);
+  background: var(--ccm-surface-alt);
+  object-fit: cover;
+}
+/* Split (concept 1): text on the left, a 4:3 photo on the right */
+.ccm-hero--split .ccm-hero__img {
+  aspect-ratio: 4 / 3;
+}
+
+/* Text first: the numbers beside the title */
+.ccm-hero--stats .ccm-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+@media (min-width: 576px) and (max-width: 991.98px) {
+  .ccm-hero--stats .ccm-stats {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+.ccm-hero--stats .ccm-stat {
+  padding: var(--ccm-space-6) var(--ccm-space-4);
+}
+.ccm-hero--stats .ccm-stat__num {
+  font-size: var(--ccm-text-h1);
+}
+
+/* Compact: less space, smaller title and photo */
+.ccm-hero--compact {
+  padding-block: var(--ccm-space-9);
+}
+@media (min-width: 992px) {
+  .ccm-hero--compact .ccm-hero__grid {
+    grid-template-columns: minmax(0, 7fr) minmax(0, 5fr);
+  }
+}
+.ccm-hero--compact .ccm-hero__title {
+  font-size: var(--ccm-text-h1);
+}
+.ccm-hero--compact .ccm-hero__lead {
+  margin-bottom: var(--ccm-space-6);
+}
+.ccm-hero--compact .ccm-hero__img {
+  aspect-ratio: 3 / 2;
+}
+
+/* ---- Numbers, in boxes ----------------------------------------------------
+   <ul class="ccm-stats"><li class="ccm-stat"><span class="ccm-stat__num">167</span>
+   <span class="ccm-stat__label">Faculty members</span></li>…</ul>
+   Two per row on phones, three on tablets, six on wide screens. */
+.ccm-stats {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ccm-space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+@media (min-width: 768px) {
+  .ccm-stats { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--ccm-space-4); }
+}
+@media (min-width: 1200px) {
+  .ccm-stats { grid-template-columns: repeat(6, minmax(0, 1fr)); }
+}
+.ccm-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start; /* numbers line up even when a label wraps */
+  gap: var(--ccm-space-2);
+  margin: 0;
+  padding: var(--ccm-space-6) var(--ccm-space-3);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  text-align: center;
+}
+.ccm-stat__num {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h2);
+  line-height: 1;
+  color: var(--ccm-turquoise);
+}
+.ccm-stat__label {
+  font-size: var(--ccm-text-sm);
+  line-height: 1.35;
+  color: var(--ccm-text-muted);
+}
+
+/* ---- Department cards -----------------------------------------------------
+   <a class="ccm-tile" href="https://coe.kfupm.edu.sa/">
+     <span class="ccm-tile__code">COE</span> <span class="ccm-tile__name">Computer Engineering</span>
+     <span class="ccm-tile__text">…programs…</span> <span class="ccm-tile__go">Visit the COE website</span>
+   </a>  (inside .ccm-grid--4) */
+.ccm-tile,
+.ccm-tile:visited {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-2);
+  padding: var(--ccm-space-6);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  color: var(--ccm-text);
+  text-decoration: none;
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-tile:hover,
+.ccm-tile:focus-visible {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-tile__code {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h3);
+  line-height: 1;
+  color: var(--ccm-turquoise);
+}
+.ccm-tile__name {
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+}
+.ccm-tile__text {
+  font-size: var(--ccm-text-sm);
+  line-height: 1.55;
+  color: var(--ccm-text-muted);
+}
+.ccm-tile__go {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ccm-space-2);
+  margin-top: auto;
+  padding-top: var(--ccm-space-3);
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--ccm-link);
+}
+.ccm-tile__go::after {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-i-external) center / contain no-repeat;
+          mask: var(--ccm-i-external) center / contain no-repeat;
+}
+.ccm-tile:hover .ccm-tile__go {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+/* ---- Quick links: a box with a title, a line of text and an arrow ---------
+   <a class="ccm-quick" href="…"><span class="ccm-quick__title">Research groups</span>
+   <span class="ccm-quick__text">…</span></a>  (inside .ccm-grid) */
+.ccm-quick,
+.ccm-quick:visited {
+  position: relative;
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: var(--ccm-space-1);
+  padding: var(--ccm-space-5) calc(var(--ccm-space-6) + var(--ccm-space-6)) var(--ccm-space-5) var(--ccm-space-6);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  color: var(--ccm-text);
+  text-decoration: none;
+  transition: border-color var(--ccm-duration) var(--ccm-ease),
+              box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-quick::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 9px);
+  right: var(--ccm-space-5);
+  width: 18px;
+  height: 18px;
+  background-color: var(--ccm-turquoise);
+  -webkit-mask: var(--ccm-i-arrow) center / contain no-repeat;
+          mask: var(--ccm-i-arrow) center / contain no-repeat;
+  transition: transform var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-quick:hover,
+.ccm-quick:focus-visible {
+  border-color: var(--ccm-accent);
+  box-shadow: var(--ccm-shadow-md);
+}
+.ccm-quick:hover::after {
+  transform: translateX(3px);
+}
+.ccm-quick__title {
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  color: var(--ccm-text);
+}
+.ccm-quick__text {
+  font-size: var(--ccm-text-sm);
+  line-height: 1.45;
+  color: var(--ccm-text-muted);
+}
+
+/* ---- Row links: a short list of links, one per row (Compact) --------------
+   <ul class="ccm-rows"><li><a class="ccm-row" href="…">
+     <span class="ccm-row__code">COE</span>   (optional)
+     <span class="ccm-row__body"><span class="ccm-row__title">…</span>
+     <span class="ccm-row__text">…</span></span>
+   </a></li>…</ul> */
+.ccm-rows {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  border-top: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-rows > li {
+  margin: 0;
+  border-bottom: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-row,
+.ccm-row:visited {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: var(--ccm-space-4);
+  min-height: var(--ccm-target);
+  padding: var(--ccm-space-4) calc(var(--ccm-space-6) + var(--ccm-space-2)) var(--ccm-space-4) 0;
+  color: var(--ccm-text);
+  text-decoration: none;
+}
+.ccm-row::after {
+  content: "";
+  position: absolute;
+  top: calc(50% - 9px);
+  right: var(--ccm-space-1);
+  width: 18px;
+  height: 18px;
+  background-color: var(--ccm-turquoise);
+  -webkit-mask: var(--ccm-i-arrow) center / contain no-repeat;
+          mask: var(--ccm-i-arrow) center / contain no-repeat;
+  transition: transform var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-row:hover::after {
+  transform: translateX(3px);
+}
+.ccm-row:hover .ccm-row__title {
+  text-decoration: underline;
+  text-decoration-color: var(--ccm-accent);
+  text-decoration-thickness: 2px;
+  text-underline-offset: 4px;
+}
+.ccm-row__code {
+  flex: none;
+  width: 4.5rem;
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h4);
+  line-height: 1;
+  color: var(--ccm-turquoise);
+}
+.ccm-row__body {
+  display: flex;
+  flex-direction: column;
+  gap: var(--ccm-space-1);
+  min-width: 0;
+}
+.ccm-row__title {
+  font-size: var(--ccm-text-body);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+}
+.ccm-row__text {
+  font-size: var(--ccm-text-sm);
+  line-height: 1.45;
+  color: var(--ccm-text-muted);
+}
+
+/* ---- Lines: the same page drawn with thin lines instead of boxes ---------
+   Wrap the page in <div class="ccm-lines">. No grey bands: a line between
+   sections. Cards lose their frames; the numbers become one outlined strip;
+   news and events become lists with a line between items. */
+.ccm-lines .ccm-band--alt {
+  background: var(--ccm-surface);
+}
+.ccm-lines .ccm-band + .ccm-band {
+  padding-top: var(--ccm-section-space);
+  border-top: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-lines .ccm-band + .ccm-band--tight {
+  padding-top: var(--ccm-space-9);
+}
+.ccm-lines .ccm-hero__img {
+  border-radius: var(--ccm-radius-md);
+}
+/* One strip: a 1px gap over the line colour draws the lines between cells */
+.ccm-lines .ccm-stats {
+  gap: 1px;
+  overflow: hidden;
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-md);
+  background: var(--ccm-line);
+}
+.ccm-lines .ccm-stat {
+  border: 0;
+  border-radius: 0;
+}
+.ccm-lines .ccm-grid .ccm-news {
+  overflow: visible;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+}
+.ccm-lines .ccm-grid .ccm-news:hover {
+  box-shadow: none;
+}
+.ccm-lines .ccm-grid .ccm-news__img {
+  border-radius: var(--ccm-radius-md);
+}
+.ccm-lines .ccm-grid .ccm-news__img--contain {
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-lines .ccm-grid .ccm-news__body {
+  padding: var(--ccm-space-4) 0 0;
+}
+.ccm-lines .ccm-tile {
+  padding: var(--ccm-space-5) 0 0;
+  border: 0;
+  border-top: var(--ccm-border-control) solid var(--ccm-turquoise);
+  border-radius: 0;
+  background: transparent;
+}
+.ccm-lines .ccm-tile:hover,
+.ccm-lines .ccm-tile:focus-visible {
+  border-top-color: var(--ccm-accent);
+  box-shadow: none;
+}
+.ccm-lines .ccm-news--row,
+.ccm-lines .ccm-event {
+  padding: var(--ccm-space-4) 0;
+  border: 0;
+  border-bottom: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: 0;
+  background: transparent;
+}
+.ccm-lines .ccm-news--row:hover,
+.ccm-lines .ccm-event:hover {
+  box-shadow: none;
+}
+.ccm-lines .ccm-pages__panel {
+  gap: 0;
+  border-top: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+@container (max-width: 539.98px) {
+  .ccm-lines .ccm-grid .ccm-news {
+    padding: 0;
+  }
+  .ccm-lines .ccm-grid .ccm-news__body {
+    padding: 0;
+  }
+}

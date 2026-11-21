@@ -10,8 +10,9 @@
 
 | Page | Live address | Status | Files |
 |---|---|---|---|
-| Dean & Chairmen | `/peoples/dean-chairmen` | 6 design options. Waiting for a choice. | [pages/dean-chairmen/](pages/dean-chairmen/): open `index.html` |
-| Sitefinity test (hidden, never published) | `/peoples/sitefinity-test` | Ready to run | [upload/sitefinity-test/HOW-TO-TEST.md](upload/sitefinity-test/HOW-TO-TEST.md) |
+| Dean & Chairmen | `/peoples/dean-chairmen` | Round 3: 4 design options. Waiting for a choice. | [pages/dean-chairmen/](pages/dean-chairmen/): open `index.html` |
+| Home page | `/` | Round 4: concept 1 (chosen) and three minimal variations (round 3 variations rejected) | [pages/home/](pages/home/): open `index.html` |
+| Sitefinity test (hidden, never published) | `/peoples/sitefinity-test` | Done 2026-11-21 | [upload/sitefinity-test/TEST-RESULTS.md](upload/sitefinity-test/TEST-RESULTS.md) |
 
 ## Folders
 
