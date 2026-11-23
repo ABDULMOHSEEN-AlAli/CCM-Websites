@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Programs: design options, round 2 (CCM)</title>
+  <link rel="stylesheet" href="../../../design-system/ccm.css">
+  <link rel="stylesheet" href="../../../design-system/preview.css">
+  <!-- Review tools: First choice / Could work / No, comments, Copy feedback. Preview only. -->
+  <script src="../../../design-system/review.js" defer></script>
+</head>
+<body data-review-round="2">
+  <div class="ccm-scope">
+    <header class="ccm-page-head">
+      <div class="ccm-container">
+        <nav aria-label="Breadcrumb">
+          <ol class="ccm-page-head__crumbs">
+            <li>CCM website</li>
+            <li><a href="https://ccm.kfupm.edu.sa/academics/programs">/academics/programs</a></li>
+            <li aria-current="page">Design options, round 2</li>
+          </ol>
+        </nav>
+        <h1 class="ccm-page-head__title">Programs: Round 2</h1>
+      </div>
+    </header>
+
+    <main class="cmp">
+      <p class="cmp__lead">Your round 1 notes, applied. <strong>Option 1 is kept exactly as it was</strong> (your first choice). <strong>Option 1B</strong> is a copy of it with <strong>clearer group headings</strong>: "Bachelor of Science", "Concentrations", "Master of Science" and "Doctor of Philosophy" in larger, dark text with a college-colour bar. Options 2 and 3 get the same headings, and option 3 has its categories back. "By level" and "Expandable" are removed. In all four, the departments now come in the order <strong>ICS, ISE, COE, MATH</strong>. Compare with <a href="https://ccm.kfupm.edu.sa/academics/programs">today's Programs page</a>.</p>
+
+      <section class="cmp__notes cmp__notes--first" aria-labelledby="diff-h">
+        <h2 id="diff-h">What Differs</h2>
+        <p><strong>In all four:</strong> the same 39 programs and links, the department order ICS, ISE, COE, MATH, a short introduction, and the KFUPM colours and fonts.</p>
+        <div class="ccm-prose">
+          <table>
+            <thead>
+              <tr><th scope="col">Option</th><th scope="col">Layout</th><th scope="col">Group headings</th><th scope="col">How a link looks clickable</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">1 Two columns</th><td>Each department, Undergraduate beside Graduate</td><td>As round 1: small grey capitals</td><td>Turquoise text with an arrow in front</td></tr>
+              <tr><th scope="row">1B Two columns, clearer headings</th><td>As 1</td><td>Larger dark text with a college-colour bar</td><td>As 1</td></tr>
+              <tr><th scope="row">2 Department cards</th><td>The same columns inside one card per department</td><td>As 1B</td><td>Full-width rows with a chevron that light up</td></tr>
+              <tr><th scope="row">3 Program tiles</th><td>The same columns; each program is a small box</td><td>As 1B (the categories are back)</td><td>A box with a degree badge and an arrow</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <ul class="cmp__grid cmp__grid--2">
+
+      <li class="cmp__card">
+        <a class="cmp__shots" href="option-1-two-columns.html" aria-label="Open option 1: Two columns">
+          <img class="cmp__desktop" src="previews/option-1-two-columns-desktop.png" alt="" loading="lazy">
+          <img class="cmp__phone" src="previews/option-1-two-columns-phone.png" alt="" loading="lazy">
+        </a>
+        <div class="cmp__body">
+          <p class="cmp__num">Option 1 · your first choice, unchanged</p>
+          <h2 class="cmp__title">Two columns</h2>
+          <p class="cmp__desc">Each department with Undergraduate beside Graduate. Small labels group the programs: Bachelor of Science, Concentrations, Master of Science, Doctor of Philosophy. Buttons at the top jump to each department.</p>
+          <dl class="cmp__facts">
+            <dt>Good for</dt><dd>The lightest look; reads like a clear list.</dd>
+            <dt>Watch out</dt><dd>Four departments one after another, so it scrolls.</dd>
+          </dl>
+          <div class="cmp__links">
+            <a class="ccm-btn ccm-btn--primary ccm-btn--sm" href="option-1-two-columns.html">Open preview</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="cmp__card">
+        <a class="cmp__shots" href="option-1b-two-columns-clear-headings.html" aria-label="Open option 1B: Two columns, clearer headings">
+          <img class="cmp__desktop" src="previews/option-1b-two-columns-clear-headings-desktop.png" alt="" loading="lazy">
+          <img class="cmp__phone" src="previews/option-1b-two-columns-clear-headings-phone.png" alt="" loading="lazy">
+        </a>
+        <div class="cmp__body">
+          <p class="cmp__num">Option 1B · option 1 with clearer headings</p>
+          <h2 class="cmp__title">Two columns, clearer headings</h2>
+          <p class="cmp__desc">Option 1 with the group headings fixed: "Bachelor of Science", "Concentrations (CX)", "Master of Science" and "Doctor of Philosophy" are larger, dark and marked with a college-colour bar, so each group is easy to find.</p>
+          <dl class="cmp__facts">
+            <dt>Good for</dt><dd>Option 1's light look, with groups that stand out.</dd>
+            <dt>Watch out</dt><dd>A little longer than option 1, because the headings are bigger.</dd>
+          </dl>
+          <div class="cmp__links">
+            <a class="ccm-btn ccm-btn--primary ccm-btn--sm" href="option-1b-two-columns-clear-headings.html">Open preview</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="cmp__card">
+        <a class="cmp__shots" href="option-2-department-cards.html" aria-label="Open option 2: Department cards">
+          <img class="cmp__desktop" src="previews/option-2-department-cards-desktop.png" alt="" loading="lazy">
+          <img class="cmp__phone" src="previews/option-2-department-cards-phone.png" alt="" loading="lazy">
+        </a>
+        <div class="cmp__body">
+          <p class="cmp__num">Option 2</p>
+          <h2 class="cmp__title">Department cards</h2>
+          <p class="cmp__desc">Each department in its own card, with its code and name in a beige header. Every program is a full-width row with a chevron. Round 2: the clearer group headings of option 1B.</p>
+          <dl class="cmp__facts">
+            <dt>Good for</dt><dd>The clearest "this is clickable" signal, and big targets on phones.</dd>
+            <dt>Watch out</dt><dd>More lines and boxes than option 1.</dd>
+          </dl>
+          <div class="cmp__links">
+            <a class="ccm-btn ccm-btn--primary ccm-btn--sm" href="option-2-department-cards.html">Open preview</a>
+          </div>
+        </div>
+      </li>
+
+      <li class="cmp__card">
+        <a class="cmp__shots" href="option-3-program-tiles.html" aria-label="Open option 3: Program tiles">
+          <img class="cmp__desktop" src="previews/option-3-program-tiles-desktop.png" alt="" loading="lazy">
+          <img class="cmp__phone" src="previews/option-3-program-tiles-phone.png" alt="" loading="lazy">
+        </a>
+        <div class="cmp__body">
+          <p class="cmp__num">Option 3</p>
+          <h2 class="cmp__title">Program tiles</h2>
+          <p class="cmp__desc">Each program is a small box with its degree badge (B.S., CX, M.S., Ph.D.). Round 2: the categories are back with the clearer headings of option 1B, so bachelor's programs and concentrations are no longer mixed.</p>
+          <dl class="cmp__facts">
+            <dt>Good for</dt><dd>Seeing the degree type at a glance, and an obvious click target.</dd>
+            <dt>Watch out</dt><dd>The longest page: every program takes a box. The badge now repeats the heading above it; it can go if you prefer.</dd>
+          </dl>
+          <div class="cmp__links">
+            <a class="ccm-btn ccm-btn--primary ccm-btn--sm" href="option-3-program-tiles.html">Open preview</a>
+          </div>
+        </div>
+      </li>
+
+      </ul>
+
+      <section class="cmp__notes" aria-labelledby="know-h">
+        <h2 id="know-h">Things to Know</h2>
+        <ul>
+          <li><strong>Mix and match.</strong> The layout, the headings and the link look are separate parts: for example, option 1B's headings with option 2's link rows, or option 1 with option 3's boxes.</li>
+          <li><strong>Program names, written one way.</strong> Today's page mixes styles ("MS (Project-based) in…", "M.S. (Thesis-based) in…", "Concentration (CX) Program in…"). Here every name follows one pattern: "B.S. in…", "CX in…", "M.S. in…", "Ph.D. in…", with "Thesis-based" or "Project-based" as a small note. Within each master's list, thesis-based programs come first.</li>
+          <li><strong>The links go to the department websites</strong>, as today. They open in the same tab; today's page opens a new tab each time.</li>
+          <li><strong>Text to confirm:</strong> the introduction, and "All concentrations open to COE students" (today: "Concentration Programs Available to COE Students").</li>
+          <li><strong>In Sitefinity:</strong> no pop-ups, so a Content block is fine.</li>
+        </ul>
+      </section>
+    </main>
+  </div>
+</body>
+</html>
