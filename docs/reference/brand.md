@@ -22,6 +22,8 @@ Anything the guidelines do not cover is marked *Not specified in guidelines*. My
 /* Fonts named in the guidelines: KFUPM Display (headlines), IBM Plex Sans Arabic (body), Segoe UI (fallback) */
 --font-display: "KFUPM Display", "Segoe UI", sans-serif; /* weights 400, 700, 900 */
 --font-body:    "IBM Plex Sans Arabic", "Segoe UI", sans-serif; /* 100-700 in folder; guide shows 300, 400, 700 */
+/* WEBSITES (KFUPM web team, 2026-11-23): English text uses Open Sans; IBM Plex is for documents.
+   Our design: --ccm-font-body: "Open Sans", "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif */
 ```
 
 ### Colour conflicts between the PDF, the .ase swatches and the SVG files
@@ -85,7 +87,7 @@ The grid has no White or Black background row.
 |---|---|---|
 | Headlines, key statements | **KFUPM Display**: Regular, Bold, Black. Covers Arabic and Latin. | "Ideal for large headlines, impactful statements, and key messages in both Arabic and English" (p42/64). "Headlines should always utilize the KFUPM Display typeface". Avoid Plex for headlines (p49/71). |
 | Subheadings | KFUPM Display | The hierarchy sample mixes a Regular line with a Bold line (p48/70). |
-| Body copy | **IBM Plex Sans Arabic** (covers Arabic and Latin) | "The body text should consistently use IBM Plex Sans Arabic". Avoid KFUPM Display in body text or at small sizes (p46/68, p49/71). The specimen shows the Light, Regular and Bold weights. |
+| Body copy | **IBM Plex Sans Arabic** (covers Arabic and Latin). **On the websites, English text uses Open Sans instead** (KFUPM web team, 2026-11-23: IBM Plex is for documents, not websites). | "The body text should consistently use IBM Plex Sans Arabic". Avoid KFUPM Display in body text or at small sizes (p46/68, p49/71). The specimen shows the Light, Regular and Bold weights. |
 | Fallback | **Segoe UI** | Fallback for "digital platforms, devices, and environments where the primary typeface may not be available". The guide adds: "Do not resort to using Segoe UI as the fallback unless the primary typefaces are unavailable" (p47/69). |
 | College logo lockups only | Helvetica Now Display, 5° skew | Logo artwork only (p22/44 to p25/47). This font is not in `01 Font\`. |
 
@@ -219,7 +221,8 @@ No white version of ShortHorizontal is supplied, and there is no CCM favicon fil
 3. **Fonts:**
    - Self-host the WOFF2 files from `01 Font\KFUPM Display\WOFF\`. The internal family name is "KFUPM" (weights 400, 700 and 900).
    - The design has a built-in 5° slant (italicAngle −5). Never add `font-style: italic`, and set `font-synthesis: none`.
-   - IBM Plex Sans Arabic is TTF only in the folder. Convert it to WOFF2, or load it from Google Fonts.
+   - IBM Plex Sans Arabic is TTF only in the folder; we converted it to WOFF2. On the websites it is only for Arabic letters (`unicode-range`).
+   - **Open Sans** is the websites' English text font (KFUPM web team, 2026-11-23). The CCM, ICS and COE themes already load it (weights 300, 400, 600, 700, 800 and italics; no 500), so it is not uploaded.
    - The site is English only, so `ss01` doesn't matter yet.
 4. **The logo SVGs contain live `<text>` set in "Helvetica Now Display" with `skewX(-5.19)`.** That font isn't supplied, so the college name will render in a fallback font on the web. Convert the text to outlines or ask for outlined files, and fix the off-brand greens (`#019467`, `#009567`).
 5. **Logo position:** the "top right" rule comes from the poster pages. Confirm with branding whether it applies to an English website header. Keep 1X clear space. Since no minimum size is given, I suggest keeping the icon at least 24px tall.
@@ -230,5 +233,5 @@ No white version of ShortHorizontal is supplied, and there is no CCM favicon fil
    - recolour it only to the allowed combinations
    - never rotate, flip or stretch it
    - respect `prefers-reduced-motion` for animated versions
-8. **Don't use the Seal on the website.** The live site's `#007D40` green, `#C69529` gold, Open Sans and Font Awesome 5 are all off-brand.
+8. **Don't use the Seal on the website.** The live site's `#007D40` green, `#C69529` gold and Font Awesome 5 are off-brand. (Open Sans is not: it is the web team's font for English text, 2026-11-23.)
 9. `DC Upgrade - Assessment Findings and Required Actions.docx` has nothing to do with the website or branding. Its metadata says it is a CCM data-centre assessment, but the body now holds only a stub "Exam Scheduling Term 262" table. It has a KFUPM letterhead.

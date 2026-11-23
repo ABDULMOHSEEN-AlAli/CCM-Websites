@@ -5,13 +5,13 @@
 | Website | https://coe.kfupm.edu.sa |
 | Platform | **Sitefinity 15.1 DX** (newer than the other sites), theme package `COE` |
 | Chair | Dr. Mohammad Waleed Shinwari |
-| Design | Shared with all five sites: [`../design-system/`](../design-system/) |
+| Design | Shared with all five sites: [`design-system/`](../../design-system/) |
 
 > Sitefinity 15 has a different page editor from version 14. When we upload here, some steps in the CCM upload guide may look different.
 
 ## Pages being redesigned
 
-None yet. When a page starts, it gets a folder `pages/<page>/`, the same as in [`../CCM/`](../CCM/).
+None yet. When a page starts, it gets a folder `COE/pages/<page>/`, the same as on [CCM](ccm.md).
 
 ## All pages on the site
 

@@ -5,11 +5,11 @@
 | Website | https://ics.kfupm.edu.sa |
 | Platform | Sitefinity 14.4 DX (MVC), theme package `ICS` |
 | Chair | Dr. Malak Baslyman |
-| Design | Shared with all five sites: [`../design-system/`](../design-system/) |
+| Design | Shared with all five sites: [`design-system/`](../../design-system/) |
 
 ## Pages being redesigned
 
-None yet. When a page starts, it gets a folder `pages/<page>/`, the same as in [`../CCM/`](../CCM/).
+None yet. When a page starts, it gets a folder `ICS/pages/<page>/`, the same as on [CCM](ccm.md).
 
 ## All pages on the site
 

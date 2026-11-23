@@ -1,0 +1,6 @@
+# Windows and Office leftovers
+Thumbs.db
+desktop.ini
+~$*
+# Node
+node_modules/

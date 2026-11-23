@@ -7,13 +7,13 @@
 | Website | https://ise.kfupm.edu.sa |
 | Platform | **Not Sitefinity.** A Django site, very likely the **Wagtail** CMS (Django security cookies, Wagtail-style image names such as `…max-1900x1900.png`). |
 | Chair | Dr. Yasser Almoghathawi |
-| Design | Shared with all five sites: [`../design-system/`](../design-system/) |
+| Design | Shared with all five sites: [`design-system/`](../../design-system/) |
 
 > The shared CSS works here too, because it's plain CSS. But the Sitefinity upload steps and `tools/build-sitefinity.mjs` don't apply. We need to find out who runs this site and how pages are edited (Wagtail admin is usually at `/admin/`).
 
 ## Pages being redesigned
 
-None yet. When a page starts, it gets a folder `pages/<page>/`, the same as in [`../CCM/`](../CCM/).
+None yet. When a page starts, it gets a folder `ISE/pages/<page>/`, the same as on [CCM](ccm.md).
 
 ## All pages on the site
 

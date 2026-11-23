@@ -5,11 +5,13 @@
 | Website | https://math.kfupm.edu.sa |
 | Platform | Sitefinity 14.4 DX (MVC), theme package `MATH` |
 | Chair | Dr. Monther Alfuraidan |
-| Design | Shared with all five sites: [`../design-system/`](../design-system/) |
+| Design | Shared with all five sites: [`design-system/`](../../design-system/) |
+
+> **Note (2026-11-22):** the MATH department manages its own website and may keep its own design. Don't plan MATH page work until this is confirmed. MATH faculty still appear on CCM pages (for example Research Groups).
 
 ## Pages being redesigned
 
-None yet. When a page starts, it gets a folder `pages/<page>/`, the same as in [`../CCM/`](../CCM/).
+None yet. When a page starts, it gets a folder `MATH/pages/<page>/`, the same as on [CCM](ccm.md).
 
 ## All pages on the site
 
