@@ -1,11 +1,12 @@
 {
-  "_how": "Upload each file below ONCE to the MATH Sitefinity library (fonts and ccm-styles.css: Content > Documents & Files; graphics: Content > Images). Open the uploaded item, copy its link (it starts with https://math.kfupm.edu.sa/), paste it between the quotes, save, and run the build again. Leave a link empty until the file is uploaded. ccm-styles.css is in MATH/upload/ (made by the build); the other files are in design-system/.",
+  "_how": "The links of the shared files in the MATH Sitefinity library. Steps: docs/03-shared-files.md. Paste each link between the quotes as Sitefinity shows it (http:// is fine), save, then run: node tools/check-cms-links.mjs MATH. Upload ccm-styles.css last. The IBM Plex Sans Arabic links are optional (Arabic text only). Open Sans is not uploaded: the site's theme already has it.",
+  "fonts/KFUPM-Regular.woff2": "",
   "fonts/KFUPM-Bold.woff2": "",
+  "fonts/KFUPM-Black.woff2": "",
   "fonts/IBMPlexSansArabic-Regular.woff2": "",
   "fonts/IBMPlexSansArabic-Medium.woff2": "",
   "fonts/IBMPlexSansArabic-SemiBold.woff2": "",
   "fonts/IBMPlexSansArabic-Bold.woff2": "",
   "graphics/fast-matrix-four-beige.svg": "",
-  "graphics/fast-matrix-four-green.svg": "",
   "ccm-styles.css": ""
 }
