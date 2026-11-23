@@ -1,61 +1,35 @@
-<!doctype html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="ccm-live-url" content="https://ccm.kfupm.edu.sa/">
-  <meta name="ccm-live-section" content="main">
-  <title>Concept 2: Classic, text first · Home page (CCM preview)</title>
-
-  <!-- The live site's theme, as on the real page (its header and footer use it). -->
-  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/main.min.css?package=CCM">
-  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/all-style.min.css?package=CCM">
-  <link rel="stylesheet" href="https://ccm.kfupm.edu.sa/ResourcePackages/CCM/assets/dist/css/custom-ccm.css?package=CCM">
-
-  <!-- Shared design system: one stylesheet for all five sites. -->
-  <link rel="stylesheet" href="../../../design-system/ccm.css">
-
-  <!-- Preview only, never uploaded: the option bar, and the live header and footer around the new page. -->
-  <link rel="stylesheet" href="../../../design-system/preview.css">
-  <script src="live-frame.js" defer></script>
-  <script src="../../../design-system/preview.js" defer></script>
-</head>
-<body>
-  <nav class="preview-bar" aria-label="Design concepts">
-    <a href="index.html">&larr; All concepts</a>
-    <span><strong>Concept 2 of 4: Classic, text first.</strong> Concept 1 without the hero photo: the numbers sit beside the college name. Everything else as in concept 1.</span>
-    <span class="preview-bar__nav"><a href="option-1-classic.html">&lsaquo; Previous</a><a href="option-3-lines.html">Next &rsaquo;</a></span>
-  </nav>
-
-  <!-- The live header and footer are added around this; everything between them is new. -->
-  <div class="ccm-scope">
-    <!-- SITEFINITY:START (a whole-page proposal: on the live site this becomes the home page template and its widget templates) -->
-    <section class="ccm-band ccm-hero ccm-hero--stats" aria-labelledby="hero-h">
+<div class="ccm-scope">
+  <div class="ccm-lines">
+    <section class="ccm-band ccm-hero ccm-hero--split" aria-labelledby="hero-h">
       <div class="ccm-band__inner ccm-hero__grid">
         <div class="ccm-hero__text">
           <p class="ccm-eyebrow">King Fahd University of Petroleum &amp; Minerals</p>
-          <h2 class="ccm-hero__title" id="hero-h">College of Computing and Mathematics</h2>
+          <h1 class="ccm-hero__title" id="hero-h">College of Computing and Mathematics</h1>
           <p class="ccm-hero__lead">Bachelor’s, master’s and Ph.D. programs in computer engineering, computer science, industrial and systems engineering, and mathematics.</p>
           <div class="ccm-actions">
             <a class="ccm-btn ccm-btn--primary" href="https://ccm.kfupm.edu.sa/academics/programs">Explore our programs</a>
             <a class="ccm-btn ccm-btn--outline" href="https://admissions.kfupm.edu.sa/en">Apply to KFUPM</a>
           </div>
         </div>
-        <div>
-          <h3 class="ccm-sr-only">The college in numbers</h3>
+        <img class="ccm-hero__img" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/ccm---graduate-programs---photo.jfif?sfvrsn=93d740d2_0" alt="A CCM student presenting his project to a visitor" width="1858" height="1045">
+      </div>
+    </section>
+    <section class="ccm-band ccm-band--tight" aria-labelledby="facts-h">
+      <div class="ccm-band__inner">
+        <div class="ccm-section">
+          <h2 class="ccm-sr-only" id="facts-h">The College in Numbers</h2>
           <ul class="ccm-stats">
-            <li class="ccm-stat"><span class="ccm-stat__num">1,808</span><span class="ccm-stat__label">Undergraduates</span></li>
-            <li class="ccm-stat"><span class="ccm-stat__num">815</span><span class="ccm-stat__label">Graduate students</span></li>
-            <li class="ccm-stat"><span class="ccm-stat__num">167</span><span class="ccm-stat__label">Faculty members</span></li>
-            <li class="ccm-stat"><span class="ccm-stat__num">10,703</span><span class="ccm-stat__label">Students graduated</span></li>
-            <li class="ccm-stat"><span class="ccm-stat__num">5,514</span><span class="ccm-stat__label">Publications</span></li>
-            <li class="ccm-stat"><span class="ccm-stat__num">120</span><span class="ccm-stat__label">Issued patents</span></li>
+            <li class="ccm-stat ccm-c-students"><span class="ccm-stat__num">1,808</span><span class="ccm-stat__label">Undergraduates</span></li>
+            <li class="ccm-stat ccm-c-group"><span class="ccm-stat__num">815</span><span class="ccm-stat__label">Graduate students</span></li>
+            <li class="ccm-stat ccm-c-faculty"><span class="ccm-stat__num">167</span><span class="ccm-stat__label">Faculty members</span></li>
+            <li class="ccm-stat ccm-c-award"><span class="ccm-stat__num">10,703</span><span class="ccm-stat__label">Students graduated</span></li>
+            <li class="ccm-stat ccm-c-document"><span class="ccm-stat__num">5,514</span><span class="ccm-stat__label">Publications</span></li>
+            <li class="ccm-stat ccm-c-idea"><span class="ccm-stat__num">120</span><span class="ccm-stat__label">Issued patents</span></li>
           </ul>
         </div>
       </div>
     </section>
-
-    <section class="ccm-band ccm-band--alt" aria-labelledby="study-h">
+    <section class="ccm-band" aria-labelledby="study-h">
       <div class="ccm-band__inner">
         <div class="ccm-section">
           <div class="ccm-feed__head">
@@ -67,16 +41,16 @@
               <article class="ccm-news">
                 <img class="ccm-news__img" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/ccm---undergraduate-programs---photo.jfif?sfvrsn=e175c0d1_0" alt="" width="5160" height="3440" loading="lazy">
                 <div class="ccm-news__body">
-                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/academics/programs/undergraduate-programs">Undergraduate programs</a></h3>
+                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/academics/programs/undergraduate-programs">Undergraduate Programs</a></h3>
                   <p class="ccm-news__sum">Bachelor’s programs in computer engineering, computer science, software engineering, AI and cybersecurity, industrial and systems engineering, and mathematics.</p>
                 </div>
               </article>
             </li>
             <li>
               <article class="ccm-news">
-                <img class="ccm-news__img" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---other-images/ccm---graduate-programs---photo.jfif?sfvrsn=93d740d2_0" alt="" width="1858" height="1045" loading="lazy">
+                <img class="ccm-news__img" src="https://ccm.kfupm.edu.sa/images/default-source/ccm---banner---department/ccm---2nd-computing-expo---photo-5.png?sfvrsn=2e0ccca2_1" alt="" width="1000" height="662" loading="lazy">
                 <div class="ccm-news__body">
-                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/academics/programs/graduate-programs">Graduate programs</a></h3>
+                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/academics/programs/graduate-programs">Graduate Programs</a></h3>
                   <p class="ccm-news__sum">Master’s and Ph.D. programs in all four departments.</p>
                 </div>
               </article>
@@ -85,7 +59,7 @@
               <article class="ccm-news">
                 <img class="ccm-news__img" src="https://ccm.kfupm.edu.sa/images/default-source/default-album/prospective-img3b3fb63a-6cd3-408d-a3eb-c58b1a6d4424.tmb-featured.jpeg?Culture=en&amp;sfvrsn=97b501a5_1" alt="" width="1920" height="980" loading="lazy">
                 <div class="ccm-news__body">
-                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/featured-detail/prospective-students">Prospective students</a></h3>
+                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/featured-detail/prospective-students">Prospective Students</a></h3>
                   <p class="ccm-news__sum">Why the College of Computing and Mathematics is the right place for you.</p>
                 </div>
               </article>
@@ -94,12 +68,11 @@
         </div>
       </div>
     </section>
-
     <section class="ccm-band" aria-labelledby="depts-h">
       <div class="ccm-band__inner">
         <div class="ccm-section">
           <div class="ccm-feed__head">
-            <h2 class="ccm-section__title" id="depts-h">Our departments</h2>
+            <h2 class="ccm-section__title" id="depts-h">Our Departments</h2>
             <a class="ccm-more" href="https://ccm.kfupm.edu.sa/academics/departments">About the departments</a>
           </div>
           <ul class="ccm-grid ccm-grid--4">
@@ -139,14 +112,13 @@
         </div>
       </div>
     </section>
-
-    <section class="ccm-band ccm-band--alt" aria-label="News and events">
+    <section class="ccm-band" aria-label="News and events">
       <div class="ccm-band__inner">
         <div class="ccm-section">
           <div class="ccm-feed__cols">
             <section class="ccm-section" aria-labelledby="news-h">
               <div class="ccm-feed__head">
-                <h2 class="ccm-section__title" id="news-h">Latest news</h2>
+                <h2 class="ccm-section__title" id="news-h">Latest News</h2>
                 <a class="ccm-more" href="https://ccm.kfupm.edu.sa/news">View all news</a>
               </div>
               <div class="ccm-pages">
@@ -462,19 +434,18 @@
         </div>
       </div>
     </section>
-
     <section class="ccm-band" aria-labelledby="research-h">
       <div class="ccm-band__inner">
         <div class="ccm-section">
           <div class="ccm-feed__head">
-            <h2 class="ccm-section__title" id="research-h">Research and accreditation</h2>
+            <h2 class="ccm-section__title" id="research-h">Research and Accreditation</h2>
           </div>
           <ul class="ccm-grid ccm-grid--2">
             <li>
               <article class="ccm-news">
                 <img class="ccm-news__img" src="https://ccm.kfupm.edu.sa/images/default-source/default-album/research-img855cefc1-4513-44d3-8bb4-71838ca0134b.tmb-featured.jpg?Culture=en&amp;sfvrsn=2b08af51_0" alt="" width="1920" height="980" loading="lazy">
                 <div class="ccm-news__body">
-                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/research/research-groups">Research groups</a></h3>
+                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/research/research-groups">Research Groups</a></h3>
                   <p class="ccm-news__sum">The college’s research groups work across computing, engineering and mathematics. See what each group does.</p>
                 </div>
               </article>
@@ -483,7 +454,7 @@
               <article class="ccm-news">
                 <img class="ccm-news__img ccm-news__img--contain" src="https://ccm.kfupm.edu.sa/images/default-source/default-album/featured-img0870b194-df63-45fb-ba92-c9752cc762b2.tmb-featured.png?Culture=en&amp;sfvrsn=7fc872db_0" alt="" width="1920" height="980" loading="lazy">
                 <div class="ccm-news__body">
-                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/featured-detail/featured-this-month">ABET accreditation</a></h3>
+                  <h3 class="ccm-news__title"><a class="ccm-news__link" href="https://ccm.kfupm.edu.sa/featured-detail/featured-this-month">ABET Accreditation</a></h3>
                   <p class="ccm-news__sum">ABET is the Accreditation Board for Engineering and Technology. Read about the accreditation of our programs.</p>
                 </div>
               </article>
@@ -492,7 +463,5 @@
         </div>
       </div>
     </section>
-    <!-- SITEFINITY:END -->
   </div>
-</body>
-</html>
+</div>
