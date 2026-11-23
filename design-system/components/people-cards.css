@@ -5,7 +5,7 @@
    readers hear one control. No "View details" label (owner, 2026-11-21).
    - 1A: the name is a <button popovertarget="profile-x"> that opens the
      contact pop-up (profile-popup.css). Needs the Embed code widget in
-     Sitefinity (TEST-RESULTS.md).
+     Sitefinity (docs/reference/sitefinity-test-results-ccm.md).
    - 1B: the name is a link, <a class="ccm-card__open" href="…">, to the
      person's full profile page. Works in a Content block.
 

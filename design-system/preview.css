@@ -290,3 +290,48 @@ body.preview-unframed > .ccm-scope {
 .rv-clear:hover { color: var(--ccm-error-strong); }
 .rv-clear:focus-visible { outline: var(--ccm-focus-width) solid var(--ccm-focus); outline-offset: 2px; }
 .rv-panel__done { font-size: var(--ccm-text-sm); font-weight: 600; color: var(--ccm-green-d2); }
+
+/* ---- A review note above a design (never uploaded) ----------------------- */
+.preview-note {
+  margin: 0 0 var(--ccm-space-6);
+  padding: var(--ccm-space-3) var(--ccm-space-4);
+  border-left: var(--ccm-border-bar) solid var(--ccm-error-strong);
+  border-radius: var(--ccm-radius-sm);
+  background: #FDF3F3;
+  font-size: var(--ccm-text-sm);
+  color: var(--ccm-text);
+}
+
+/* Colour-look picker in the preview bar (preview only) */
+.preview-looks {
+  flex-basis: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: .4rem .5rem;
+}
+.preview-looks__label {
+  font-weight: 700;
+}
+.preview-looks button {
+  padding: .25rem .85rem;
+  border: 1px solid #C9A24A;
+  border-radius: 999px;
+  background: #FFFFFF;
+  color: #5A4300;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+.preview-looks button:hover {
+  border-color: #5A4300;
+}
+.preview-looks button[aria-pressed="true"] {
+  border-color: #5A4300;
+  background: #5A4300;
+  color: #FFFFFF;
+}
+.preview-looks__note {
+  font-size: .85em;
+  opacity: .85;
+}

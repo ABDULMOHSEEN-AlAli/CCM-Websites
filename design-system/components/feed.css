@@ -34,6 +34,25 @@
   flex-direction: column;
   margin: 0;
 }
+/* Side by side, both columns are the same length (owner, round 5): each list
+   fills its column, and its items share the height evenly. With the same
+   number of items, the news and events cards line up row by row. */
+@media (min-width: 992px) {
+  .ccm-feed__cols > .ccm-section > .ccm-feed__list,
+  .ccm-feed__cols .ccm-pages__panels {
+    flex: 1;
+  }
+  .ccm-feed__cols .ccm-pages__panels {
+    display: grid;
+  }
+  .ccm-feed__cols .ccm-feed__list,
+  .ccm-feed__cols .ccm-pages__panel {
+    grid-auto-rows: 1fr;
+  }
+  .ccm-feed__cols .ccm-event {
+    align-items: center;
+  }
+}
 
 /* A plain stack of items (news rows, events) without page numbers */
 .ccm-feed__list {

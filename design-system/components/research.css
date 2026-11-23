@@ -1,0 +1,930 @@
+/* ==========================================================================
+   Research centers: the RESEARCH PAGE (CCM/pages/research-groups), round 6
+   One card per KFUPM research center: its name (linked to the center's own
+   website), a short description, and the CCM faculty affiliated with it,
+   grouped by department (ICS, ISE, COE, MATH). Names only for now.
+
+   <section class="ccm-section ccm-center" id="center-iss" aria-labelledby="center-iss-h">
+     <div class="ccm-center__head">
+       <h2 class="ccm-center__name" id="center-iss-h"><span class="ccm-tag">IRC-ISS</span> IRC for Intelligent Secure Systems</h2>
+       <a class="ccm-more" href="https://ri.kfupm.edu.sa/iss">Visit the center</a>
+     </div>
+     <p class="ccm-center__desc">…</p>
+     <h3 class="ccm-center__people">Affiliated CCM Faculty <span class="ccm-center__count">47</span></h3>
+     <div class="ccm-affil">
+       <div class="ccm-affil__group">
+         <h4 class="ccm-affil__dept"><span class="ccm-tag">ICS</span></h4>
+         <ul class="ccm-affil__names"><li>Dr. …</li></ul>
+       </div>
+     </div>
+   </section>
+   The jump links at the top reuse .ccm-jump (programs.css).
+   ========================================================================== */
+
+.ccm-center {
+  margin: 0 0 var(--ccm-space-6);
+  padding: var(--ccm-space-6);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  scroll-margin-top: var(--ccm-space-6);
+}
+.ccm-center__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ccm-space-2) var(--ccm-space-5);
+  margin: 0 0 var(--ccm-space-3);
+}
+.ccm-center__head .ccm-more {
+  margin: 0;
+}
+.ccm-center__name {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: var(--ccm-space-2) var(--ccm-space-3);
+  margin: 0;
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h3);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-text);
+}
+.ccm-center__desc {
+  max-width: var(--ccm-measure);
+  margin: 0 0 var(--ccm-space-6);
+  line-height: var(--ccm-leading-body);
+  color: var(--ccm-text);
+}
+
+/* "Affiliated CCM Faculty", with the same college-colour bar as the
+   Programs page's group headings, and the number of people */
+.ccm-center__people {
+  display: flex;
+  align-items: center;
+  gap: var(--ccm-space-3);
+  margin: 0 0 var(--ccm-space-4);
+  padding: var(--ccm-space-1) 0 var(--ccm-space-1) var(--ccm-space-3);
+  border-left: var(--ccm-border-bar) solid var(--ccm-accent);
+  font-size: var(--ccm-text-h5);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-text);
+}
+.ccm-center__count {
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--ccm-space-7);
+  padding: 0 var(--ccm-space-2);
+  border-radius: var(--ccm-radius-pill);
+  background: var(--ccm-surface-soft);
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.6;
+  color: var(--ccm-turquoise);
+}
+
+/* One row per department: the department tag, then the names in columns */
+.ccm-affil {
+  display: grid;
+  gap: var(--ccm-space-4);
+}
+.ccm-affil__group {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-2);
+  padding-top: var(--ccm-space-4);
+  border-top: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-affil__group:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+@container (min-width: 540px) {
+  .ccm-affil__group {
+    grid-template-columns: var(--ccm-space-11) minmax(0, 1fr);
+    gap: var(--ccm-space-4);
+  }
+}
+.ccm-affil__dept {
+  margin: 0;
+  font-size: var(--ccm-text-body);
+  line-height: 1.6;
+}
+.ccm-affil__names {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  column-gap: var(--ccm-space-6);
+  font-size: var(--ccm-text-sm);
+  line-height: 1.6;
+  color: var(--ccm-text);
+}
+.ccm-affil__names > li {
+  margin: 0;
+  padding: 2px 0;
+  break-inside: avoid;
+}
+@container (min-width: 540px) {
+  .ccm-affil__names { columns: 2; }
+}
+@container (min-width: 860px) {
+  .ccm-affil__names { columns: 3; }
+}
+
+/* ---- Names to check (review only) -------------------------------------------
+   <li class="ccm-check" title="why">Dr. …</li>: a name we are not sure is CCM
+   faculty, in red for the owner to check. No name may keep this class when the
+   page goes live (check-page.mjs warns about it). */
+.ccm-check {
+  color: var(--ccm-error-strong);
+  font-weight: var(--ccm-weight-semibold);
+}
+
+/* ---- Names on click (the map's center list and the mosaic) ----------------------
+   <details class="ccm-reveal">
+     <summary class="ccm-reveal__toggle">Show the 46 CCM faculty</summary>
+     <div class="ccm-affil">…</div>
+   </details> */
+.ccm-reveal {
+  border-top: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-reveal__toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: var(--ccm-space-2);
+  min-height: var(--ccm-target);
+  padding-top: var(--ccm-space-2);
+  cursor: pointer;
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--ccm-link);
+  list-style: none;
+}
+.ccm-reveal__toggle::-webkit-details-marker {
+  display: none;
+}
+.ccm-reveal__toggle::after {
+  content: "";
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-i-chevron) center / contain no-repeat;
+          mask: var(--ccm-i-chevron) center / contain no-repeat;
+  transition: transform var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-reveal[open] > .ccm-reveal__toggle::after {
+  transform: rotate(180deg);
+}
+.ccm-reveal__toggle:hover {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ccm-reveal__toggle:focus-visible {
+  outline: var(--ccm-focus-width) solid var(--ccm-focus);
+  outline-offset: var(--ccm-focus-offset);
+}
+.ccm-reveal > .ccm-affil {
+  padding: var(--ccm-space-3) 0 var(--ccm-space-2);
+}
+
+/* ---- How many CCM faculty, by department: one light line -------------------------
+   <ul class="ccm-dept-line" aria-label="CCM faculty by department">
+     <li><span class="ccm-dept-line__dept">ICS</span> 20</li>
+     <li class="ccm-dept-line__none"><span class="ccm-dept-line__dept">ISE</span> 0</li> …
+   </ul>
+   Always all four departments, in the same order; a department with nobody is grey.
+   The colours come from --dl-label / --dl-num / --dl-line, so a coloured tile can
+   change them. */
+.ccm-dept-line {
+  display: flex;
+  flex-wrap: wrap;
+  white-space: nowrap;
+  align-items: baseline;
+  gap: var(--ccm-space-1) 0;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-body);
+  line-height: 1.4;
+  font-variant-numeric: tabular-nums;
+  color: var(--dl-num, var(--ccm-turquoise));
+}
+.ccm-dept-line > li {
+  display: inline-flex;
+  align-items: baseline;
+  gap: var(--ccm-space-1);
+  margin: 0;
+  padding: 0 var(--ccm-space-2);
+  border-left: var(--ccm-border-hairline) solid var(--dl-line, var(--ccm-line));
+}
+.ccm-dept-line > li:first-child {
+  padding-left: 0;
+  border-left: 0;
+}
+.ccm-dept-line__dept {
+  font-family: var(--ccm-font-body);
+  font-weight: var(--ccm-weight-semibold);
+  font-size: var(--ccm-text-xs);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  color: var(--dl-label, var(--ccm-text-muted));
+}
+.ccm-dept-line__none {
+  font-weight: var(--ccm-weight-regular);
+  opacity: .55;
+}
+
+/* ---- Option 5: the research map ----------------------------------------------------
+   CCM in the middle, the research centers in a ring around it. A circle's size
+   shows how many CCM faculty take part; each one links to that center in the
+   list below (.ccm-center-list, same circles). On narrow screens (and in
+   browsers without CSS sin()/cos()) the ring becomes a two-column list.
+   <section class="ccm-section ccm-rmap ccm-look-light" aria-labelledby="rmap-h">
+     <div class="ccm-rmap__intro">
+       <p class="ccm-rmap__eyebrow">CCM in KFUPM Research</p>
+       <h2 class="ccm-rmap__title" id="rmap-h">…</h2>
+       <p class="ccm-rmap__text">…</p>
+     </div>
+     <div class="ccm-rmap__map">
+       <p class="ccm-rmap__hub"><span class="ccm-rmap__hub-num">119</span> <span class="ccm-rmap__hub-label">CCM faculty</span></p>
+       <ol class="ccm-rmap__nodes">
+         <li class="ccm-rmap__node ccm-rmap__node--xl"><a href="#center-iss" aria-label="…"><span class="ccm-rmap__num">46</span> <span class="ccm-rmap__name">Intelligent Secure Systems</span></a></li>
+       </ol>
+     </div>
+   </section>
+   Looks (one class on the section): ccm-look-light (no background, the default),
+   ccm-look-soft (a beige panel), ccm-look-turquoise (a turquoise panel).
+   The ring is set for 13 centers (the nth-child rules and "/ 13" below): if the
+   number of centers changes, change those too. Clockwise from the top; on the
+   right half the names sit right of the circles, on the left half to the left.
+   Sizes: --xl 40+ faculty, --l 30+, --m 10+, --s 4+, --xs fewer. */
+.ccm-rmap,
+.ccm-rmap.ccm-look-light {
+  --rmap-bg: var(--ccm-surface);
+  --rmap-pad: 0;
+  --rmap-eyebrow: var(--ccm-link);
+  --rmap-title: var(--ccm-text);
+  --rmap-text: var(--ccm-text-muted);
+  --rmap-hub-bg: var(--ccm-turquoise);
+  --rmap-hub-text: var(--ccm-text-inverse);
+  --rmap-hub-halo: var(--ccm-beige-l2);
+  --rmap-node-bg: var(--ccm-surface);
+  --rmap-node-ring: var(--ccm-turquoise);
+  --rmap-node-num: var(--ccm-turquoise);
+  --rmap-node-hover-bg: var(--ccm-turquoise);
+  --rmap-node-hover-num: var(--ccm-text-inverse);
+  --rmap-label: var(--ccm-text);
+  --rmap-spoke: var(--ccm-college);
+  --rmap-orbit: var(--ccm-gray-l2);
+  --rmap-focus: var(--ccm-focus);
+}
+.ccm-rmap.ccm-look-soft {
+  --rmap-bg: var(--ccm-beige-l3);
+  --rmap-pad: var(--ccm-space-8) var(--ccm-space-6);
+  --rmap-hub-halo: var(--ccm-beige);
+  --rmap-node-bg: var(--ccm-white);
+  --rmap-orbit: var(--ccm-beige-d1);
+}
+.ccm-rmap.ccm-look-turquoise {
+  --rmap-bg: var(--ccm-turquoise);
+  --rmap-pad: var(--ccm-space-8) var(--ccm-space-6);
+  --rmap-eyebrow: var(--ccm-beige);
+  --rmap-title: var(--ccm-text-inverse);
+  --rmap-text: var(--ccm-text-inverse-muted);
+  --rmap-hub-bg: var(--ccm-white);
+  --rmap-hub-text: var(--ccm-turquoise);
+  --rmap-hub-halo: var(--ccm-turquoise-d1);
+  --rmap-node-bg: var(--ccm-turquoise-d1);
+  --rmap-node-ring: var(--ccm-college);
+  --rmap-node-num: var(--ccm-text-inverse);
+  --rmap-node-hover-bg: var(--ccm-college);
+  --rmap-node-hover-num: var(--ccm-turquoise-d3);
+  --rmap-label: var(--ccm-text-inverse);
+  --rmap-orbit: var(--ccm-fill-inverse-strong);
+  --rmap-focus: var(--ccm-white);
+}
+.ccm-rmap {
+  padding: var(--rmap-pad);
+  border-radius: var(--ccm-radius-xl);
+  background: var(--rmap-bg);
+  color: var(--rmap-label);
+}
+.ccm-rmap__intro {
+  max-width: 40rem;
+  margin: 0 auto var(--ccm-space-7);
+  text-align: center;
+}
+.ccm-rmap__eyebrow {
+  margin: 0 0 var(--ccm-space-2);
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--rmap-eyebrow);
+}
+.ccm-rmap__title {
+  margin: 0 0 var(--ccm-space-3);
+  text-wrap: balance;
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-black);
+  font-size: var(--ccm-text-h1);
+  line-height: var(--ccm-leading-tight);
+  color: var(--rmap-title);
+}
+.ccm-rmap__text {
+  margin: 0;
+  line-height: var(--ccm-leading-body);
+  color: var(--rmap-text);
+}
+
+/* Narrow: the hub as a band, the centers as a two-column list */
+.ccm-rmap__hub {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: var(--ccm-space-2);
+  margin: 0 0 var(--ccm-space-6);
+  padding: var(--ccm-space-3) var(--ccm-space-5);
+  border-radius: var(--ccm-radius-pill);
+  background: var(--rmap-hub-bg);
+  color: var(--rmap-hub-text);
+  animation: ccm-rmap-pop var(--ccm-duration-enter) var(--ccm-ease-out) backwards;
+}
+.ccm-rmap__hub-num {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-black);
+  font-size: var(--ccm-text-h2);
+  line-height: 1;
+}
+.ccm-rmap__hub-label {
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: var(--ccm-leading-snug);
+}
+.ccm-rmap__nodes {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--ccm-space-4) var(--ccm-space-3);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ccm-rmap__node {
+  --i: 0;
+  margin: 0;
+}
+/* In the list, the biggest centers come first (the ring order is for balance) */
+.ccm-rmap__node--xl { order: -4; }
+.ccm-rmap__node--l  { order: -3; }
+.ccm-rmap__node--m  { order: -2; }
+.ccm-rmap__node--s  { order: -1; }
+.ccm-rmap__node > a {
+  --d: 1.8em;
+  display: flex;
+  align-items: center;
+  gap: var(--ccm-space-3);
+  font-size: var(--ccm-text-h5);
+  color: var(--rmap-label);
+  text-decoration: none;
+}
+.ccm-rmap__node--xl > a { font-size: var(--ccm-text-display); }
+.ccm-rmap__node--l > a  { font-size: var(--ccm-text-h1); }
+.ccm-rmap__node--m > a  { font-size: var(--ccm-text-h2); }
+.ccm-rmap__node--s > a  { font-size: var(--ccm-text-h4); }
+.ccm-rmap__node--xs > a { font-size: var(--ccm-text-h5); }
+.ccm-rmap__num {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: var(--d);
+  height: var(--d);
+  border: var(--ccm-border-ring) solid var(--rmap-node-ring);
+  border-radius: var(--ccm-radius-round);
+  background: var(--rmap-node-bg);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--rmap-node-num);
+  transition: background-color var(--ccm-duration) var(--ccm-ease), color var(--ccm-duration) var(--ccm-ease), transform var(--ccm-duration) var(--ccm-ease-out);
+  animation: ccm-rmap-pop var(--ccm-duration-enter) var(--ccm-ease-out) backwards;
+  animation-delay: calc(2 * var(--ccm-duration) + var(--i) * var(--ccm-stagger));
+}
+.ccm-rmap__name {
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: var(--ccm-leading-snug);
+}
+.ccm-rmap__node > a:hover .ccm-rmap__num,
+.ccm-rmap__node > a:focus-visible .ccm-rmap__num {
+  background: var(--rmap-node-hover-bg);
+  color: var(--rmap-node-hover-num);
+  transform: scale(1.08);
+}
+.ccm-rmap__node > a:hover .ccm-rmap__name {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ccm-rmap__node > a:focus-visible {
+  outline: var(--ccm-focus-width) solid var(--rmap-focus);
+  outline-offset: var(--ccm-focus-offset);
+  border-radius: var(--ccm-radius-sm);
+}
+@keyframes ccm-rmap-pop {
+  from { opacity: 0; transform: scale(.4); }
+}
+@keyframes ccm-rmap-draw {
+  from { transform: rotate(var(--rot)) scaleX(0); }
+}
+
+/* Wide: the ring. Positions are in container units (cqi), so the ring scales
+   with the section; the circles take their size from the type scale. */
+@supports (top: calc(1px * sin(1deg))) and (width: hypot(1px, 1px)) {
+  @container (min-width: 720px) {
+    .ccm-rmap__map {
+      --rx: 27cqi;
+      --ry: 29cqi;
+      --cy: 38cqi;
+      position: relative;
+      height: 72cqi;
+    }
+    .ccm-rmap__hub {
+      position: absolute;
+      top: var(--cy);
+      left: 50%;
+      z-index: 2;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: var(--ccm-space-1);
+      width: 3.3em;
+      height: 3.3em;
+      margin: 0;
+      padding: 0 var(--ccm-space-6);
+      text-align: center;
+      border-radius: var(--ccm-radius-round);
+      font-size: var(--ccm-text-display);
+      box-shadow: 0 0 0 10px var(--rmap-hub-halo), 0 0 0 13px var(--ccm-college);
+      translate: -50% -50%;
+    }
+    .ccm-rmap__hub-num {
+      font-size: 1em;
+    }
+    .ccm-rmap__nodes {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: block;
+      isolation: isolate;
+    }
+    /* The orbit: a dashed ring through the circles */
+    .ccm-rmap__nodes::before {
+      content: "";
+      position: absolute;
+      top: calc(var(--cy) - var(--ry));
+      left: calc(50% - var(--rx));
+      z-index: -2;
+      width: calc(2 * var(--rx));
+      height: calc(2 * var(--ry));
+      border: var(--ccm-border-control) dashed var(--rmap-orbit);
+      border-radius: var(--ccm-radius-round);
+    }
+    .ccm-rmap__node {
+      --a: calc(var(--i) * 360deg / 13);
+      --x: calc(var(--rx) * sin(var(--a)));
+      --y: calc(var(--ry) * cos(var(--a)));
+      --rot: atan2(calc(var(--y) * -1), var(--x));
+      position: absolute;
+      top: calc(var(--cy) - var(--y));
+      left: calc(50% + var(--x));
+      width: 0;
+      height: 0;
+    }
+    /* The spoke, from the hub out to the circle */
+    .ccm-rmap__node::before {
+      content: "";
+      position: absolute;
+      top: calc(var(--y) - 1px);
+      left: calc(var(--x) * -1);
+      z-index: -1;
+      width: hypot(var(--x), var(--y));
+      height: 2px;
+      background: var(--rmap-spoke);
+      transform-origin: 0 50%;
+      transform: rotate(var(--rot));
+      animation: ccm-rmap-draw var(--ccm-duration-enter) var(--ccm-ease-out) backwards;
+      animation-delay: calc(var(--ccm-duration-fast) + var(--i) * var(--ccm-stagger));
+    }
+    .ccm-rmap__node > a {
+      --d: 2.4em;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: calc(var(--d) + var(--ccm-space-3) + 18cqi);
+      translate: calc(var(--d) / -2) -50%;
+    }
+    .ccm-rmap__name {
+      flex: 1;
+    }
+    /* Left half: the name to the left of the circle */
+    .ccm-rmap__node:nth-child(n+8) > a {
+      flex-direction: row-reverse;
+      text-align: right;
+      translate: calc(var(--d) / 2 - 100%) -50%;
+    }
+    /* The top circle: the name below it, on the section colour so the spoke
+       doesn't run through the text */
+    .ccm-rmap__node:first-child > a {
+      flex-direction: column;
+      gap: var(--ccm-space-2);
+      width: calc(var(--d) + 8cqi);
+      text-align: center;
+      translate: -50% calc(var(--d) / -2);
+    }
+    .ccm-rmap__node:first-child .ccm-rmap__name {
+      padding: 0 var(--ccm-space-1);
+      background: var(--rmap-bg);
+    }
+    .ccm-rmap__node:nth-child(2)  { --i: 1; }
+    .ccm-rmap__node:nth-child(3)  { --i: 2; }
+    .ccm-rmap__node:nth-child(4)  { --i: 3; }
+    .ccm-rmap__node:nth-child(5)  { --i: 4; }
+    .ccm-rmap__node:nth-child(6)  { --i: 5; }
+    .ccm-rmap__node:nth-child(7)  { --i: 6; }
+    .ccm-rmap__node:nth-child(8)  { --i: 7; }
+    .ccm-rmap__node:nth-child(9)  { --i: 8; }
+    .ccm-rmap__node:nth-child(10) { --i: 9; }
+    .ccm-rmap__node:nth-child(11) { --i: 10; }
+    .ccm-rmap__node:nth-child(12) { --i: 11; }
+    .ccm-rmap__node:nth-child(13) { --i: 12; }
+  }
+}
+
+/* ---- Under the map: the centers as a list with the same circles ----------------
+   <ol class="ccm-center-list">
+     <li class="ccm-center-row" id="center-iss">
+       <p class="ccm-center-row__num">46 <span class="ccm-sr-only">CCM faculty</span></p>
+       <div class="ccm-center-row__body">
+         <h3 class="ccm-center-row__name"><a href="…">IRC for Intelligent Secure Systems</a></h3>
+         <p class="ccm-center-row__desc">…</p>
+         <ul class="ccm-dept-line">…</ul>
+         <details class="ccm-reveal">…</details>
+       </div>
+     </li>
+   </ol> */
+.ccm-center-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ccm-center-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: var(--ccm-space-4);
+  margin: 0;
+  padding: var(--ccm-space-6) 0;
+  border-top: var(--ccm-border-hairline) solid var(--ccm-line);
+  scroll-margin-top: var(--ccm-space-6);
+}
+.ccm-center-row:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+@container (min-width: 540px) {
+  .ccm-center-row { gap: var(--ccm-space-6); }
+}
+.ccm-center-row__num {
+  display: grid;
+  place-items: center;
+  width: 2.4em;
+  height: 2.4em;
+  margin: 0;
+  border: var(--ccm-border-ring) solid var(--ccm-turquoise);
+  border-radius: var(--ccm-radius-round);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h4);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--ccm-turquoise);
+}
+.ccm-center-row__body {
+  display: grid;
+  gap: var(--ccm-space-3);
+  min-width: 0;
+}
+.ccm-center-row__name {
+  margin: 0;
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h4);
+  line-height: var(--ccm-leading-snug);
+}
+.ccm-center-row__name a,
+.ccm-center-row__name a:visited {
+  color: var(--ccm-text);
+  text-decoration: none;
+}
+.ccm-center-row__name a:hover,
+.ccm-center-row__name a:focus-visible {
+  color: var(--ccm-link);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ccm-center-row__desc {
+  max-width: var(--ccm-measure);
+  margin: 0;
+  line-height: var(--ccm-leading-body);
+  color: var(--ccm-text-muted);
+}
+.ccm-center-row .ccm-reveal {
+  border-top: 0;
+}
+.ccm-center-row .ccm-reveal__toggle {
+  padding-top: 0;
+}
+
+/* ---- Option 6: the mosaic ------------------------------------------------------------
+   First the totals (how many centers, how many of our faculty are affiliated,
+   counted once each), then every center as an equal tile: no center is
+   highlighted over another. A last tile links to all KFUPM research centers.
+   A tile whose names are open takes the full width.
+   <section class="ccm-section ccm-mosaic-wrap ccm-look-kfupm" aria-labelledby="mosaic-h">
+     <p class="ccm-eyebrow">…</p>
+     <h2 class="ccm-section__title" id="mosaic-h">…</h2>
+     <p class="ccm-lead">…</p>
+     <div class="ccm-totals">
+       <div class="ccm-totals__item">
+         <p class="ccm-totals__num">13</p>
+         <p class="ccm-totals__label">Research Centers</p>
+       </div>
+       <div class="ccm-totals__item"> … 119 … <ul class="ccm-dept-line">…</ul></div>
+       <p class="ccm-totals__note">…</p>
+     </div>
+     <ul class="ccm-mosaic">
+       <li class="ccm-mosaic__tile" id="center-iss">
+         <h3 class="ccm-mosaic__name"><a href="…">…</a></h3>
+         <p class="ccm-mosaic__desc">…</p>
+         <p class="ccm-mosaic__count"><span class="ccm-mosaic__num">46</span> Affiliated CCM Faculty</p>
+         <ul class="ccm-dept-line">…</ul>
+         <details class="ccm-reveal">…</details>
+       </li>
+       <li class="ccm-mosaic__tile ccm-mosaic__tile--more"> … (all KFUPM research centers)
+     </ul>
+   </section>
+   Looks (one class on the section; each colours the totals band and ALL tiles
+   the same way): ccm-look-kfupm (turquoise band, the default), ccm-look-simple
+   (all white), ccm-look-soft (beige), ccm-look-green (KFUPM green), ccm-look-ccm
+   (a band in the CCM college colour). */
+.ccm-mosaic-wrap,
+.ccm-mosaic-wrap.ccm-look-kfupm {
+  --totals-bg: var(--ccm-turquoise);
+  --totals-line: var(--ccm-turquoise);
+  --totals-text: var(--ccm-text-inverse);
+  --totals-num: var(--ccm-text-inverse);
+  --totals-muted: var(--ccm-text-inverse-muted);
+  --totals-divider: var(--ccm-fill-inverse-strong);
+  --totals-ring: var(--ccm-college);
+  --tile-bg: var(--ccm-surface);
+  --tile-line: var(--ccm-line);
+  --tile-num: var(--ccm-turquoise);
+  --tile-text: var(--ccm-text);
+  --tile-muted: var(--ccm-text-muted);
+  --tile-accent: var(--ccm-college);
+  --more-bg: var(--ccm-beige-l2);
+  --more-line: var(--ccm-beige-l2);
+}
+.ccm-mosaic-wrap.ccm-look-simple {
+  --totals-bg: var(--ccm-surface);
+  --totals-line: var(--ccm-line);
+  --totals-text: var(--ccm-text);
+  --totals-num: var(--ccm-turquoise);
+  --totals-muted: var(--ccm-text-muted);
+  --totals-divider: var(--ccm-line);
+  --totals-ring: transparent;
+  --tile-accent: transparent;
+  --more-bg: var(--ccm-surface);
+  --more-line: var(--ccm-line);
+}
+.ccm-mosaic-wrap.ccm-look-soft {
+  --totals-bg: var(--ccm-beige);
+  --totals-line: var(--ccm-beige);
+  --totals-text: var(--ccm-text);
+  --totals-num: var(--ccm-turquoise);
+  --totals-muted: var(--ccm-text);
+  --totals-divider: var(--ccm-beige-d1);
+  --totals-ring: var(--ccm-beige-l1);
+  --tile-bg: var(--ccm-beige-l3);
+  --tile-line: var(--ccm-beige-l1);
+  --tile-accent: var(--ccm-sand-l1);
+  --more-bg: var(--ccm-surface);
+  --more-line: var(--ccm-beige);
+}
+.ccm-mosaic-wrap.ccm-look-green {
+  --totals-bg: var(--ccm-green-d1);
+  --totals-line: var(--ccm-green-d1);
+  --totals-ring: var(--ccm-green);
+  --tile-num: var(--ccm-green-d1);
+  --tile-accent: var(--ccm-green-l2);
+  --more-bg: var(--ccm-green-l3);
+  --more-line: var(--ccm-green-l3);
+}
+.ccm-mosaic-wrap.ccm-look-ccm {
+  --totals-bg: var(--ccm-college);
+  --totals-line: var(--ccm-college);
+  --totals-text: var(--ccm-turquoise-d3);
+  --totals-num: var(--ccm-turquoise-d3);
+  --totals-muted: var(--ccm-turquoise-d3);
+  --totals-divider: var(--ccm-turquoise-l1);
+  --totals-ring: var(--ccm-fill-inverse-strong);
+  --tile-accent: var(--ccm-college);
+  --more-bg: var(--ccm-turquoise-l3);
+  --more-line: var(--ccm-turquoise-l3);
+}
+
+/* The totals band */
+.ccm-totals {
+  --dl-num: var(--totals-num);
+  --dl-label: var(--totals-muted);
+  --dl-line: var(--totals-divider);
+  position: relative;
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-6);
+  margin: 0 0 var(--ccm-space-8);
+  padding: var(--ccm-space-7);
+  overflow: hidden;
+  border: var(--ccm-border-hairline) solid var(--totals-line);
+  border-radius: var(--ccm-radius-xl);
+  background: var(--totals-bg);
+  color: var(--totals-text);
+  font-size: var(--ccm-text-display);
+}
+/* The college-colour ring of the brand's college layouts, in the corner */
+.ccm-totals::after {
+  content: "";
+  position: absolute;
+  top: calc(var(--ccm-space-12) * -1);
+  right: calc(var(--ccm-space-12) * -1);
+  width: 260px;
+  height: 260px;
+  border: 18px solid var(--totals-ring);
+  border-radius: var(--ccm-radius-round);
+  pointer-events: none;
+}
+@container (min-width: 540px) {
+  .ccm-totals { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .ccm-totals__item + .ccm-totals__item {
+    padding-left: var(--ccm-space-6);
+    border-left: var(--ccm-border-hairline) solid var(--totals-divider);
+  }
+}
+.ccm-totals__item {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  align-content: start;
+  gap: var(--ccm-space-2);
+}
+.ccm-totals__num {
+  margin: 0;
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-black);
+  font-size: 1.9em;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--totals-num);
+}
+.ccm-totals__label {
+  margin: 0;
+  font-family: var(--ccm-font-body);
+  font-weight: var(--ccm-weight-semibold);
+  font-size: var(--ccm-text-body);
+  line-height: var(--ccm-leading-snug);
+  color: var(--totals-text);
+}
+.ccm-totals .ccm-dept-line {
+  margin-top: var(--ccm-space-2);
+}
+.ccm-totals__note {
+  position: relative;
+  z-index: 1;
+  grid-column: 1 / -1;
+  margin: 0;
+  font-family: var(--ccm-font-body);
+  font-size: var(--ccm-text-sm);
+  line-height: var(--ccm-leading-body);
+  color: var(--totals-muted);
+}
+
+/* The centers: equal tiles */
+.ccm-mosaic {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  grid-auto-flow: row dense;
+  gap: var(--ccm-space-4);
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+@container (min-width: 540px) {
+  .ccm-mosaic { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@container (min-width: 860px) {
+  .ccm-mosaic { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .ccm-mosaic__tile--more { grid-column: span 2; }
+}
+.ccm-mosaic > .ccm-mosaic__tile:has(details[open]) {
+  grid-column: 1 / -1;
+}
+.ccm-mosaic__tile {
+  --dl-num: var(--tile-num);
+  --dl-label: var(--tile-muted);
+  --dl-line: var(--tile-line);
+  display: flex;
+  flex-direction: column;
+  gap: var(--ccm-space-3);
+  margin: 0;
+  padding: var(--ccm-space-6) var(--ccm-space-5) var(--ccm-space-3);
+  border: var(--ccm-border-hairline) solid var(--tile-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--tile-bg);
+  color: var(--tile-text);
+  box-shadow: inset 0 var(--ccm-border-bar) 0 var(--tile-accent);
+  scroll-margin-top: var(--ccm-space-6);
+  transition: transform var(--ccm-duration) var(--ccm-ease-out), box-shadow var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-mosaic__tile:hover {
+  transform: translateY(-4px);
+  box-shadow: inset 0 var(--ccm-border-bar) 0 var(--tile-accent), var(--ccm-shadow-md);
+}
+.ccm-mosaic__name {
+  margin: 0;
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h5);
+  line-height: var(--ccm-leading-snug);
+}
+.ccm-mosaic__name a,
+.ccm-mosaic__name a:visited {
+  color: var(--tile-text);
+  text-decoration: none;
+}
+.ccm-mosaic__name a:hover,
+.ccm-mosaic__name a:focus-visible {
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ccm-mosaic__desc {
+  margin: 0;
+  font-size: var(--ccm-text-sm);
+  line-height: var(--ccm-leading-body);
+  color: var(--tile-muted);
+}
+/* The number sits at the bottom, so numbers line up across a row of tiles */
+.ccm-mosaic__count {
+  display: flex;
+  align-items: baseline;
+  gap: var(--ccm-space-2);
+  margin: auto 0 0;
+  padding-top: var(--ccm-space-2);
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--tile-muted);
+}
+.ccm-mosaic__num {
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-black);
+  font-size: var(--ccm-text-h2);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+  color: var(--tile-num);
+}
+.ccm-mosaic__tile .ccm-reveal {
+  border-color: var(--tile-line);
+}
+.ccm-mosaic__tile .ccm-reveal__toggle {
+  color: var(--tile-num);
+}
+
+/* The last tile: all KFUPM research centers */
+.ccm-mosaic__tile--more {
+  --tile-bg: var(--more-bg);
+  --tile-line: var(--more-line);
+  --tile-accent: transparent;
+  --tile-muted: var(--ccm-text);
+  justify-content: center;
+  padding-bottom: var(--ccm-space-6);
+}
+.ccm-mosaic__tile--more .ccm-mosaic__count {
+  margin: 0;
+  padding: 0;
+}
+.ccm-mosaic__tile--more .ccm-mosaic__desc {
+  max-width: 34rem;
+}

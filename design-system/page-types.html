@@ -182,6 +182,14 @@
           <table class="pt-table">
             <thead><tr><th scope="col">Date</th><th scope="col">Decision</th><th scope="col">Decided by</th></tr></thead>
             <tbody>
+              <tr><td>2026-11-23</td><td><b>English text on the websites uses Open Sans</b> (the KFUPM web team: IBM Plex is for documents, not websites). Headings and big numbers stay in <b>KFUPM Display</b>. IBM Plex Sans Arabic is kept only for Arabic text. Open Sans comes with each site's theme, so it isn't uploaded; KFUPM Display Regular and Black are uploaded alongside Bold.</td><td>KFUPM web team, via the project owner</td></tr>
+              <tr><td>2026-11-22</td><td><b>MATH may keep its own design.</b> The department manages its website and may not adopt the shared design. MATH stays in the plan as "to be confirmed": no MATH page work until it is.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-22</td><td>Research Groups, round 5 review: the research map in its <b>light</b> look is good. <b>Don't highlight one item over the others</b> by size or colour when they are equals (all research centers): show the totals first, then equal tiles. Numbers must say exactly what they count ("affiliated CCM faculty", not "CCM faculty").</td><td>Project owner</td></tr>
+              <tr><td>2026-11-22</td><td>Research Groups, round 4 review: options must not <b>repeat</b> each other. Counters stay <b>light</b>, not boxed. Large areas of solid turquoise feel <b>overwhelming</b>: keep colour for small accents, and let the page stay light. <b>Colour variations</b> are shown with a picker in one preview file, not as separate copies.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-22</td><td>Research Groups, round 3 review: <b>no tables</b> for this information. Department numbers must look <b>smooth and aligned</b>, not like loose tags. A compact page is liked, but <b>one page is better than two</b>. Each page type should offer <b>one or two options with a "wow" factor</b> (not every page needs one).</td><td>Project owner</td></tr>
+              <tr><td>2026-11-22</td><td>Research Groups, round 2 review: the page lists <b>KFUPM research centers</b> and the CCM faculty affiliated with them. <b>Center cards</b> are the first choice. CCM stays <b>general</b>: it should not list who is in or out line by line, so ideas that keep names off the main page are explored. The compact list is dropped. Names and titles are kept as each center shows them.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-22</td><td>Home page, round 5 review: concept 1 is <b>good</b>. <b>No FAST Matrix on the home page</b>: the pattern is used only where it has a clear purpose, never placed just for decoration. The Lines look stays as concept 3, without the pattern. Concept 4 uses the same hero photo as concept 1. All options stay, so the Dr. can choose and mix features. "Graduate students" gets a <b>group-of-people icon</b>.</td><td>Project owner</td></tr>
+              <tr><td>2026-11-22</td><td>Home page, round 4 review: <b>Text first is dropped</b>. The numbers get <b>icons</b> (the official KFUPM icon set); news and events must be <b>the same length</b>; section titles are in <b>Title Case</b> (now checked by <code>check-page.mjs</code>). The all-white Lines look felt lost, so it is tried with <b>one FAST Matrix</b>.</td><td>Project owner</td></tr>
               <tr><td>2026-11-21</td><td>Home page, round 3: the photo-panel and centred variations are <b>rejected</b>. Round 4 tries other <b>minimal, simple variations</b> of concept 1 (text first, lines, compact).</td><td>Project owner</td></tr>
               <tr><td>2026-11-21</td><td>Home page, round 2: <b>concept 1, "Classic, made clear"</b>, is the base. The other concepts become variations of it (same order and style).</td><td>Project owner</td></tr>
               <tr><td>2026-11-21</td><td>Home page, round 1: keep it <b>simple and minimal</b>, with <b>no colour blocks at the top</b>; as easy to read as the old page; <b>numbers in boxes</b>; <b>no message from the Dean</b>.</td><td>Project owner</td></tr>
@@ -282,11 +290,12 @@ const TYPES = [
     },
   },
   {
-    id: 'landing', name: 'Section page', status: 'todo', built: 'block',
+    id: 'landing', name: 'Section page', status: 'options', built: 'block',
     what: 'The first page of a menu section: a short introduction and links to the pages under it, such as "Undergraduate Programs" or "Departments".',
-    have: ['Department cards (from Dean & Chairmen option 4)'],
-    need: ['Link cards: title, one line and a link', 'Short introduction'],
-    sample: ['CCM', 'Departments', '/academics/departments'],
+    have: ['Department cards (from Dean & Chairmen option 4)', 'CCM Programs, round 1: five options (two columns, department cards, program tiles, by level, expandable)', 'CCM Programs, round 2: option 1 (first choice), 1B (clearer headings), 2 and 3; order ICS, ISE, COE, MATH'],
+    need: ['A choice for the Programs page', 'Link cards: title, one line and a link (Departments page)'],
+    sample: ['CCM', 'Programs', '/academics/programs'],
+    work: { label: 'Open the Programs options (round 2)', href: '../CCM/pages/programs/index.html' },
     pages: {
       CCM: [['Departments', '/academics/departments'], ['Programs', '/academics/programs'], ['Undergraduate Programs', '/academics/programs/undergraduate-programs'], ['Graduate Programs', '/academics/programs/graduate-programs']],
       ICS: [['Undergraduate Programs', '/academics/undergraduate-programs'], ['Graduate Programs', '/academics/graduate-programs']],
@@ -325,11 +334,12 @@ const TYPES = [
     },
   },
   {
-    id: 'research', name: 'Research page', status: 'todo', built: 'block',
+    id: 'research', name: 'Research page', status: 'options', built: 'block',
     what: 'Research groups, research areas, faculty interests, publications and statistics.',
-    have: ['Rich text', 'Tags'],
-    need: ['Research group cards (name, lead, members, link)', 'Area tags', 'Publication list', 'Number highlights'],
+    have: ['CCM Research Groups, round 1: KFUPM research centers with their CCM affiliated faculty (one design)', 'CCM Research Groups, round 2: all 22 centers checked (13 with CCM faculty, 4 names to check); four options', 'CCM Research Groups, round 3: names confirmed (0 to check); center cards (first choice), a department table, and three ways to keep names off the main page (on click, a second page, the center websites)', 'CCM Research Groups, round 4: two wow options (a research map with CCM at the center, and a mosaic), a one-page compact version, and one aligned department strip in every tile', 'CCM Research Groups, round 5: three options (research map, mosaic, center cards) with no repeats; a light department line; colour looks you can switch in the preview', 'CCM Research Groups, round 6: the mosaic starts with the totals and shows every center as an equal tile; the numbers now say affiliated CCM faculty'],
+    need: ['The departments to confirm the affiliated faculty', 'Research numbers band (later)'],
     sample: ['CCM', 'Research Groups', '/research/research-groups'],
+    work: { label: 'Open the three Research Groups options', href: '../CCM/pages/research-groups/index.html' },
     pages: {
       CCM: [['Research Groups', '/research/research-groups']],
       ICS: [['Research Areas', '/research/research-areas']],
@@ -391,8 +401,8 @@ const TYPES = [
   {
     id: 'home', name: 'Home page', status: 'options', built: 'template',
     what: 'The front page of each site: the biggest and most visible page, and the one most tied to the header and template.',
-    have: ['CCM, round 1 reviewed on 2026-11-21', 'CCM, round 2 reviewed: concept 1 "Classic, made clear" chosen as the base', 'CCM, round 3 reviewed: both variations rejected', 'CCM, round 4: concept 1 and three minimal variations of it (text first, lines, compact)'],
-    need: ['Your choice among the four, or a mix of their parts', 'Page template access for the layout; widget templates for news and events'],
+    have: ['CCM, round 1 reviewed on 2026-11-21', 'CCM, round 2 reviewed: concept 1 "Classic, made clear" chosen as the base', 'CCM, round 3 reviewed: both variations rejected', 'CCM, round 4: concept 1 and three minimal variations of it (text first, lines, compact)', 'CCM, round 5: concepts 1 and 4 with icons on the numbers, even news and events, Title Case; Lines in two versions with a FAST Matrix (3A hero, 3B numbers)', 'CCM, round 6: concepts 1 ("good"), 3 (lines, no pattern) and 4 (same hero photo); no FAST Matrix'],
+    need: ['The Dr. chooses among concepts 1, 3 and 4 (round 6), or mixes their parts', 'Page template access for the layout; widget templates for news and events'],
     sample: ['CCM', 'Home', '/'],
     work: { label: 'Open the home page concepts', href: '../CCM/pages/home/index.html' },
     pages: { CCM: [['Home', '/']], ICS: [['Home', '/']], COE: [['Home', '/']], MATH: [['Home', '/']], ISE: [['Home', '/']] },

@@ -1,0 +1,331 @@
+/* ==========================================================================
+   Programs: the PROGRAMS PAGE (CCM/pages/programs), round 2
+   Each department's programs in two columns: Undergraduate (Bachelor of
+   Science, Concentrations) beside Graduate (Master of Science, Doctor of
+   Philosophy). Round 2: options 1, 1B, 2 and 3 (4 "by level" and 5
+   "expandable" were rejected). When one is chosen, delete what only the others use.
+
+   <nav class="ccm-jump" aria-label="Departments">
+     <ul class="ccm-jump__list"><li><a class="ccm-jump__link" href="#prog-coe">Computer Engineering</a></li>…</ul>
+   </nav>
+   <section class="ccm-section ccm-dept-progs" aria-labelledby="prog-coe">
+     <div class="ccm-dept-progs__head">
+       <h2 class="ccm-section__title" id="prog-coe">Computer Engineering</h2>
+       <a class="ccm-more" href="https://coe.kfupm.edu.sa/">COE website</a>
+     </div>
+     <div class="ccm-levels">
+       <div class="ccm-levels__col">
+         <h3 class="ccm-levels__title">Undergraduate</h3>
+         <h4 class="ccm-levels__group">Bachelor of Science</h4>
+         <ul class="ccm-plinks"><li><a class="ccm-plinks__a" href="…">B.S. in …</a></li></ul>
+       </div>
+       <div class="ccm-levels__col">…Graduate…</div>
+     </div>
+   </section>
+
+   How a program link looks:
+   - .ccm-plinks             an arrow, then the name in turquoise (options 1, 1B)
+   - .ccm-plinks--rows       full-width rows with a chevron (option 2)
+   - .ccm-plinks--tiles      boxes with a degree badge (option 3)
+   The name sits in <span class="ccm-plinks__name">; a <span class="ccm-plinks__note">Project-based</span>
+   inside it adds a quiet note.
+   ========================================================================== */
+
+/* ---- Jump links to each department ---------------------------------------- */
+.ccm-jump {
+  margin: 0 0 var(--ccm-space-8);
+}
+.ccm-jump__list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--ccm-space-2);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ccm-jump__list > li {
+  margin: 0;
+}
+.ccm-jump__link,
+.ccm-jump__link:visited {
+  display: inline-flex;
+  align-items: center;
+  min-height: var(--ccm-target);
+  padding: 0 var(--ccm-space-4);
+  border: var(--ccm-border-hairline) solid var(--ccm-line-strong);
+  border-radius: var(--ccm-radius-pill);
+  background: var(--ccm-surface);
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-semibold);
+  color: var(--ccm-link);
+  text-decoration: none;
+  transition: background-color var(--ccm-duration-fast) var(--ccm-ease),
+              border-color var(--ccm-duration-fast) var(--ccm-ease),
+              color var(--ccm-duration-fast) var(--ccm-ease);
+}
+.ccm-jump__link:hover,
+.ccm-jump__link:focus-visible {
+  border-color: var(--ccm-surface-strong);
+  background: var(--ccm-surface-strong);
+  color: var(--ccm-text-inverse);
+}
+
+/* ---- One department ------------------------------------------------------- */
+.ccm-dept-progs {
+  scroll-margin-top: var(--ccm-space-6);
+}
+.ccm-dept-progs__head {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: var(--ccm-space-2) var(--ccm-space-5);
+  margin: 0 0 var(--ccm-space-6);
+}
+.ccm-dept-progs__head .ccm-section__title,
+.ccm-dept-progs__head .ccm-more {
+  margin: 0;
+}
+
+/* ---- Two columns: Undergraduate | Graduate -------------------------------- */
+.ccm-levels {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--ccm-space-7);
+}
+@container (min-width: 540px) {
+  .ccm-levels {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+.ccm-levels__col {
+  min-width: 0;
+}
+.ccm-levels__title {
+  margin: 0 0 var(--ccm-space-4);
+  padding-bottom: var(--ccm-space-2);
+  border-bottom: var(--ccm-border-control) solid var(--ccm-turquoise);
+  font-family: var(--ccm-font-display);
+  font-weight: var(--ccm-weight-bold);
+  font-size: var(--ccm-text-h4);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-text);
+}
+.ccm-levels__group {
+  margin: var(--ccm-space-5) 0 var(--ccm-space-2);
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: 1.35;
+  letter-spacing: var(--ccm-tracking-caps);
+  text-transform: uppercase;
+  color: var(--ccm-text-muted);
+}
+.ccm-levels__title + .ccm-levels__group {
+  margin-top: 0;
+}
+/* Clearer group headings (round 2, options 1B, 2 and 3): the small grey
+   capitals were hard to spot. Dark, larger text with a college-colour bar.
+   <h4 class="ccm-levels__group ccm-levels__group--clear">Bachelor of Science</h4> */
+.ccm-levels__group--clear {
+  margin: var(--ccm-space-6) 0 var(--ccm-space-3);
+  padding: var(--ccm-space-1) 0 var(--ccm-space-1) var(--ccm-space-3);
+  border-left: var(--ccm-border-bar) solid var(--ccm-accent);
+  font-size: var(--ccm-text-h5);
+  font-weight: var(--ccm-weight-semibold);
+  line-height: var(--ccm-leading-snug);
+  letter-spacing: normal;
+  text-transform: none;
+  color: var(--ccm-text);
+}
+/* ---- Program links: an arrow, then the name ------------------------------
+   The arrow comes first, so it never ends up alone on a line when a long
+   name wraps. <a class="ccm-plinks__a" href="…"><span class="ccm-plinks__name">M.S. in …
+   <span class="ccm-plinks__note">Project-based</span></span></a> */
+.ccm-plinks {
+  display: grid;
+  gap: var(--ccm-space-1);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.ccm-plinks > li {
+  margin: 0;
+}
+.ccm-plinks__a,
+.ccm-plinks__a:visited {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: var(--ccm-space-2);
+  padding: var(--ccm-space-1) 0;
+  font-weight: var(--ccm-weight-semibold);
+  line-height: var(--ccm-leading-snug);
+  color: var(--ccm-link);
+  text-decoration: none;
+}
+.ccm-plinks__a::before {
+  content: "";
+  flex: none;
+  width: 14px;
+  height: 14px;
+  margin-top: .2em; /* centred on the first line */
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-i-arrow) center / contain no-repeat;
+          mask: var(--ccm-i-arrow) center / contain no-repeat;
+  transition: transform var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-plinks__a:hover,
+.ccm-plinks__a:focus-visible {
+  color: var(--ccm-link-hover);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.ccm-plinks__a:hover::before {
+  transform: translateX(3px);
+}
+.ccm-plinks__name {
+  min-width: 0;
+}
+.ccm-plinks__note {
+  margin-left: var(--ccm-space-1);
+  font-size: var(--ccm-text-sm);
+  font-weight: var(--ccm-weight-regular);
+  color: var(--ccm-text-muted);
+  white-space: nowrap;
+}
+
+/* ---- Rows with a chevron at the end (option 2) ---------------------------- */
+.ccm-plinks--rows {
+  gap: 0;
+  border-top: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-plinks--rows > li {
+  border-bottom: var(--ccm-border-hairline) solid var(--ccm-line);
+}
+.ccm-plinks--rows .ccm-plinks__a {
+  display: flex;
+  width: 100%;
+  min-height: var(--ccm-target);
+  align-items: center;
+  gap: var(--ccm-space-3);
+  padding: var(--ccm-space-3) var(--ccm-space-2);
+  transition: background-color var(--ccm-duration-fast) var(--ccm-ease);
+}
+.ccm-plinks--rows .ccm-plinks__a::before,
+.ccm-plinks--tiles .ccm-plinks__a::before {
+  display: none;
+}
+.ccm-plinks--rows .ccm-plinks__a::after {
+  content: "";
+  flex: none;
+  margin-left: auto;
+  width: 18px;
+  height: 18px;
+  background-color: currentColor;
+  -webkit-mask: var(--ccm-i-chevron) center / contain no-repeat;
+          mask: var(--ccm-i-chevron) center / contain no-repeat;
+  transform: rotate(-90deg);
+  transition: transform var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-plinks--rows .ccm-plinks__a:hover,
+.ccm-plinks--rows .ccm-plinks__a:focus-visible {
+  background: var(--ccm-surface-soft);
+  text-decoration: none;
+}
+.ccm-plinks--rows .ccm-plinks__a:hover::after {
+  transform: rotate(-90deg) translateY(3px);
+}
+
+/* ---- Tiles with a degree badge (option 3) --------------------------------- */
+.ccm-plinks--tiles {
+  gap: var(--ccm-space-2);
+}
+.ccm-plinks--tiles .ccm-plinks__a {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  gap: var(--ccm-space-3);
+  padding: var(--ccm-space-3) var(--ccm-space-4);
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-md);
+  background: var(--ccm-surface);
+  color: var(--ccm-text);
+  transition: border-color var(--ccm-duration-fast) var(--ccm-ease),
+              box-shadow var(--ccm-duration-fast) var(--ccm-ease);
+}
+.ccm-plinks--tiles .ccm-plinks__a::after {
+  content: "";
+  flex: none;
+  margin-left: auto;
+  width: 14px;
+  height: 14px;
+  background-color: var(--ccm-link);
+  -webkit-mask: var(--ccm-i-arrow) center / contain no-repeat;
+          mask: var(--ccm-i-arrow) center / contain no-repeat;
+  transition: transform var(--ccm-duration) var(--ccm-ease);
+}
+.ccm-plinks--tiles .ccm-plinks__a:hover,
+.ccm-plinks--tiles .ccm-plinks__a:focus-visible {
+  border-color: var(--ccm-turquoise);
+  box-shadow: var(--ccm-shadow-sm);
+  color: var(--ccm-link);
+  text-decoration: none;
+}
+.ccm-plinks--tiles .ccm-plinks__a:hover::after {
+  transform: translateX(3px);
+}
+/* In a tile, the note goes on its own line under the name */
+.ccm-plinks--tiles .ccm-plinks__name {
+  display: flex;
+  flex-direction: column;
+}
+.ccm-plinks--tiles .ccm-plinks__note {
+  margin-left: 0;
+}
+.ccm-plinks__badge {
+  flex: none;
+  display: inline-grid;
+  place-items: center;
+  min-width: var(--ccm-space-10);
+  padding: var(--ccm-space-1) var(--ccm-space-2);
+  border-radius: var(--ccm-radius-sm);
+  background: var(--ccm-beige);
+  font-size: var(--ccm-text-xs);
+  font-weight: var(--ccm-weight-bold);
+  line-height: 1.4;
+  color: var(--ccm-turquoise); /* 5.6:1 on Beige */
+}
+
+/* ---- A department as a card (option 2) ------------------------------------ */
+.ccm-dept-progs--card {
+  overflow: hidden;
+  border: var(--ccm-border-hairline) solid var(--ccm-line);
+  border-radius: var(--ccm-radius-lg);
+  background: var(--ccm-surface);
+  margin-bottom: var(--ccm-space-6);
+}
+.ccm-dept-progs--card .ccm-dept-progs__head {
+  align-items: center;
+  margin: 0;
+  padding: var(--ccm-space-5) var(--ccm-space-6);
+  border-bottom: var(--ccm-border-hairline) solid var(--ccm-line);
+  background: var(--ccm-surface-soft);
+}
+.ccm-dept-progs--card .ccm-section__title {
+  display: flex;
+  align-items: center;
+  gap: var(--ccm-space-3);
+  font-size: var(--ccm-text-h4);
+}
+.ccm-dept-progs--card .ccm-section__title::after {
+  display: none;
+}
+.ccm-dept-progs--card .ccm-levels {
+  padding: var(--ccm-space-6);
+}
+
+@container (max-width: 539.98px) {
+  .ccm-dept-progs--card .ccm-dept-progs__head,
+  .ccm-dept-progs--card .ccm-levels {
+    padding-inline: var(--ccm-space-4);
+  }
+}

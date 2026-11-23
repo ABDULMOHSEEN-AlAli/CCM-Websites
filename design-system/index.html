@@ -295,7 +295,7 @@
         <ul class="ds-cards">
           <li class="ds-card"><span class="ds-card__n">1</span><h3>KFUPM brand first</h3><p>The primary colours dominate. Turquoise, Beige and White make up most of every page.</p></li>
           <li class="ds-card"><span class="ds-card__n">2</span><h3>One look, five sites</h3><p>All five websites use the same colours. The CCM college colour is the only accent: for rings, bars and lines, never for text.</p></li>
-          <li class="ds-card"><span class="ds-card__n">3</span><h3>Two typefaces</h3><p>KFUPM Display for headings, IBM Plex Sans Arabic for everything else.</p></li>
+          <li class="ds-card"><span class="ds-card__n">3</span><h3>Two typefaces</h3><p>KFUPM Display for headings, Open Sans for all other English text. (IBM Plex Sans Arabic only for Arabic.)</p></li>
           <li class="ds-card"><span class="ds-card__n">4</span><h3>Accessible by default</h3><p>Text contrast of at least 4.5:1, 44px touch targets, visible focus and calm motion.</p></li>
           <li class="ds-card"><span class="ds-card__n">5</span><h3>Made for the CMS</h3><p>Every class starts with <code>ccm-</code>, there's no JavaScript, and components fit any column they're placed in.</p></li>
         </ul>
@@ -468,7 +468,7 @@
         <h2 class="ccm-section__title" id="h-type">Typography</h2>
         <p class="ccm-lead">Two typefaces and one size rule, a <strong>fluid modular scale</strong>: heading sizes come from a formula and grow smoothly from phone to desktop.</p>
 
-        <h3 class="ds-h3">Typefaces <span class="ds-badge ds-badge--brand">KFUPM rule · p42, p46, p47</span></h3>
+        <h3 class="ds-h3">Typefaces <span class="ds-badge ds-badge--brand">KFUPM rule · p42, p47 · web team</span></h3>
         <div class="ds-faces">
           <div class="ds-face">
             <p class="ds-face__aa" style="font-family:var(--ccm-font-display);font-weight:700">Aa</p>
@@ -479,13 +479,14 @@
           </div>
           <div class="ds-face">
             <p class="ds-face__aa" style="font-family:var(--ccm-font-body);font-weight:600">Aa</p>
-            <h4>IBM Plex Sans Arabic</h4>
-            <p>Everything that isn't a heading: paragraphs, labels, buttons, tables, menus.</p>
-            <div class="ds-weights"><span style="font-weight:400">Regular 400</span><span style="font-weight:500">Medium 500</span><span style="font-weight:600">SemiBold 600</span><span style="font-weight:700">Bold 700</span></div>
+            <h4>Open Sans</h4>
+            <p>All English text that isn't a heading: paragraphs, labels, buttons, tables, menus. The KFUPM web team's rule for the websites (KFUPM web team, 2026-11-23): the brand book's IBM Plex is for documents. Each site's theme already loads Open Sans, so it isn't uploaded.</p>
+            <div class="ds-weights"><span style="font-weight:400">Regular 400</span><span style="font-weight:600">SemiBold 600</span><span style="font-weight:700">Bold 700</span></div>
             <p class="ds-arabic" lang="ar" dir="rtl">كلية الحوسبة والرياضيات</p>
+            <p class="ds-src">Arabic letters use IBM Plex Sans Arabic, which loads only when a page has Arabic text.</p>
           </div>
         </div>
-        <p class="ds-src" style="margin-top:var(--ccm-space-4)">Fallback when a font can't load: Segoe UI (p47). On the websites, the font files (WOFF2, the web format) are uploaded once to each site's Sitefinity library and the CSS links to them. See <a href="#use">How to use it</a>.</p>
+        <p class="ds-src" style="margin-top:var(--ccm-space-4)">Fallback when a font can't load: Segoe UI (p47). On the websites, the KFUPM Display files (WOFF2, the web format) are uploaded once to each site's Sitefinity library and the CSS links to them. Open Sans comes with each site's theme. See <a href="#use">How to use it</a>.</p>
 
         <h3 class="ds-h3">Type scale: fluid modular scale <span class="ds-badge ds-badge--ours">Our choice</span></h3>
         <p>The rule has two parts:</p>
@@ -519,22 +520,22 @@
             <ul>
               <li>Use KFUPM Display Bold for every heading. <span class="ds-badge ds-badge--brand">p42</span></li>
               <li>Use only the sizes in the scale (the <code>--ccm-text-*</code> tokens). Never type a pixel size for text.</li>
-              <li>Use Plex for all other text, at 16px minimum for paragraphs. <span class="ds-badge ds-badge--brand">p46</span></li>
+              <li>Use Open Sans for all other English text, at 16px minimum for paragraphs. <span class="ds-badge ds-badge--brand">Web team</span></li>
               <li>Keep paragraphs under 70 characters per line, with 1.6 line height.</li>
               <li>Use 14px only for meta text (contact lines, dates, captions) and 12px only for UPPERCASE labels.</li>
               <li>Use Title Case for page and section titles, and Sentence case for buttons, labels and text.</li>
-              <li>Use weight to show importance: 400 for text, 500 for emphasis in UI, 600 for labels and buttons, 700 for strong text.</li>
+              <li>Use weight to show importance: 400 for text, 600 for labels, buttons and emphasis in UI, 700 for strong text. (Open Sans has no 500.)</li>
             </ul>
           </div>
           <div>
             <h4>Don't</h4>
             <ul>
               <li>Italicise KFUPM Display. It already has a 5° slant. <span class="ds-badge ds-badge--brand">p45</span></li>
-              <li>Use Plex for headlines. <span class="ds-badge ds-badge--brand">p49</span></li>
+              <li>Use Open Sans for headlines: they are KFUPM Display.</li>
               <li>Use KFUPM Display for paragraphs or below 18px. <span class="ds-badge ds-badge--brand">p49</span></li>
               <li>Set whole sentences in UPPERCASE.</li>
               <li>Underline anything that isn't a link.</li>
-              <li>Use any other fonts (Open Sans, Hacen Tunisia and KacstOffice are on the live sites today).</li>
+              <li>Use any other fonts (Hacen Tunisia and KacstOffice are on the live sites today), or IBM Plex for English text: it is for documents.</li>
             </ul>
           </div>
         </div>
@@ -717,7 +718,7 @@
             icon and text <code>&lt;a class="ccm-has-ico ccm-c-mail" href="…"&gt;Email&lt;/a&gt;</code>;
             icon alone <code>&lt;span class="ccm-ico ccm-c-mail"&gt;&lt;span class="ccm-sr-only"&gt;Email&lt;/span&gt;&lt;/span&gt;</code>.
             Never leave the tag empty: the editor deletes empty tags.</li>
-          <li><strong>Illustrative icons:</strong> the official KFUPM icon set (Branding/04 Icongraphy, 13 icons) is for infographics and feature blocks, not small UI icons.</li>
+          <li><strong>Illustrative icons:</strong> the official KFUPM icon set (Branding/04 Icongraphy, 13 icons) is for infographics and feature blocks, not small UI icons. The home page numbers use six of them at 48px: <code>ccm-c-students</code>, <code>ccm-c-group</code> (three people for "Graduate students", drawn by us in the style of the person icon, to confirm with branding), <code>ccm-c-faculty</code>, <code>ccm-c-award</code>, <code>ccm-c-document</code> and <code>ccm-c-idea</code>.</li>
         </ul>
         <p>Font Awesome, which the live sites use today, should be phased out. Its style doesn't match the brand.</p>
       </section>
@@ -868,6 +869,7 @@
               <tr><td><code>design-system/checklist.html</code></td><td>The page checklist: go through it after building every page.</td></tr>
               <tr><td><code>design-system/page-types.html</code></td><td>Every page of the five sites grouped into page types, the order of work, how we agree on a design, and the decisions so far.</td></tr>
               <tr><td><code>design-system/review.js</code></td><td>The review tools on compare pages: First choice / Could work / No, comments, Copy feedback. Preview only.</td></tr>
+              <tr><td><code>docs/</code></td><td>All the how-to guides: how the system works, uploading, testing in Sitefinity, tools and troubleshooting. Start with <code>docs/README.md</code>.</td></tr>
               <tr><td><code>tools/check-page.mjs</code></td><td>The automatic part of the checklist. It reads a page and lists what breaks the rules.</td></tr>
               <tr><td><code>&lt;SITE&gt;/upload/ccm-styles.css</code></td><td>Everything above in one file, built by <code>node tools/build-sitefinity.mjs</code>. Uploaded once to each site's library; every page links to it.</td></tr>
               <tr><td><code>tools/compare-saved.mjs</code></td><td>Compares the HTML we pasted into a Content block with what Sitefinity saved, and lists anything the editor removed.</td></tr>
@@ -1044,7 +1046,7 @@
     else { var f = value.match(/([\d.]+)rem/); if (!f) return '?'; px = f[1] * rem; }
     return String(Math.round(px * 10) / 10);
   }
-  var D = 'KFUPM Display', P = 'Plex';
+  var D = 'KFUPM Display', P = 'Open Sans';
   var styles = [
     ['Display', '--ccm-text-display', D, 700, '--ccm-leading-tight', 'Homepage hero only', 'Computing the future', 6],
     ['H1', '--ccm-text-h1', D, 700, '--ccm-leading-tight', 'Page title (one per page)', 'Dean & Chairmen', 5],

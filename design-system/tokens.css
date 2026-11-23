@@ -5,13 +5,21 @@
    Shown visually in design-system/index.html, which reads these values live.
 
    Source: KFUPM Brand Guidelines (Branding folder), summarised in
-   reference/brand/kfupm-brand-web.md. "p39" = PDF page 39.
+   docs/reference/brand.md. "p39" = PDF page 39.
    Anything marked (our choice) is not specified in the guidelines.
    ========================================================================== */
 
-/* ---- Fonts (from Branding/01 Font; Plex converted to WOFF2, the web format) ----
-   These local files are for the prototypes. On the live sites the build links
-   to the copies uploaded to each site's Sitefinity library (<SITE>/cms-links.json). */
+/* ---- Fonts -----------------------------------------------------------------
+   KFUPM Display (Branding/01 Font): headlines and big numbers. Regular, Bold
+     and Black are uploaded to each site's library.
+   Open Sans: all English text on the websites (KFUPM web team, 2026-11-23).
+     The live themes of CCM, ICS and COE already load it from their own files,
+     so it is NOT uploaded and the build adds no @font-face for it. The files
+     here are copies of the CCM theme's own files, for the prototypes only.
+   IBM Plex Sans Arabic: Arabic letters only (unicode-range), so English pages
+     never download it. The web team uses IBM Plex for documents, not websites.
+   On the live sites the build replaces these rules with links to the copies
+   uploaded to each site's Sitefinity library (<SITE>/cms-links.json). */
 @font-face {
   font-family: "KFUPM Display";
   src: url("fonts/KFUPM-Regular.woff2") format("woff2");
@@ -34,11 +42,54 @@
   font-display: swap;
 }
 @font-face {
+  font-family: "Open Sans";
+  src: url("fonts/OpenSans.woff2") format("woff2");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("fonts/OpenSans-Italic.woff2") format("woff2");
+  font-weight: 400;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("fonts/OpenSans-Semibold.woff2") format("woff2");
+  font-weight: 600;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("fonts/OpenSans-SemiboldItalic.woff2") format("woff2");
+  font-weight: 600;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("fonts/OpenSans-Bold.woff2") format("woff2");
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+@font-face {
+  font-family: "Open Sans";
+  src: url("fonts/OpenSans-BoldItalic.woff2") format("woff2");
+  font-weight: 700;
+  font-style: italic;
+  font-display: swap;
+}
+@font-face {
   font-family: "IBM Plex Sans Arabic";
   src: url("fonts/IBMPlexSansArabic-Regular.woff2") format("woff2");
   font-weight: 400;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 @font-face {
   font-family: "IBM Plex Sans Arabic";
@@ -46,6 +97,7 @@
   font-weight: 500;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 @font-face {
   font-family: "IBM Plex Sans Arabic";
@@ -53,6 +105,7 @@
   font-weight: 600;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 @font-face {
   font-family: "IBM Plex Sans Arabic";
@@ -60,6 +113,7 @@
   font-weight: 700;
   font-style: normal;
   font-display: swap;
+  unicode-range: U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF;
 }
 
 :root {
@@ -140,15 +194,18 @@
   --ccm-focus: var(--ccm-turquoise);            /* keyboard focus ring */
 
   /* ---- 7. Typography ---------------------------------------------------
-     KFUPM Display: headlines only, 18px and up, weight 700 (p42, p49).
-     IBM Plex Sans Arabic: everything else (p46). Segoe UI: fallback (p47). */
+     KFUPM Display: headlines and big numbers only, 18px and up (p42, p49).
+     Open Sans: all other English text (KFUPM web team, 2026-11-23: the brand
+     book's IBM Plex is for documents, not websites). IBM Plex Sans Arabic
+     only picks up Arabic letters. Segoe UI: fallback (p47). */
   --ccm-font-display: "KFUPM Display", "Segoe UI", system-ui, sans-serif;
-  --ccm-font-body: "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
+  --ccm-font-body: "Open Sans", "IBM Plex Sans Arabic", "Segoe UI", system-ui, sans-serif;
 
   --ccm-weight-regular: 400;
-  --ccm-weight-medium: 500;
+  --ccm-weight-medium: 500;  /* Arabic (IBM Plex) only: Open Sans has no 500 */
   --ccm-weight-semibold: 600;
   --ccm-weight-bold: 700;
+  --ccm-weight-black: 900;    /* KFUPM Display Black: big statements and numbers only */
 
   /* Type scale (our choice): a FLUID MODULAR SCALE.
      - Modular scale: each step is the one below it times a fixed ratio.
@@ -215,6 +272,8 @@
   --ccm-duration-fast: 150ms;  /* hover colour changes */
   --ccm-duration: 200ms;       /* cards, arrows, toggles */
   --ccm-duration-slow: 250ms;  /* panels and pop-ups opening */
+  --ccm-duration-enter: 500ms; /* a large graphic appearing once on page load (the research map) */
+  --ccm-stagger: 60ms;         /* delay between items that appear one after another */
   --ccm-ease: ease;
   --ccm-ease-out: cubic-bezier(.2, .7, .2, 1);
 

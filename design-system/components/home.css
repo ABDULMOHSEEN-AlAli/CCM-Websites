@@ -1,6 +1,6 @@
 /* ==========================================================================
    Home page: concept 1 "Classic, made clear" and its minimal variations,
-   round 4 (CCM/pages/home)
+   round 6 (CCM/pages/home)
    Calm and simple on purpose (owner, 21 Nov 2026):
    - white hero, colour only in the photo, the buttons and the links;
    - one card style and one grid for every section;
@@ -21,10 +21,11 @@
    The inner width matches the live theme's container (Bootstrap 540 / 720 /
    960 / 1140 / 1320px), so the bands line up with the old header and footer.
 
-   Variations of concept 1:
-   - Text first: .ccm-hero--stats, the numbers beside the title instead of a photo
+   Variations of concept 1 (round 6; "Text first" was dropped, and the home
+   page has no FAST Matrix: owner, 22 Nov 2026):
    - Lines:      wrap the page in <div class="ccm-lines">: thin lines instead of boxes
    - Compact:    .ccm-hero--compact and .ccm-rows (link lists instead of cards)
+   Section titles are in Title Case ("Research and Accreditation").
    ========================================================================== */
 
 .ccm-band {
@@ -33,7 +34,7 @@
   background: var(--ccm-surface);
 }
 /* Two white bands in a row: one gap between them, not two.
-   :where() keeps this rule weak, so the Lines look can override it. */
+   :where() keeps this rule weak, so a variation can override it. */
 .ccm-band:where(:not(.ccm-band--alt)) + .ccm-band:where(:not(.ccm-band--alt)) {
   padding-top: 0;
 }
@@ -109,7 +110,7 @@
      <div class="ccm-band__inner ccm-hero__grid">
        <div class="ccm-hero__text">
          <p class="ccm-eyebrow">King Fahd University of Petroleum &amp; Minerals</p>
-         <h2 class="ccm-hero__title" id="hero-h">College of Computing and Mathematics</h2>
+         <h1 class="ccm-hero__title" id="hero-h">College of Computing and Mathematics</h1>
          <p class="ccm-hero__lead">…</p>
          <div class="ccm-actions">…</div>
        </div>
@@ -117,9 +118,8 @@
      </div>
    </section>
    - .ccm-hero--split    text and a 4:3 photo (concept 1)
-   - .ccm-hero--stats    the numbers (a .ccm-stats list) instead of the photo
    - .ccm-hero--compact  less space, a smaller title and photo
-   On the real home page the hero title is the page's H1 (page template). */
+   The hero title is the page's only H1: the live home template has no title of its own. */
 .ccm-hero {
   overflow: hidden;
 }
@@ -164,22 +164,6 @@
 /* Split (concept 1): text on the left, a 4:3 photo on the right */
 .ccm-hero--split .ccm-hero__img {
   aspect-ratio: 4 / 3;
-}
-
-/* Text first: the numbers beside the title */
-.ccm-hero--stats .ccm-stats {
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-@media (min-width: 576px) and (max-width: 991.98px) {
-  .ccm-hero--stats .ccm-stats {
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-  }
-}
-.ccm-hero--stats .ccm-stat {
-  padding: var(--ccm-space-6) var(--ccm-space-4);
-}
-.ccm-hero--stats .ccm-stat__num {
-  font-size: var(--ccm-text-h1);
 }
 
 /* Compact: less space, smaller title and photo */
@@ -231,6 +215,18 @@
   border-radius: var(--ccm-radius-lg);
   background: var(--ccm-surface);
   text-align: center;
+}
+/* An icon above the number, from the official KFUPM set (icons.css):
+   <li class="ccm-stat ccm-c-students"> */
+.ccm-stat[class*="ccm-c-"]::before {
+  content: "";
+  flex: none;
+  width: var(--ccm-space-9);
+  height: var(--ccm-space-9);
+  margin-bottom: var(--ccm-space-1);
+  background-color: var(--ccm-turquoise);
+  -webkit-mask: var(--ccm-icon) center / contain no-repeat;
+          mask: var(--ccm-icon) center / contain no-repeat;
 }
 .ccm-stat__num {
   font-family: var(--ccm-font-display);

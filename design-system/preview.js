@@ -7,6 +7,7 @@
 // 2. States from the address bar, so a state can be linked or screenshotted:
 //      option-1-profile-cards.html#show=profile-sultan   → opens that pop-up
 //      …#show=some-details-id                            → opens that <details>
+//      …#show=center-iss                                 → opens the <details> inside that tile
 (function () {
   var scope = document.querySelector('.ccm-scope');
   var frame = window.CCM_LIVE_FRAME;
@@ -65,6 +66,10 @@
   } else if (el.tagName === 'DETAILS') {
     el.open = true;
     el.scrollIntoView({ block: 'center', behavior: 'instant' });
+  } else if (el.querySelector('details')) {
+    // A tile with names that open on click, for example #show=center-iss
+    el.querySelector('details').open = true;
+    el.scrollIntoView({ block: 'start', behavior: 'instant' });
   } else if (el.type === 'radio') {
     // A tab, chip or page button, for example #show=tab-events
     el.checked = true;
@@ -73,4 +78,27 @@
   } else {
     el.scrollIntoView({ block: 'start', behavior: 'instant' });
   }
+})();
+
+// Colour looks (preview only): <div class="preview-looks" data-for=".ccm-mosaic-wrap">
+// with <button value="green">. A click puts ccm-look-green on the design (in place of
+// its other ccm-look-* class); #look=green in the address picks one on load.
+(function () {
+  var pickers = document.querySelectorAll('.preview-looks');
+  Array.prototype.forEach.call(pickers, function (p) {
+    var target = document.querySelector(p.getAttribute('data-for'));
+    if (!target) return;
+    var set = function (name) {
+      target.className = target.className.replace(/(^|\s)ccm-look-[\w-]+/g, '') + ' ccm-look-' + name;
+      Array.prototype.forEach.call(p.querySelectorAll('button'), function (b) {
+        b.setAttribute('aria-pressed', String(b.value === name));
+      });
+    };
+    p.addEventListener('click', function (e) {
+      var b = e.target.closest('button');
+      if (b) set(b.value);
+    });
+    var m = location.hash.match(/^#look=([\w-]+)$/);
+    if (m) set(m[1]);
+  });
 })();

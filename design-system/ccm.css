@@ -34,3 +34,9 @@
 @import url("components/news.css");           /* news items and photo cards */
 @import url("components/events.css");         /* events */
 @import url("components/pages.css");          /* page numbers (concept 1, Text first, Lines) */
+/* Programs page: round 2, options 1, 1B, 2 and 3 (CCM/pages/programs). When one is chosen,
+   delete the parts only the others use. */
+@import url("components/programs.css");
+/* Research page: KFUPM research centers and the CCM faculty affiliated with them
+   (CCM/pages/research-groups). */
+@import url("components/research.css");

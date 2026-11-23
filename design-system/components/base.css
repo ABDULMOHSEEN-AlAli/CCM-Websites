@@ -144,7 +144,7 @@
   display: block;
   padding-block: var(--ccm-space-4);
   font-size: var(--ccm-text-body);
-  font-weight: var(--ccm-weight-medium);
+  font-weight: var(--ccm-weight-semibold);
   color: var(--ccm-text-muted);
   text-decoration: none;
   white-space: nowrap;

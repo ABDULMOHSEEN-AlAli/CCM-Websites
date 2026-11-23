@@ -208,11 +208,11 @@ var GROUPS = [
       ['brand-5', 'Logos are the official files: not recoloured, stretched or redrawn, with clear space around them.', 'Turquoise-and-Green logo on light backgrounds, white logo on dark ones.']
     ] },
   { title: 'Typography', link: 'index.html#type', intro: 'Two fonts, one type scale.', items: [
-      ['type-1', 'Headings use KFUPM Display Bold; all other text uses IBM Plex Sans Arabic. No other fonts appear.', 'Check in Sitefinity Preview too: the site\'s own theme can replace fonts.'],
+      ['type-1', 'Headings use KFUPM Display; all other English text uses Open Sans. No other fonts appear.', 'Check in Sitefinity Preview too: the site\'s own theme can replace fonts.'],
       ['type-2', 'Headings are used for structure, not to make text big, and the same level looks the same as on other pages.', 'A section title is always H2, a sub-section H3.'],
       ['type-3', 'Title Case for page and section titles; Sentence case for buttons, labels and normal text.', 'Title: "Academic Programs". Button: "View profile".'],
       ['type-4', 'Paragraphs are easy to read: lines no wider than about 70 characters, and no long passages in bold.', ''],
-      ['type-5', 'If the page has Arabic text: it reads right to left and uses IBM Plex Sans Arabic.', 'The Arabic text has <code>lang="ar" dir="rtl"</code>.']
+      ['type-5', 'If the page has Arabic text: it reads right to left and uses IBM Plex Sans Arabic (it loads only for Arabic letters).', 'The Arabic text has <code>lang="ar" dir="rtl"</code>.']
     ] },
   { title: 'Layout and screen sizes', link: 'index.html#layout', intro: 'Check at each breakpoint.', items: [
       ['layout-1', 'Phone (360–390px): one column, nothing cut off, no sideways scrolling, text readable without zooming.', 'In Edge or Chrome: F12, then the phone icon. Or run <code>node tools/screenshot.mjs</code>.'],
@@ -245,8 +245,8 @@ var GROUPS = [
       ['a11y-6', 'Alt text is useful: photos say who the person is (or are empty when the name is right next to them).', 'The automatic check only knows alt text exists, not whether it\'s good.']
     ] },
   { title: 'Sitefinity and approval', link: 'index.html#use', intro: 'Upload safely.', items: [
-      ['cms-0', 'The shared files are in this site\'s library: the fonts and graphics (the build says "6 of 6 linked") and <code>ccm-styles.css</code>, replaced with the latest build.', 'Once per site, then again whenever the build says <code>ccm-styles.css … CHANGED</code>. Steps: <code>SITE/upload/sitefinity-test/HOW-TO-TEST.md</code>. Links go in <code>SITE/cms-links.json</code>.'],
-      ['cms-1', 'Built with the build tool: a CSS widget that links <code>ccm-styles.css</code> ("Link to a file"), and <code>01-content.html</code> in a Content block.', 'Run <code>node tools/build-sitefinity.mjs SITE/pages/page-name</code>. See <code>HOW-TO-UPLOAD.md</code>.'],
+      ['cms-0', 'The shared files are in this site\'s library: the fonts and graphics (the build says "6 of 6 linked") and <code>ccm-styles.css</code>, replaced with the latest build.', 'Once per site, then again whenever the build says <code>ccm-styles.css … CHANGED</code>. Steps: <code>docs/03-shared-files.md</code>. Links go in <code>SITE/cms-links.json</code>; check them with <code>node tools/check-cms-links.mjs SITE</code>.'],
+      ['cms-1', 'Built with the build tool: a CSS widget that links <code>ccm-styles.css</code> ("Link to a file"), and <code>01-content.html</code> in a Content block (an Embed code widget if it has pop-ups).', 'Run <code>node tools/build-sitefinity.mjs SITE/pages/page-name</code>. Steps: <code>docs/04-test-a-page.md</code>.'],
       ['cms-2', 'After saving in Sitefinity, the editor removed nothing, and Preview looks like the prototype.', 'Copy the Content block\'s HTML view into <code>content-after-save.html</code> and run <code>node tools/compare-saved.mjs SITE/upload/page/option</code>. Then compare Preview with the prototype side by side.'],
       ['cms-3', 'Checked with Preview and saved as a draft only. Not published before approval.', ''],
       ['cms-4', 'If there were design options: the options page and its screenshots are up to date.', '']

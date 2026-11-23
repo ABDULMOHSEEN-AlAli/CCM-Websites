@@ -72,7 +72,7 @@
   text-transform: uppercase;
   color: var(--ccm-text-muted);
 }
-/* Titles are often whole sentences, so they use IBM Plex SemiBold, which is
+/* Titles are often whole sentences, so they use Open Sans SemiBold, which is
    easier to read at this size than the slanted KFUPM Display. */
 .ccm-news__title {
   margin: 0;
