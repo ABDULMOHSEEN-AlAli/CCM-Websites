@@ -24,7 +24,8 @@
 //     Files always come from the CMS. Until a link is filled in, the build uses a
 //     fallback and says so:
 //       KFUPM Display and graphics → embedded in the CSS
-//       IBM Plex Sans Arabic       → Google Fonts
+//       IBM Plex Sans Arabic       → left out (it is only for Arabic letters)
+//     Open Sans (all English text) is not uploaded: each site's theme already loads it.
 
 import { readFile, writeFile, mkdir, readdir, stat, rm } from 'node:fs/promises';
 import { existsSync, readFileSync } from 'node:fs';
@@ -36,16 +37,20 @@ import { fetchLive, splitAtContent, splitAtSection, splitAtMain } from './lib/li
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const DS = path.join(ROOT, 'design-system');
 
-// The font files the live sites need (all display text is KFUPM Display 700).
+// The font files the live sites need. KFUPM Display: headlines and big numbers.
+// Open Sans (all English text) is not listed: each site's theme already loads it
+// (KFUPM web team, 2026-11-23). IBM Plex Sans Arabic is for Arabic letters only
+// (unicode-range), so it is optional: left out until its links are filled in.
 const WEB_FONTS = [
+  { family: 'KFUPM Display', weight: 400, file: 'fonts/KFUPM-Regular.woff2' },
   { family: 'KFUPM Display', weight: 700, file: 'fonts/KFUPM-Bold.woff2' },
-  { family: 'IBM Plex Sans Arabic', weight: 400, file: 'fonts/IBMPlexSansArabic-Regular.woff2' },
-  { family: 'IBM Plex Sans Arabic', weight: 500, file: 'fonts/IBMPlexSansArabic-Medium.woff2' },
-  { family: 'IBM Plex Sans Arabic', weight: 600, file: 'fonts/IBMPlexSansArabic-SemiBold.woff2' },
-  { family: 'IBM Plex Sans Arabic', weight: 700, file: 'fonts/IBMPlexSansArabic-Bold.woff2' },
+  { family: 'KFUPM Display', weight: 900, file: 'fonts/KFUPM-Black.woff2' },
+  { family: 'IBM Plex Sans Arabic', weight: 400, file: 'fonts/IBMPlexSansArabic-Regular.woff2', arabicOnly: true },
+  { family: 'IBM Plex Sans Arabic', weight: 500, file: 'fonts/IBMPlexSansArabic-Medium.woff2', arabicOnly: true },
+  { family: 'IBM Plex Sans Arabic', weight: 600, file: 'fonts/IBMPlexSansArabic-SemiBold.woff2', arabicOnly: true },
+  { family: 'IBM Plex Sans Arabic', weight: 700, file: 'fonts/IBMPlexSansArabic-Bold.woff2', arabicOnly: true },
 ];
-const PLEX_GOOGLE =
-  '@import url("https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&display=swap");';
+const ARABIC_RANGE = 'U+0600-06FF, U+0750-077F, U+0870-08FF, U+FB50-FDFF, U+FE70-FEFF';
 const MIME = { '.svg': 'image/svg+xml', '.png': 'image/png', '.jpg': 'image/jpeg', '.woff2': 'font/woff2' };
 const DOMAIN = { CCM: 'ccm.kfupm.edu.sa', ICS: 'ics.kfupm.edu.sa', COE: 'coe.kfupm.edu.sa', MATH: 'math.kfupm.edu.sa', ISE: 'ise.kfupm.edu.sa' };
 const SITE_CSS = 'ccm-styles.css';
@@ -71,8 +76,11 @@ const SITE = path.relative(ROOT, files[0]).split(path.sep)[0];
 const linksFile = path.join(ROOT, SITE, 'cms-links.json');
 const links = existsSync(linksFile) ? JSON.parse(readFileSync(linksFile, 'utf8')) : {};
 const linkFor = (key) => {
-  const url = (links[key] ?? '').trim();
+  let url = (links[key] ?? '').trim();
   if (!url) return null;
+  // Sitefinity shows its own library links as http:// (the site sits behind an https
+  // proxy). Browsers block http files on an https page, so use https for our own site.
+  if (DOMAIN[SITE] && url.startsWith(`http://${DOMAIN[SITE]}/`)) url = 'https://' + url.slice('http://'.length);
   if (!/^https:\/\//.test(url)) throw new Error(`${SITE}/cms-links.json: "${key}" must be a full https:// link, got "${url}"`);
   if (DOMAIN[SITE] && new URL(url).hostname !== DOMAIN[SITE]) {
     console.warn(`WARNING ${SITE}/cms-links.json: "${key}" is on ${new URL(url).hostname}, not ${DOMAIN[SITE]}. ` +
@@ -111,14 +119,13 @@ async function inline(file) {
 
 const fontFace = (f, src) =>
   `@font-face {\n  font-family: "${f.family}";\n  src: url("${src}") format("woff2");\n` +
-  `  font-weight: ${f.weight};\n  font-style: normal;\n  font-display: swap;\n}\n`;
+  `  font-weight: ${f.weight};\n  font-style: normal;\n  font-display: swap;\n` +
+  (f.arabicOnly ? `  unicode-range: ${ARABIC_RANGE};\n` : '') + '}\n';
 let fontFaces = '';
-const plex = WEB_FONTS.filter((f) => f.family.startsWith('IBM'));
-const plexAllInCms = plex.every((f) => linkFor(f.file));
 for (const f of WEB_FONTS) {
   const url = linkFor(f.file);
-  if (f.family.startsWith('IBM') && !plexAllInCms) {
-    used.set(f.file, 'Google Fonts for now (all four Plex links are needed)');
+  if (f.arabicOnly && !url) {
+    used.set(f.file, 'left out (only needed for Arabic text)');
   } else if (url) {
     used.set(f.file, 'cms');
     fontFaces += fontFace(f, url);
@@ -128,7 +135,28 @@ for (const f of WEB_FONTS) {
   }
 }
 
-const designCss = (await inline(path.join(DS, 'ccm.css'))).trim();
+// Comments are for people reading design-system/, not for browsers: dropping them
+// makes the file about a third smaller, and a comment-only change keeps the same
+// build code, so nothing needs uploading again.
+function stripComments(css) {
+  let out = '';
+  for (let i = 0; i < css.length;) {
+    const c = css[i];
+    if (c === '"' || c === "'") {                      // a string: copy it whole
+      let j = i + 1;
+      while (j < css.length && css[j] !== c) j += css[j] === '\\' ? 2 : 1;
+      out += css.slice(i, j + 1); i = j + 1;
+    } else if (c === '/' && css[i + 1] === '*') {      // a comment: skip it
+      const end = css.indexOf('*/', i + 2);
+      i = end < 0 ? css.length : end + 2;
+    } else if (css.startsWith('url(', i) && !/^url\(\s*["']/.test(css.slice(i, i + 8))) {
+      const end = css.indexOf(')', i);                 // an unquoted url(): copy it whole
+      out += css.slice(i, end + 1); i = end + 1;
+    } else { out += c; i++; }
+  }
+  return out.replace(/[ \t]+$/gm, '').replace(/\n{2,}/g, '\n').trim();
+}
+const designCss = stripComments(await inline(path.join(DS, 'ccm.css')));
 // The build number changes only when the CSS itself changes, so it tells you whether
 // the copy in the Sitefinity library is the latest one.
 const build = createHash('sha256').update(fontFaces + designCss).digest('hex').slice(0, 8);
@@ -137,7 +165,7 @@ const header =
   `   One stylesheet for every page of all five sites. Do not edit here: change design-system/ and rebuild. */\n`;
 // @import must come first in a stylesheet, so the Google Fonts line goes before the header.
 // The last rule shows the build number on pages that have <p class="ccm-build">.
-const css = (plexAllInCms ? '' : PLEX_GOOGLE + '\n') + header + fontFaces + designCss + '\n' +
+const css = header + fontFaces + designCss + '\n' +
   `.ccm-scope .ccm-build::after { content: " ${build}"; }\n`;
 
 const siteCssFile = path.join(ROOT, SITE, 'upload', SITE_CSS);
@@ -219,5 +247,5 @@ if (missing.length) {
   console.log('Not uploaded yet, so the build uses a fallback:');
   for (const [file, how] of missing) console.log(`  design-system/${file}  →  ${how}`);
   console.log(`Upload them to the ${SITE} Sitefinity library, paste their links into ${SITE}/cms-links.json and build again.`);
-  console.log(`How: ${SITE}/upload/sitefinity-test/HOW-TO-TEST.md, part A.`);
+  console.log('How: docs/03-shared-files.md');
 }

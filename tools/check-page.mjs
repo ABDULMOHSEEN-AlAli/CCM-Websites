@@ -86,7 +86,9 @@ const FORBIDDEN_TAGS = {
   marquee: 'No moving text.',
 };
 const OLD_ATTRS = ['align', 'valign', 'bgcolor', 'cellpadding', 'cellspacing', 'face'];
-const VAGUE_LINK = /^(read more|more|click here|here|learn more|details|more details|link|view|this|go)$/i;
+// Words that stay lowercase inside a Title Case title (unless they come first)
+const SMALL_WORDS = new Set(['a', 'an', 'the', 'and', 'but', 'or', 'nor', 'for', 'so', 'yet', 'as', 'at', 'by', 'in', 'of', 'on', 'to', 'up', 'via', 'with', 'from', 'into', 'per', 'vs']);
+const VAGUE_LINK =/^(read more|more|click here|here|learn more|details|more details|link|view|this|go)$/i;
 const PHONE_OK = /^\+966 \d{2} \d{3} \d{4}$/;
 // Images and files must live in a KFUPM Sitefinity library: a full https link on
 // *.kfupm.edu.sa, or a link that starts with "/" (the same site).
@@ -95,6 +97,9 @@ const PHONE_LIKE = /(?:\+|00)?966[\d\s-]{8,14}\d|\b0\d{1,2}[\s-]?\d{3}[\s-]?\d{4
 
 function checkPage(file, src) {
   const issues = [];
+  // A page that replaces the whole main area (the home page) has no template title,
+  // so its content must carry the page's one H1.
+  const ownsH1 = /<meta\s+name="ccm-live-section"\s+content="main"/.test(src);
   const m = src.match(/<!--\s*SITEFINITY:START[\s\S]*?-->([\s\S]*?)<!--\s*SITEFINITY:END\s*-->/);
   let html, base;
   if (m) {
@@ -129,7 +134,7 @@ function checkPage(file, src) {
       if (ids.has(a.id)) add('error', 'IDs', `id="${a.id}" is used twice.`, t.i);
       else ids.set(a.id, t.i);
     }
-    if (t.name === 'h1') add('error', 'Headings', 'The page title (H1) comes from the Sitefinity page template, so content starts at <h2>.', t.i);
+    if (t.name === 'h1' && !ownsH1) add('error', 'Headings', 'The page title (H1) comes from the Sitefinity page template, so content starts at <h2>.', t.i);
     if (t.name === 'img') {
       if (!('alt' in a)) add('error', 'Images', 'Image without alt. Use the person\'s name, or alt="" when the name is already next to the photo.', t.i);
       else if (/\.(jpe?g|png|gif|webp|svg)$/i.test(a.alt) || /^(image|photo|picture|img|pic|\.+)$/i.test(a.alt.trim())) add('error', 'Images', `Alt text "${a.alt}" doesn't describe the image.`, t.i);
@@ -137,6 +142,7 @@ function checkPage(file, src) {
       if (!fromCms(a.src)) add('error', 'CMS', `Image isn't from the Sitefinity library (${short(a.src || '(no src)')}). Upload it to the site's Images library and use its link.`, t.i);
     }
     if (t.name === 'button' && !a.type) add('warn', 'Buttons', '<button> without type="button".', t.i);
+    if ((a.class ?? '').split(/\s+/).includes('ccm-check')) add('warn', 'Content', 'A name is still marked in red (ccm-check) for checking. Confirm or remove it before the page goes live.', t.i);
     if (t.name === 'iframe') add('warn', 'Sitefinity', '<iframe>: put it in an Embed code widget and check it still works after saving.', t.i);
   }
 
@@ -156,12 +162,22 @@ function checkPage(file, src) {
   for (const e of html.matchAll(/<br\s*\/?>\s*<br\s*\/?>/gi)) add('warn', 'Spacing', 'Two <br> in a row. Use spacing from the design system, not empty lines.', e.index);
 
   // --- headings: in order, no skipped levels (the template's H1 comes first) ---
+  if (ownsH1) {
+    const h1s = (html.match(/<h1\b/gi) || []).length;
+    if (h1s !== 1) add('error', 'Headings', `This page replaces the whole main area, so the template adds no title: it needs exactly one <h1> (found ${h1s}). Make the hero title the H1.`);
+  }
   let prev = 1;
   for (const h of html.matchAll(/<h([1-6])\b[^>]*>([\s\S]*?)<\/h\1\s*>/gi)) {
     const lvl = +h[1];
     const text = textOf(h[2]);
     if (!text) add('error', 'Headings', `Empty <h${lvl}>.`, h.index);
     if (lvl > prev + 1) add('error', 'Headings', `Heading jumps from H${prev} to H${lvl} ("${short(text, 40)}"). Don't skip levels.`, h.index);
+    // Page and section titles (H1, H2) are in Title Case: "Research and Accreditation".
+    if (lvl <= 2 && text) {
+      const words = text.split(/\s+/);
+      const lower = words.filter((w, i) => /^[a-z]/.test(w) && (i === 0 || !SMALL_WORDS.has(w.replace(/[^a-z]/g, ''))));
+      if (lower.length) add('warn', 'Headings', `Title Case for page and section titles: "${short(text, 50)}" (capitalise ${lower.map((w) => `"${w}"`).join(', ')}).`, h.index);
+    }
     prev = lvl;
   }
 
@@ -209,8 +225,8 @@ function checkPage(file, src) {
     add('warn', 'Content', `"${p[1]}" without a full stop. Write "${p[1]}." before a name.`, p.index);
   }
   for (const p of text.matchAll(/\b[A-Z][A-Z'’.-]+(?:\s+(?:&amp;\s+)?[A-Z][A-Z'’.-]+){3,}/g)) {
-    // A row of short acronyms (COE ICS ISE MATH, for example chips) is fine.
-    if (p[0].split(/\s+/).every((w) => w.replace(/[^A-Z]/g, '').length <= 4)) continue;
+    // A row of short acronyms (COE ICS ISE MATH, or codes like IRC-ISS JRC-AI) is fine.
+    if (p[0].split(/[\s-]+/).every((w) => w.replace(/[^A-Z]/g, '').length <= 4)) continue;
     add('warn', 'Typography', `"${short(p[0], 40)}" is typed in UPPERCASE. Type it normally; CSS makes labels uppercase.`, p.index);
   }
 

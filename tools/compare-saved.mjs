@@ -122,18 +122,35 @@ const changedAttrs = new Set(attrDiff.lost.map(([k]) => k.split(' ')[1]));
 const lostVals = valDiff.lost.filter(([kv]) => !changedAttrs.has(kv.split('=')[0]));
 if (lostVals.length) {
   const cut = (s, n) => (s.length > n ? s.slice(0, n - 1) + '…' : s);
-  // Pair each lost value with a new value of the same attribute, in page order.
+  // Pair each lost value with the most similar new value of the same attribute
+  // (the longest shared ending, ignoring ?query), not by position: the same photo
+  // can appear twice on a page, and a shortened link keeps its file name.
   const gainedBy = new Map();
   for (const [kv, n] of valDiff.gained) {
     const k = kv.split('=')[0];
     for (let i = 0; i < n; i++) gainedBy.set(k, [...(gainedBy.get(k) ?? []), kv.slice(k.length + 1)]);
   }
+  const strip = (s) => s.replace(/[?#].*$/, '');
+  const sameEnd = (a, b) => {
+    a = strip(a); b = strip(b);
+    let i = 0;
+    while (i < a.length && i < b.length && a[a.length - 1 - i] === b[b.length - 1 - i]) i++;
+    return i;
+  };
   console.log('\nCHANGED values (pasted → saved):');
-  for (const [kv] of lostVals.slice(0, 25)) {
+  for (const [kv, n] of lostVals.slice(0, 25)) {
     const k = kv.split('=')[0];
-    const now = gainedBy.get(k)?.shift();
-    console.log(`  ${cut(kv, 110)}`);
-    console.log(`    now: ${now === undefined ? '(gone)' : cut(now, 104)}`);
+    const old = kv.slice(k.length + 1);
+    const pool = gainedBy.get(k) ?? [];
+    const picks = [];
+    for (let c = 0; c < n && pool.length; c++) {
+      let best = 0;
+      pool.forEach((v, i) => { if (sameEnd(old, v) > sameEnd(old, pool[best])) best = i; });
+      picks.push(pool.splice(best, 1)[0]);
+    }
+    console.log(`  ${cut(kv, 110)}${n > 1 ? `  (×${n})` : ''}`);
+    const now = [...new Set(picks)];
+    console.log(`    now: ${now.length ? now.map((v) => cut(v, 104)).join('\n         ') : '(gone)'}`);
   }
   if (lostVals.length > 25) console.log(`  … and ${lostVals.length - 25} more`);
   problems += lostVals.length;
